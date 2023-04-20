@@ -1,6 +1,6 @@
 # Tumi Palace App
 
-<img src="./src/tumipalace.gif" width="250">
+<img src="./src/tumipalace.gif">
 
 
 ## 🫂 Integrantes
