@@ -12,7 +12,7 @@
 
 ## 📝 Descripción
 <p align="justify">
-Aplicación web que permite a los usuarios realizar apuestas de distinta indole, su principal atractivo es el Coricancha (Tragamonedas), la web permite a los usuarios mantener sus registros, jugadas, transacciones y muchas mas opciones almacenadas desde cualquier dispositivo tanto en escritorio como en moviles y desde la simple comodidad de su casa.
+Aplicación web que permite a los usuarios realizar apuestas de distinta índole, su principal atractivo es el Coricancha (Tragamonedas), la web permite a los usuarios mantener sus registros, jugadas, transacciones y muchas mas opciones almacenadas desde cualquier dispositivo tanto en escritorio como en moviles y desde la simple comodidad de su casa.
 </p>
 
 
