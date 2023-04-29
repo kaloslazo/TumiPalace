@@ -1,5 +1,202 @@
-* {
+/*===: Importing */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poltawski+Nowy:wght@400;500;600&display=swap');
+
+/*===: General*/
+:root{
+    --blackBrig: #363130;
+    --whiteBrig: #f4f4f4;
+    --yellowBrig: #F7C420;
+    --yellowHover: #deb01d;
+    --bgColor: #201A19;
+    --bgColorHover: #423835;
+}
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+body{
+    width: 100%;
+    max-width: 1680px;
+    margin: 0 auto;
+    font-family: 'Poltawski Nowy';
+    font-weight: 400;
+    color: var(--whiteBrig);
+    background-color: var(--bgColor);
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: "Cinzel Decorative";
+}
+
+/*===: Navbar*/
+#navbar{
+    width: 100%;
+    padding: 1em 1.5em;
+    max-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--yellowBrig);
+}
+#navbarLogo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#navbarLogo img{
+    width: 45px;
+    margin-right: 1em;
+}
+#navbarLogo h1{
+    font-size: 1.2em !important;
+    color: var(--yellowBrig);
+    text-align: center;
+}
+#navbarAccess ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#navbarAccess ul li{
+    list-style: none;
+}
+#navbarAccess ul li a{
+    padding: 0em .5em;
+    margin: 0em .5em;
+    color: var(--whiteBrig);
+    text-decoration: none;
+}
+#navbarAccess ul li a:hover{
+    transition: 300ms all;
+    color: var(--yellowHover);
+}
+#navbarAccess ul li a:hover{
+    opacity: 90%;
+    animation: 300ms all ease;
+}
+.mr-4{
+    margin-right: 3em;
+}
+.btn {
+    padding: .8em 2em;
+    font-family: "Cinzel Decorative";
+    font-weight: 400;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn:hover{
+    transition: 300ms all ease;
+}
+.btn1{
+    margin-left: 3em;
+    border: 1px solid var(--yellowBrig);
+    color: var(--yellowBrig);
+    background-color: transparent;
+}
+.btn1:hover{
+    background-color: var(--bgColorHover);
+}
+.btn2{
+    margin-left: 1em;
+    color: var(--blackBrig);
+    background-color: var(--yellowBrig);
+}
+.btn2:hover{
+    background-color: var(--yellowHover);
+}
+
+/*===: Hero*/
+#heroWrapper{
+    width: 100%;
+    height: 100%;
+    min-height: 960px;
+    padding: 4em 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#leftAction{
+    font-family: "Cinzel Decorative";
+    max-width: 600px;
+    margin-right: 5em;
+}
+#leftAction h3 {
+    font-size: 3.8em;
+    text-align: left;
+}
+#leftAction h5{
+    margin-top: .2em;
+    font-size: 4em;
+    color: var(--yellowBrig);
+}
+#leftAction button{
+    margin-top: 2em;
+    margin-left: 0em;
+    padding: 1em 2em;
+    font-size: 1.2em;
+}
+#rightAction{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#rightAction .cardGames{
+    margin: 1.5em;
+    max-width: 400px;
+    min-width: 350px;
+    min-height: 500px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid var(--bgColorHover);
+    background: rgb(32,26,25);
+    background: linear-gradient(0deg, rgb(32, 26, 25) 54%, rgba(54,49,48,1) 100%);
+    box-shadow: var(--bgColorHover) 5px 8px 20px -3px;
+}
+#rightAction .cardGames button{
+    display: block;
+    margin: 0 !important;
+}
+
+
+/*===: Price status*/
+#callToAction{
+    padding-top: 4em;
+    max-width: 1350px;
+    margin: 0 auto;
+    display: block;
+}
+#priceStatus{
+    padding: 1em .5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1.8em;
+    border-radius: 8px;
+    color: var(--whiteBrig);
+    background: var(--bgColorHover);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+#priceMount{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: var(--yellowBrig);
+}
+#priceMount span{
+    font-size: 1em;
+    margin-right: .5em;
+}
+#priceMount p{
+    padding: .3em .6em;
+    margin: .3em;
+    font-size: 1.2em;
+    border: 2px solid var(--yellowHover);
+    border-radius: 4px;
+    background-color: none;
 }
