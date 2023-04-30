@@ -1,0 +1,79 @@
+{% extends '_base.html' %}
+
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roulette.css') }}">
+{% endblock %}
+{% block content %}
+
+<section id="homeWrapper">
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div id="navbarLogo">
+            <img src="static/img/tumiLogo.png" alt="tumiLogo">
+            <h1>Tumi <br/> Palace</h1>
+        </div>
+        <div id="navbarAccess">
+            <ul>
+                <li><a href="{{url_for('home')}}">Juegos</a></li>
+                <li><a href="">Recompensas</a></li>
+                <li class=""><a href="">Soporte</a></li>
+                <a class="btn btn2" href="{{url_for('register')}}">Configuración</a>
+                <a class="btn btn2" href="{{url_for('register')}}">Cerrar sesión</a>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Wrapper-->
+    <div id="roulette">
+        <h1>Ruleta del Inca</h1>
+        <div id="roulettePool">
+            <table>
+                <tr>
+                    <td rowspan="3" colspan="3">0</td>
+                    <td>3</td>
+                    <td>6</td>
+                    <td>9</td>
+                    <td>12</td>
+                    <td>15</td>
+                    <td>18</td>
+                    <td>21</td>
+                    <td>24</td>
+                    <td>27</td>
+                    <td>30</td>
+                    <td>33</td>
+                    <td>36</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>8</td>
+                    <td>11</td>
+                    <td>14</td>
+                    <td>17</td>
+                    <td>20</td>
+                    <td>23</td>
+                    <td>26</td>
+                    <td>29</td>
+                    <td>32</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>7</td>
+                    <td>10</td>
+                    <td>13</td>
+                    <td>16</td>
+                    <td>19</td>
+                    <td>22</td>
+                    <td>25</td>
+                    <td>28</td>
+                    <td>31</td>
+                    <td>34</td>
+                </tr>
+              </table>
+        </div>
+    </div>
+{% endblock %}

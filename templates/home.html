@@ -5,6 +5,39 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Bienvenido</h1>
-    <a href="{{url_for('logout')}}">Cerrar sesión</a>
+
+    <!-- Navigation -->
+    <section id="homeWrapper">
+        <nav id="navbar">
+            <div id="navbarLogo">
+                <img src="static/img/tumiLogo.png" alt="tumiLogo">
+                <h1>Tumi <br/> Palace</h1>
+            </div>
+            <div id="navbarAccess">
+                <ul>
+                    <li><a href="">Juegos</a></li>
+                    <li><a href="">Recompensas</a></li>
+                    <li class=""><a href="">Soporte</a></li>
+                    <a class="btn btn2" href="{{url_for('register')}}">Configuración</a>
+                    <a class="btn btn2" href="{{url_for('register')}}">Cerrar sesión</a>
+                </ul>
+            </div>
+        </nav>
+
+        
+        <!-- Hero Wrapper-->
+        <h1 id="heroGames">Juegos disponibles</h1>
+        <div id="cardGamesContainer">
+            <div class="cardGames">
+                <h3>Ruleta del Inca</h3>
+                <img src="static/img/cardRoulette.png" alt="cardRoulette">
+                <a class="btn btn1" href="{{url_for('roulette')}}">Jugar</a>
+            </div>
+            <div class="cardGames">
+                <h3>Tragamonedas del Inca</h3>
+                <img src="static/img/cardSlots.png" alt="cardSlots">
+                <a class="btn btn1">Jugar</a>
+            </div>
+        </div>
+    </section>
 {% endblock %}

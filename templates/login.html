@@ -5,12 +5,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Login Page</h1>
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.userpass }}
-        {{ form.submit }}
-    </form>
-    <a class="btn btn2" href="{{url_for('register')}}">Registrarse</a>
+    <section id="formWrapper">
+      <img src="static/img/macchuPicchuBrown.png" id="macchuBottomRight">
+      <h1 id="formHeader">Iniciar Sesión</h1>
+      <form method="POST" action="" id="formContainer">
+            <div id="formLogo">
+              <img src="static/img/tumiLogo.png" alt="tumi logo">
+              <p>Tumi <br/> Palace</p>
+            </div>
+            {{ form.hidden_tag() }}
+            <div class="formBox">
+              <label for="username">Usuario</label>
+              {{ form.username }}
+            </div>
+            <div class="formBox flc">
+              <label for="password">Contraseña</label>
+              {{ form.userpass }}
+            </div>
+            {{ form.submit(class="btn-submit") }}
+        </form>
+        <p>Aún no tienes una cuenta? <a class="btn2 btn3" href="{{url_for('register')}}">Regístrate</a></p>
+        <br/>
+        <p>Regresar al <a class="btn2 btn3" href="{{url_for('index')}}">Inicio</a></p>
+    </section>
 {% endblock %}
