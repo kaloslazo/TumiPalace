@@ -95,78 +95,10 @@ def register():
 def home():
     return render_template('home.html');
 
-@app.route('/logout', methods=['GET', 'POST'])
-def logout():
-    logout_user();
-    return redirect(url_for('login'));
-
-
-# ===: Main flow
-if __name__ == "__main__":
-    # check if db exists & commit changes.
-    with app.app_context():
-        db.create_all();
-    app.run(debug=True, port=8080);
-else:
-    print('Importing {}'.format(__name__))
-
-# ===: Tables
-class User(db.Model, UserMixin): # uses abstract UserMixin class.
-    __tablename__ = 'users';
-    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"), unique=True); # unique uuid code.
-    username = db.Column(db.String(20), nullable=False, unique=True);
-    userpass = db.Column(db.String(80), nullable=False, unique=False);
-
-class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=5, max=20)], render_kw={"placeholder": "Username"});
-    userpass = PasswordField(validators=[InputRequired(), Length(min=5, max=80)], render_kw={"placeholder": "Password"});
-    submit = SubmitField("Login");
-
-class RegisterForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=5, max=20)], render_kw={"placeholder": "Username"});
-    userpass = PasswordField(validators=[InputRequired(), Length(min=5, max=80)], render_kw={"placeholder": "Password"});
-    submit = SubmitField("Register");
-    def check_username(self, username):
-        usernameExists = User.query.filter_by(username=username.data).first();
-        if usernameExists:
-            raise ValidationError("Username already exists. Choose different one.");
-
-
-
-# ===: Routes
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html');
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm();
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first();
-        if user:
-            if bcrypt.check_password_hash(user.userpass, form.userpass.data):
-                login_user(user);
-                return redirect(url_for('home'));
-    return render_template('login.html', form=form);
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegisterForm();
-    if form.validate_on_submit():
-        hashedPass = bcrypt.generate_password_hash(form.userpass.data).decode('utf-8');
-        newUser = User(username=form.username.data, userpass=hashedPass);
-        print(newUser);
-        db.session.add(newUser);
-        db.session.commit();
-        db.session.close();
-        return redirect(url_for('login'));
-    return render_template('register.html', form=form);
-
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/roulette', methods=['GET', 'POST'])
 @login_required
-def home():
-    return render_template('home.html');
-
+def roulette():
+    return render_template('roulette.html');
 
 
 # ===: Main flow
