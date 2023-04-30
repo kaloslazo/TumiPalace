@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>Login Page</h1>
+{% extends '_base.html' %}
 
+{% block title %}Iniciar sesión | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Login Page</h1>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         {{ form.username }}
         {{ form.userpass }}
         {{ form.submit }}
     </form>
-
     <a class="btn btn2" href="{{url_for('register')}}">Registrarse</a>
-
-</body>
-</html>
+{% endblock %}
