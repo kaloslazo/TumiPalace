@@ -1,37 +1,3 @@
-/*===: Importing */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Spectral:wght@400;600&display=swap');
-
-/*===: General*/
-:root{
-    --blackBrig: #363130;
-    --whiteBrig: #f4f4f4;
-    --yellowBrig: #F7C420;
-    --yellowHover: #deb01d;
-    --bgColor: #201A19;
-    --bgColorHover: #423835;
-}
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body{
-    width: 100%;
-    max-width: 1680px;
-    margin: 0 auto;
-    font-family: 'Spectral';
-    font-weight: 400;
-    color: var(--whiteBrig);
-    background-color: var(--bgColor);
-}
-h1, h2, h3, h4, h5, h6{
-    font-family: "Cinzel Decorative";
-}
-a{
-    text-decoration: none;
-    color: var(--whiteBrig);
-}
-
 /*===: Navbar*/
 #navbar{
     width: 100%;
@@ -153,21 +119,21 @@ a{
 }
 #rightAction .cardGames{
     margin: 1.5em;
-    max-width: 400px;
+    padding: 6em 4em;
+    max-width: 500px;
     min-width: 350px;
     min-height: 500px;
-    border-radius: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     flex-direction: column;
     border: 2px solid var(--bgColorHover);
-    background: rgb(32,26,25);
-    background: linear-gradient(0deg, rgb(32, 26, 25) 54%, rgba(54,49,48,1) 100%);
-    box-shadow: var(--bgColorHover) 5px 8px 20px -3px;
+    background: var(--bgColorHover);
 }
-#rightAction .cardGames button{
+#rightAction .cardGames a{
     display: block;
-    margin: 0 !important;
+    margin: 1em !important;
+    font-size: 1.2em;
 }
 
 

@@ -1,3 +1,88 @@
 body{
-    background-color: purple;
+    background-color: var(--bgColor);
+}
+
+
+/*===: Navigation :===*/
+#navbar{
+    width: 100%;
+    padding: 1em 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}   
+#navbarLogo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--yellowBrig);
+}
+#navbarLogo img{
+    width: 50px;
+    margin-right: 1em;
+}
+#navbarAccess ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#navbarAccess ul li{
+    list-style: none;
+    margin-right: 2em;
+}
+#navbarAccess ul a{
+    margin-left: 1em;
+}
+.btn{
+    padding: .5em 2em;
+    color: var(--bgColor);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: var(--yellowBrig);
+}
+.btn:hover{
+    opacity: 90%;
+}
+
+
+/*===: CardGames :===*/
+#cardGamesContainer{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.cardGames{
+    margin: 2em 0em;
+    margin-right: 3em;
+    padding: 2em;
+    width: 400px;
+    height: 450px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    border: 2px solid transparent;
+    background-color: var(--bgColorHover);
+}
+.cardGames:hover{
+    transition: 300ms all ease;
+    border: 2px solid var(--bgColorHoverBrig);
+    box-shadow: var(--bgColorHoverBrig) 0px 7px 20px 0px;
+}
+.cardGames img{
+    width: 200px;
+}
+.cardGames h3{
+    color: var(--yellowBrig);
+    font-size: 1.3333em;
+}
+#heroGames{
+    margin: 1.5em 0em;
+    margin-top: 2em;
+    font-size: 3em;
+    font-family: var(--fontPrimary);
 }
