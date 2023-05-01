@@ -1,11 +1,16 @@
-#roulette h1{
-    margin: 1.5em 0em;
+#rouletteHeader h1{
+    margin: 3em 0em;
     font-family: var(--fontPrimary);
     font-size: 3em;
     color: var(--yellowBrig);
 }
+#rouletteHeader img{
+    width: 150px;
+    margin-right: 3em;
+}
 #roulettePool {
-    background-color: #4E6A54;
+    margin-bottom: 2em;
+    background-color: var(--bgColor);
 }
 
 /*===: Table :===*/
@@ -13,22 +18,113 @@ table, th, td {
     border: 2px solid #FFF;
 }
 table {
+    border-radius: 8px;
     width: 100%;
-    height: 500px;
+    height: 300px;
     border-collapse: collapse;
-    background: #D21312;
-    position: relative;
 }
 td {
     text-align: center;
     font-size: 32px;
     padding: 20px;
-    background: #D21312;
+    background: #8C1212;
     color: #fff;
 }
 .zg{
-    background-color: #072f0c !important;
+    background-color: #1e4523 !important;
+}
+.tg{
+    border: 1px solid var(--bgColor);
+    border-top: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+    background-color: transparent !important;
 }
 .b{
-    background-color: #111 !important;
+    background-color: #161515 !important;
+}
+.r{
+    background-color: #8C1212 !important;
+}
+#roulette img{
+    display: block;
+}
+
+
+/*===: Tokens :===*/
+#rouletteMenu, #rouletteMenu2{
+    margin: 3em 0em;
+    padding: 2em 0em;
+    border-radius: 8px;
+    background-color: var(--bgColorHoverBrig);
+}
+#rouletteMenu2{
+    margin-top: 5em;
+    font-size: .9em;
+}
+#rouletteMenu p, #rouletteMenu2 p{
+    font-family: var(--fontPrimary);
+    font-size: 2em;
+    color: var(--yellowBrig);
+    text-align: center;
+    margin: 0em 1em;
+}
+#rouletteMenu, #rouletteMenu2, #rouletteTokens, #roulleteBtn, #rouletteHeader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+#rouletteMenu{
+    justify-content: space-around;
+}
+#rouletteMenu2{
+    flex-direction: column;
+}
+#rouletteCounter{
+    color: var(--yellowBrig) !important;
+    margin-bottom: 1em !important;
+}
+#rouletteCounter > span{
+    color: #FFF !important;
+}
+#rouletteTokens a img{
+    width: 150px;
+}
+#rouletteTokens a{
+    margin: 0em .8em;
+}
+#rouletteTokens a:hover img{
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(0px 0px 30px var(--bgColor));
+    border: solid 5px transparent;
+}
+
+.btn{
+    padding: .5em 2em;
+    margin: 1em 0em;
+    width: 100%;
+    font-size: 1.5em;
+    font-family: var(--fontSecondary);
+    color: var(--bgColor);
+    font-weight: bold;
+    border: none;
+    border-radius:4px;
+}
+.btn:hover{
+    transition: 300ms all ease;
+    opacity: 90%;
+}
+#roulleteBtn{
+    flex-direction: column;
+    justify-content: space-around;
+}
+.tokenCoin .selected {
+    transform: translateY(-20px) scale(1.2);
+}
+.btn2{
+    width: auto;
+    margin-left: 2em;
+}
+#actionSelected{
+    color: #FFF;
 }
