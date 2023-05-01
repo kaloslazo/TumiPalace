@@ -27,67 +27,98 @@
 
     <!-- Hero Wrapper-->
     <div id="roulette">
-        <h1>Ruleta del Inca</h1>
+        <div id="rouletteHeader">
+            <img src="static/img/cardRoulette.png" alt="">
+            <h1>Ruleta del Inca</h1>
+        </div>
+
         <div id="roulettePool">
             <table>
                 <tr>
-                    <td rowspan="3" colspan="3" class="zg">0</td>
-                    <td class="b">3</td>
-                    <td class="r">6</td>
-                    <td class="b">9</td>
-                    <td class="r">12</td>
-                    <td class="b">15</td>
-                    <td class="r">18</td>
-                    <td class="b">21</td>
-                    <td class="r">24</td>
-                    <td class="b">27</td>
-                    <td class="r">30</td>
-                    <td class="b">33</td>
-                    <td class="r">36</td>
+                    <td rowspan="3" colspan="3" class="zg token">0</td>
+                    <td class="b token">3</td>
+                    <td class="r token">6</td>
+                    <td class="b token">9</td>
+                    <td class="r token">12</td>
+                    <td class="b token">15</td>
+                    <td class="r token">18</td>
+                    <td class="b token">21</td>
+                    <td class="r token">24</td>
+                    <td class="b token">27</td>
+                    <td class="r token">30</td>
+                    <td class="b token">33</td>
+                    <td class="r token">36</td>
                 </tr>
                 <tr>
-                    <td>2</td>
-                    <td class="b">5</td>
-                    <td>8</td>
-                    <td class="b">11</td>
-                    <td>14</td>
-                    <td class="b">17</td>
-                    <td>20</td>
-                    <td class="b">23</td>
-                    <td>26</td>
-                    <td class="b">29</td>
-                    <td>32</td>
-                    <td class="b">35</td>
+                    <td class="token">2</td>
+                    <td class="b token">5</td>
+                    <td class="token">8</td>
+                    <td class="b token">11</td>
+                    <td class="token">14</td>
+                    <td class="b token">17</td>
+                    <td class="token">20</td>
+                    <td class="b token">23</td>
+                    <td class="token">26</td>
+                    <td class="b token">29</td>
+                    <td class="token">32</td>
+                    <td class="b token">35</td>
                 </tr>
                 <tr>
-                    <td class="b">1</td>
-                    <td>4</td>
-                    <td class="b">7</td>
-                    <td>10</td>
-                    <td class="b">13</td>
-                    <td>16</td>
-                    <td class="b">19</td>
-                    <td>22</td>
-                    <td class="b">25</td>
-                    <td>28</td>
-                    <td class="b">31</td>
-                    <td>34</td>
+                    <td class="b token">1</td>
+                    <td class="token">4</td>
+                    <td class="b token">7</td>
+                    <td class="token">10</td>
+                    <td class="b token">13</td>
+                    <td class="token">16</td>
+                    <td class="b token">19</td>
+                    <td class="token">22</td>
+                    <td class="b token">25</td>
+                    <td class="token">28</td>
+                    <td class="b token">31</td>
+                    <td class="token">34</td>
                 </tr>
                 <tr>
-                    <td class="zg" rowspan="1" colspan="0"></td>
-                    <td class="zg" rowspan="1" colspan="6">1 st 12</td>
-                    <td class="zg" rowspan="1" colspan="4">2 nd 12</td>
-                    <td class="zg" rowspan="1" colspan="4">3 rd 12</td>
+                    <td class="tg token" rowspan="2" colspan="0"></td>
+                    <td class="zg token" rowspan="1" colspan="6">1st 12</td>
+                    <td class="zg token" rowspan="1" colspan="4">2nd 12</td>
+                    <td class="zg token" rowspan="1" colspan="4">3rd 12</td>
                 </tr>
                 <tr>
-                    <td class="zg" rowspan="1" colspan="0">1 to 18</td>
-                    <td class="zg" rowspan="1" colspan="6">Even</td>
-                    <td class="zg" rowspan="1" colspan="4"></td>
-                    <td class="b" rowspan="1" colspan="4"></td>
-                    <td class="b" rowspan="1" colspan="4">ODD</td>
-                    <td class="b" rowspan="1" colspan="4">19 to 36</td>
+                    <td class="zg token" rowspan="1" colspan="3">1 to 18</td>
+                    <td class="zg token" rowspan="1" colspan="3">Even</td>
+                    <td class="zg r token" rowspan="1" colspan="2"></td>
+                    <td class="b token" rowspan="1" colspan="2"></td>
+                    <td class="zg token" rowspan="1" colspan="3">Odd</td>
+                    <td class="zg token" rowspan="1" colspan="3">19 to 36</td>
                 </tr>
               </table>
         </div>
+
+        <div id="rouletteMenu2">
+            <p id="rouletteCounter">Tiempo restante: <span><span id="rouletteCounterSec">90</span> segundos</span></p>
+            <p>Jugada seleccionada: <span id="actionSelected"></span> </p>
+            <button id="btnActionSelected" class="btn btn2">Aceptar</button>
+        </div>
+
+        <div id="rouletteMenu">
+            <p>Saldo <br/>S/.<span id="userSalary">0</span></p>
+            <div id="rouletteTokens">
+                <a id="token1" href="" class="tokenCoin"><img src="static/img/rouletteGame/token1.png" alt="token 1"></a>
+                <a id="token5" href="" class="tokenCoin"><img src="static/img/rouletteGame/token5.png" alt="token 5"></a>
+                <a id="token10" href="" class="tokenCoin"><img src="static/img/rouletteGame/token10.png" alt="token 10"></a>
+                <a id="token25" href="" class="tokenCoin"><img src="static/img/rouletteGame/token25.png" alt="token 25"></a>
+                <a id="token50" href="" class="tokenCoin"><img src="static/img/rouletteGame/token50.png" alt="token 50"></a>
+                <a id="token100" href="" class="tokenCoin"><img src="static/img/rouletteGame/token100.png" alt="token 100"></a>
+            </div>
+            <div id="roulleteBtn">
+                <button class="btn">Clear</button>
+                <button class="btn">Historial</button>
+            </div>
+        </div>
+
     </div>
+
+    <!-- Javascript -->
+    <script src="static/js/roulette.js"></script>
+
 {% endblock %}
