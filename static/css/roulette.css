@@ -128,3 +128,22 @@ td {
 #actionSelected{
     color: #FFF;
 }
+#roulettePasedSelected{
+    width: 100%;
+    margin-top: 2em;
+    text-align: left;
+}
+#roulettePasedSelected p{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+#roulettePasedSelected img{
+    width: 80px;
+    display: inline;
+    margin-right: 1em;
+}
+#winnerWrapper{
+    margin-top: 2em !important;
+    visibility: hidden;
+}

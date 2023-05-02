@@ -11,42 +11,70 @@ const arrTweaks = [['34', '1st 12'], ['35', '2nd 12'], ['36', '3rd 12'], ['37', 
 let actionSelected = document.getElementById("actionSelected");
 let btnActionSelected = document.getElementById("btnActionSelected");
 let rouletteCounterSec = document.getElementById("rouletteCounterSec");
+let rouletteCounter = document.getElementById("rouletteCounter");
+let rouletteSpin = document.getElementById("rouletteSpin");
 
 let tempSelected = ['0', '0'];
 let currentToken, idx;
 actionSelected.innerHTML = `0, 0`;
+let pasedSelected = document.getElementById("playedActions1");
 
 let salaryCounter = document.getElementById("userSalary");
 let usrSalary = 1940.50;
+const szTokens = 6;
+
+let winnerValueCont = document.getElementById("winnerVal");
+let winnerWrapper = document.getElementById("winnerWrapper");
+
+let winnerValue = 0;
 
 //===: Functions
-getSalary(); // first fetch to salary.
+calcBank();
+
+function calcPlayed(){
+    arrTokens.forEach(arrToken => {
+        console.log(arrToken);
+    });
+};
+
+function calcBank(){
+    getSalary(); // first fetch to salary.
+};
+
 function getRandomValue(){
     const randomVal = Math.random();
-    const nVal = Math.floor(randomVal * 36); // multiply for possibles values.
-    salaryCounter.innerHTML = nVal;
+    winnerValue = Math.floor(randomVal * 36); // multiply for possibles values.
+    salaryCounter.innerHTML = usrSalary - winnerValue;
+    winnerWrapper.style.visibility = "visible";
+    winnerValueCont.innerHTML = winnerValue;
 };
 function getSalary(){
     salaryCounter.innerHTML = usrSalary;
 };
 
-const counterLimit = 11;
+const counterLimit = 5;
 let timeRemaining = counterLimit;
-const timer = setInterval(() => {
-    timeRemaining--;
-    if(timeRemaining <= 0){
-        console.log("Tiempo terminado.");
-        // for(let i=0; i<tokenNumbers.length; i++){
-        //     tokenNumbers[i].disabled = true;
-        // }; 
-        // for(const token of tokens){
-        //     token.disabled = true;
-        // };
-        // clearInterval(timer);
-    }else {
-        rouletteCounterSec.innerHTML = timeRemaining;
+let timeRepeat = 5;
+let isClicked = false;
+rouletteSpin.addEventListener('click', function onclick(event){
+    event.preventDefault();
+    isClicked = true;
+    if(isClicked){
+        const timer = setInterval(() => {
+            rouletteSpin.disabled = true;
+            timeRemaining--;
+            if(timeRemaining <= 0){
+                console.log("Tiempo terminado.");
+                calcBank();
+                calcPlayed();
+                clearInterval(timer);
+            }else {
+                rouletteCounterSec.innerHTML = timeRemaining;
+            };
+        }, 1000);
     };
-}, 1000);
+    isClicked = false;
+});
 
 
 //===: Events
@@ -83,9 +111,12 @@ btnActionSelected.addEventListener('click', function onclick(e) {
         console.log(fixToNum);
         tempSelected[1] = arrTweaks[fixToNum][0];
     };
+    console.log(arrTokens);
     arrTokens[pos].push(tempSelected[1]);
+    let nameSelect = `playedActions${tempSelected[0]}`;
+    let tokenSelected = document.getElementById(nameSelect);
+    tokenSelected.innerHTML = (arrTokens[pos]).slice(1).join(' - ');
     tempSelected[0] = '0';
     tempSelected[1] = '0';
     actionSelected.innerHTML = `${tempSelected[0]}, ${tempSelected[1]}`;
-    console.log(arrTokens);
 });
