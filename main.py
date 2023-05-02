@@ -44,6 +44,7 @@ class User(db.Model, UserMixin): # uses abstract UserMixin class.
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"), unique=True); # unique uuid code.
     username = db.Column(db.String(20), nullable=False, unique=True);
     userpass = db.Column(db.String(80), nullable=False, unique=False);
+    userBank = db.Column(db.Integer(), nullable=False, unique=False);
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=5, max=20)], render_kw={"placeholder": "Username"});
@@ -82,7 +83,7 @@ def register():
     form = RegisterForm();
     if form.validate_on_submit():
         hashedPass = bcrypt.generate_password_hash(form.userpass.data).decode('utf-8');
-        newUser = User(username=form.username.data, userpass=hashedPass);
+        newUser = User(username=form.username.data, userpass=hashedPass, userBank=0);
         print(newUser);
         db.session.add(newUser);
         db.session.commit();
@@ -105,6 +106,21 @@ def roulette():
 def slots():
     return render_template('slots.html');
 
+@app.route('/config', methods=['GET', 'POST'])
+@login_required
+def config():
+    return render_template('config.html', username=current_user.username, bank=current_user.userBank);
+
+@app.route('/delete/<string:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    if (id == current_user.id):
+        userToDeleted = User.query.get(id);
+        db.session.delete(userToDeleted);
+        db.session.commit();
+        return redirect(url_for("home"));
+    else:
+        return 'Error! You dont have access to this area';
 
 # ===: Main flow
 if __name__ == "__main__":
