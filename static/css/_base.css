@@ -1,5 +1,6 @@
 /*===: Importing */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Spectral:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@400;700;800&display=swap');
 
 /*===: General*/
 :root{
@@ -11,7 +12,7 @@
     --bgColorHover: #322823;
     --bgColorHoverBrig: #28201c;
 
-    --fontSecondary: "Spectral", serif;
+    --fontSecondary: "K2D", sans-serif;
     --fontPrimary: "Cinzel Decorative", serif;
 }
 *{
@@ -23,13 +24,13 @@ body{
     width: 100%;
     max-width: 1680px;
     margin: 0 auto;
-    font-family: 'Spectral';
+    font-family: var(--fontSecondary);
     font-weight: 400;
     color: var(--whiteBrig);
     background-color: var(--bgColor);
 }
 h1, h2, h3, h4, h5, h6{
-    font-family: "Cinzel Decorative";
+    font-family: var(--fontPrimary);
 }
 a{
     text-decoration: none;
