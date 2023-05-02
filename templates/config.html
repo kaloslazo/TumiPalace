@@ -6,22 +6,7 @@
 {% endblock %}
 {% block content %}
     <!-- Navigation -->
-    <section id="homeWrapper">
-        <nav id="navbar">
-            <div id="navbarLogo">
-                <img src="static/img/tumiLogo.png" alt="tumiLogo">
-                <h1>Tumi <br/> Palace</h1>
-            </div>
-            <div id="navbarAccess">
-                <ul>
-                    <li><a href="{{url_for('home')}}">Juegos</a></li>
-                    <li><a href="{{url_for('home')}}">Recompensas</a></li>
-                    <li class=""><a href="">Soporte</a></li>
-                    <a class="btn btn2" href="{{url_for('config')}}">Configuración</a>
-                    <a class="btn btn2" href="{{url_for('register')}}">Cerrar sesión</a>
-                </ul>
-            </div>
-        </nav>
+    {% include 'navbar.html' %}
 
     <!-- Config user -->
     <section id="configUser">
