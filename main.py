@@ -122,6 +122,11 @@ def delete(id):
     else:
         return 'Error! You dont have access to this area';
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
 # ===: Main flow
 if __name__ == "__main__":
     # check if db exists & commit changes.
