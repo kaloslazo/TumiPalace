@@ -100,6 +100,11 @@ def home():
 def roulette():
     return render_template('roulette.html');
 
+@app.route('/slots', methods=['GET', 'POST'])
+@login_required
+def slots():
+    return render_template('slots.html');
+
 
 # ===: Main flow
 if __name__ == "__main__":
