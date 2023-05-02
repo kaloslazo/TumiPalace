@@ -98,6 +98,15 @@
             <p id="rouletteCounter">Tiempo restante: <span><span id="rouletteCounterSec">90</span> segundos</span></p>
             <p>Jugada seleccionada: <span id="actionSelected"></span> </p>
             <button id="btnActionSelected" class="btn btn2">Aceptar</button>
+            <div id="roulettePasedSelected">
+                <p><img src="static/img/rouletteGame/token1.png" alt="token 1"><span id="playedActions1">-</span></p>
+                <p><img src="static/img/rouletteGame/token5.png" alt="token 5"><span id="playedActions5">-</span></p>
+                <p><img src="static/img/rouletteGame/token10.png" alt="token 10"><span id="playedActions10">-</span></p>
+                <p><img src="static/img/rouletteGame/token25.png" alt="token 25"><span id="playedActions25">-</span></p>
+                <p><img src="static/img/rouletteGame/token50.png" alt="token 50"><span id="playedActions50">-</span></p>
+                <p><img src="static/img/rouletteGame/token100.png" alt="token 100"><span id="playedActions100">-</span></p>
+                <h3 id="winnerWrapper">Valor ganador: <span id="winnerVal">0</span></h3>
+            </div>
         </div>
 
         <div id="rouletteMenu">
@@ -112,7 +121,7 @@
             </div>
             <div id="roulleteBtn">
                 <button class="btn">Clear</button>
-                <button class="btn">Historial</button>
+                <button class="btn" id="rouletteSpin">Girar</button>
             </div>
         </div>
 
