@@ -1,11 +1,10 @@
 {% extends '_base.html' %}
 
-{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block title %}Configuración | Tumi Palace{% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/config.css') }}">
 {% endblock %}
 {% block content %}
-
     <!-- Navigation -->
     <section id="homeWrapper">
         <nav id="navbar">
@@ -24,20 +23,21 @@
             </div>
         </nav>
 
-        
-        <!-- Hero Wrapper-->
-        <h1 id="heroGames">Juegos disponibles</h1>
-        <div id="cardGamesContainer">
-            <div class="cardGames">
-                <h3>Ruleta del Inca</h3>
-                <img src="static/img/cardRoulette.png" alt="cardRoulette">
-                <a class="btn btn1" href="{{url_for('roulette')}}">Jugar</a>
+    <!-- Config user -->
+    <section id="configUser">
+        <div id="userData">        
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="">
+            <div class="userDataTemplate">
+                <h3>Usuario</h3>
+                <span id="userName">{{ username }}</span>
             </div>
-            <div class="cardGames">
-                <h3>Tragamonedas del Inca</h3>
-                <img src="static/img/cardSlots.png" alt="cardSlots">
-                <a class="btn btn1" href="{{url_for('slots')}}">Jugar</a>
+            <div class="userDataTemplate">
+                <h3>Saldo disponible  </h3>
+                <span id="userID">S/. {{ bank }}</span>
             </div>
+        <div id="userActions">
+            <button class="btn r" id="actionDeleteUser">Eliminar usuario</button>
+            <button class="btn" id="actionExitUser">Actualizar Datos</button>
         </div>
-    </section>
+     </section>
 {% endblock %}
