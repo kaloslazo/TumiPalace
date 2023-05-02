@@ -1,0 +1,97 @@
+{% extends '_base.html' %}
+
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/slots.css') }}">
+{% endblock %}
+{% block content %}
+
+<section id="homeWrapper">
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div id="navbarLogo">
+            <img src="static/img/tumiLogo.png" alt="tumiLogo">
+            <h1>Tumi <br /> Palace</h1>
+        </div>
+        <div id="navbarAccess">
+            <ul>
+                <li><a href="{{url_for('home')}}">Juegos</a></li>
+                <li><a href="">Recompensas</a></li>
+                <li class=""><a href="">Soporte</a></li>
+                <a class="btn btn2" href="{{url_for('register')}}">Configuración</a>
+                <a class="btn btn2" href="{{url_for('register')}}">Cerrar sesión</a>
+            </ul>
+        </div>
+    </nav>
+    <!-- Hero Wrapper-->
+    <div id="roulette">
+        <div id="rouletteHeader">
+            <img src="static/img/cardSlots.png" alt="">
+            <h1>Tragamonedas del Inca</h1>
+        </div>
+    </div>
+
+    <!-- Slots Section-->
+    <div id="slotsSection">
+        <div id="leftInfo">
+            <p><img src="static/img/slotsGame/logo2.jpeg" alt=""><span id="leftInfoMultiplied">x2</span></p>
+            <p><img src="static/img/slotsGame/logo4.jpeg" alt=""><span id="leftInfoMultiplied">x4</span></p>
+            <p><img src="static/img/slotsGame/logo1.jpeg" alt=""><span id="leftInfoMultiplied">x6</span></p>
+            <p><img src="static/img/slotsGame/logo3.jpeg" alt=""><span id="leftInfoMultiplied">x8</span></p>
+        </div>
+        <div id="centerInfo">
+            <div id="rouletteMain">
+                <div id="rouletteMainLeft">
+                    <div class="slotsResults">
+                        <img src="static/img/slotsGame/logo2.jpeg" alt=""> 
+                        <img src="static/img/slotsGame/logo3.jpeg" alt=""> 
+                        <img src="static/img/slotsGame/logo4.jpeg" alt="">
+                    </div>
+                </div>
+                <div id="rouletteMainMiddle">
+                    <div class="slotsResults">
+                        <img src="static/img/slotsGame/logo2.jpeg" alt=""> 
+                        <img src="static/img/slotsGame/logo3.jpeg" alt=""> 
+                        <img src="static/img/slotsGame/logo4.jpeg" alt=""> 
+                    </div>
+                </div>
+                <div id="rouletteMainRight">
+                    <div class="slotsResults">
+                        <img src="static/img/slotsGame/logo2.jpeg" alt=""> 
+                        <img src="static/img/slotsGame/logo3.jpeg" alt="">
+                        <img src="static/img/slotsGame/logo4.jpeg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div id="rouletteMainActions">
+                <div id="roulleteMainBank">
+                    <p>Saldo S/.<span id="userBank">1953.50</span></p>
+                </div>
+                <div id="rouletteMainBet">
+                    <p>Apuesta S/.<span id="bankBet">0.00</span></p>
+                    <br />
+                    <p>Ganancia S/.<span id="bankPossibleEarned">0.00</span></p>
+                </div>
+                <div id="rouletteMainControls">
+                    <button class="btnA" id="controlDecrease">
+                        -
+                    </button>
+                    <br />
+                    <button class="btnA" id="controlIncrease">
+                        +
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="rightInfo">
+            <button id="btnSpin" class="">
+                <img src="static/img/slotsGame/actionStart.png" alt="">
+            </button>
+        </div>
+    </div>
+
+</section>
+<script src="static/js/slot.js"></script>
+
+{% endblock %}
