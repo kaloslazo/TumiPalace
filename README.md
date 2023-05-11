@@ -31,3 +31,19 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 ## 📚 Librerías
 - Flask
 - UUID
+- SQLAlchemy
+- WT
+
+## 🚀 Desplegar aplicación
+<p align="justify">
+    Para correr la aplicación <strong>TumiPalaceApp</strong>, es necesario instalar los módulos de python necesarios. Estos están detallados dentro del archivo requirements.txt, que muestra el nombre del módulo, seguido de su versión. Por otro lado, al usar librerías generadoras de código como <strong>uuid</strong>, es necesario colocar comandos en nuestro postgresql. Para ello hemos detallado la siguiente lista de puntos a considerar:
+</p>
+
+1. Crear un ambiente virtual para correr nuestro servidor. Podemos realizarlo a partir de instalar el módulo `pip install virtualenv`. Posteriormente lo creamos con `python3 -m venv env`, siendo `env` el nombre designado.
+2. Instalar módulos usando la herramienta pip, seguido de la flag `-r` que apunta a nuestro archivo de requerimientos, `pip install -r requirements.txt`.
+3. Acceder a postgresql por terminal mediante el comando: `sudo psql -U postgres`.
+4. Crear la tabla de base de datos necesaria, en este caso `tumipalace_db`, utilizando el comando `CREATE DATABASE tumipalace_db;`.
+5. Conectarnos a nuestra tabla `\c tumipalace_db;`. Recordar que con `\dt` listamos las relaciones.
+6. Correr el programa principal `python3 main.py`.
+
+> Si obtenemos un error parecido a `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`, es por que debemos añadir la siguiente extensión dentro de postgresql (fijarnos que estamos conectados a nuestra tabla): `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`.
