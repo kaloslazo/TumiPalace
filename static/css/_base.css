@@ -1,24 +1,24 @@
 /*===: Importing */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Spectral:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=K2D:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;600;800&display=swap');
 
 /*===: General*/
 :root{
     --blackBrig: #36302e;
     --whiteBrig: #f4f4f4;
-    --yellowBrig: #F7C420;
-    --yellowHover: #deb01d;
+    --yellowBrig: #fbbf24;
+    --yellowHover: #e4ad0a;
     --bgColor: #3E312B;
     --bgColorHover: #322823;
     --bgColorHoverBrig: #28201c;
 
-    --fontSecondary: "K2D", sans-serif;
-    --fontPrimary: "Cinzel Decorative", serif;
+    --fontSecondary: "Fira Sans Condensed", sans-serif;
+    --fontPrimary: "Fira Sans Condensed", sans-serif;
 }
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--fontPrimary);
 }
 body{
     width: 100%;
@@ -35,4 +35,7 @@ h1, h2, h3, h4, h5, h6{
 a{
     text-decoration: none;
     color: var(--whiteBrig);
+}
+a, button {
+    font-family: var(--fontSecondary) !important;
 }

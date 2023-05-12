@@ -1,7 +1,7 @@
 /*===: Navbar*/
 #navbar{
     width: 100%;
-    padding: 1em 1.5em;
+    padding: 1.5em;
     max-height: 90px;
     display: flex;
     align-items: center;
@@ -86,19 +86,18 @@
 #heroWrapper{
     width: 100%;
     height: 100%;
-    min-height: 960px;
+    min-height: 760px;
     padding: 4em 1.5em;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 #leftAction{
-    font-family: "Cinzel Decorative";
-    max-width: 600px;
-    margin-right: 5em;
+    max-width: 800px;
 }
 #leftAction h3 {
-    font-size: 3.8em;
+    width: 100%;
+    font-size: 4.5em;
     text-align: left;
 }
 #leftAction h5{
@@ -118,11 +117,14 @@
     justify-content: center;
 }
 #rightAction .cardGames{
-    margin: 1.5em;
-    padding: 6em 4em;
-    max-width: 500px;
+    margin-left: 5em;
+    padding: 2em 4em;
+    width: 400px;
+    height: 500px;
+    max-width: 600px;
     min-width: 350px;
-    min-height: 500px;
+    min-height: 400px;
+    max-height: 500px;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -131,9 +133,23 @@
     background: var(--bgColorHover);
 }
 #rightAction .cardGames a{
+    width: 100%;
     display: block;
-    margin: 1em !important;
-    font-size: 1.2em;
+    margin: 15px !important;
+    font-size: 1em;
+    padding: 1em 2em;
+    border: none;
+    border-bottom: 2px solid var(--yellowBrig);
+    border-radius: 0;
+}
+.cardGames img {
+    width: 200px;
+    max-width: 200px;
+} 
+.cardGames p{
+    width: 100%;
+    text-align: justify;
+    color: #E5E5E5 !important;
 }
 
 
