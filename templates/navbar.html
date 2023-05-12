@@ -7,8 +7,8 @@
     <div id="navbarAccess">
         <ul>
             <li><a href="{{url_for('home')}}">Juegos</a></li>
-            <li><a href="">Recompensas</a></li>
-            <li class=""><a href="">Soporte</a></li>
+            <li><a href="{{url_for('home')}}">Recompensas</a></li>
+            <li><a href="{{url_for('home')}}">Soporte</a></li>
             <a class="btn btn2" id="logoutBtn" href="{{url_for('config')}}">Configuración</a>
             <a class="btn btn2" id="deleteBtn" href="{{url_for('logout')}}">Cerrar sesión</a>
         </ul>

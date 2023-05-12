@@ -114,6 +114,59 @@ btnControlDecrease.addEventListener('click', function onCLick(e) {
     };
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Obtener elementos del DOM
+    const btnSpin = document.getElementById('btnSpin');
+    const rouletteMainLeft = document.getElementById('rouletteMainLeft');
+    const rouletteMainMiddle = document.getElementById('rouletteMainMiddle');
+    const rouletteMainRight = document.getElementById('rouletteMainRight');
+  
+    // Función para generar un número aleatorio entre 1 y 4
+    function getRandomNumber() {
+      return Math.floor(Math.random() * 4) + 1;
+    }
+  
+    // Función para rotar los carretes
+    function rotateReels() {
+      // Generar números aleatorios para cada carrete
+      const randomNumberLeft = getRandomNumber();
+      const randomNumberMiddle = getRandomNumber();
+      const randomNumberRight = getRandomNumber();
+  
+      // Deshabilitar el botón de inicio durante el giro
+      btnSpin.disabled = true;
+  
+      // Simular el giro de los carretes durante 5 segundos
+      setTimeout(() => {
+        // Mostrar los resultados finales en los carretes
+        rouletteMainLeft.innerHTML = `
+          <div class="slotsResults">
+            <img src="static/img/slotsGame/logo${randomNumberLeft}.jpeg" alt="">
+          </div>
+        `;
+  
+        rouletteMainMiddle.innerHTML = `
+          <div class="slotsResults">
+            <img src="static/img/slotsGame/logo${randomNumberMiddle}.jpeg" alt="">
+          </div>
+        `;
+  
+        rouletteMainRight.innerHTML = `
+          <div class="slotsResults">
+            <img src="static/img/slotsGame/logo${randomNumberRight}.jpeg" alt="">
+          </div>
+        `;
+  
+        // Habilitar el botón de inicio nuevamente
+        btnSpin.disabled = false;
+      }, 5000);
+    }
+  
+    // Agregar evento de clic al botón de inicio
+    btnSpin.addEventListener('click', rotateReels);
+  });
+  
+
 //===: EXECUTION :===
 updateUsrBank();
 controlAction();
