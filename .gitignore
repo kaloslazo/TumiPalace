@@ -1,3 +1,8 @@
-# Don't push environment files
+#===: Don't push environment files
 env/
 .env
+
+#===: Python trash files
+*.pyc
+__pycache__/
+.pytest_cache/
