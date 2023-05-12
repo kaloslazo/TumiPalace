@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block title %}Configuración | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/config.css') }}">
+{% endblock %}
+{% block content %}
+    <!-- Navigation -->
+    {% include 'navbar.html' %}
+
+    <!-- Config user -->
+    <section id="configUser">
+        <div id="userData">        
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="">
+            <div class="userDataTemplate">
+                <h3>Usuario</h3>
+                <span id="userName">{{ username }}</span>
+            </div>
+            <div class="userDataTemplate">
+                <h3>Saldo disponible  </h3>
+                <span id="userID">S/. {{ bank }}</span>
+            </div>
+        <div id="userActions">
+            <button class="btn r" id="actionDeleteUser">Eliminar usuario</button>
+            <button class="btn" id="actionExitUser">Actualizar Datos</button>
+        </div>
+     </section>
+{% endblock %}

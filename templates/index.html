@@ -1,70 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Tumi Palace | Casino digital</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="static/img/tumiLogo.png" type="image/x-icon">
-    <!-- Importing -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/_base.css') }}"> 
-    <link rel="stylesheet" href="static/css/main.css">
-</head>
-<body>
-    
+{% extends 'partials/_base.html' %}
+
+{% block title %}Abre una nueva cuenta y obten un bono | Tumi Palace{% endblock %}
+{% block content %}
     <!-- Navigation -->
-    <nav id="navbar">
-            <div id="navbarLogo">
-                <img src="static/img/tumiLogo.png" alt="tumiLogo">
-                <h1>Tumi <br/> Palace</h1>
-            </div>
-            <div id="navbarAccess">
-                <ul>
-                    <li><a href="{{url_for('login')}}">Juegos</a></li>
-                    <li><a href="{{url_for('login')}}">Recompensas</a></li>
-                    <li class="{{url_for('login')}}"><a href="">Soporte</a></li>
-                    <a class="btn btn1" href="{{url_for('login')}}">Iniciar sesión</a>
-                    <a class="btn btn2" href="{{url_for('register')}}">Abrir cuenta</a>
-                </ul>
-            </div>
-    </nav>
+    {% include 'partials/navbar.html' %}
 
     <!-- Hero Wrapper-->
 	<section id="heroWrapper">
         <div id="leftAction">
-            <h3>Crea tu cuenta y recibe un bono de bienvenida</h3>
-            <h5>S/. 500</h5>
-            <a class="btn btn2" href="{{url_for('home')}}">Reclamar bono</a>
+            <h3>Crea tu cuenta y recibe un bono de bienvenida de hasta</h3>
+            <h5>S/. 1,000</h5>
+            <a class="btn btn2" href="">Reclamar bono</a>
         </div>
         <div id="rightAction">
             <div class="cardGames">
                 <img src="static/img/cardRoulette.png" alt="cardRoulette">
-                <a class="btn btn1" href="{{url_for('register')}}">Jugar</a>
+                <a class="btn btn1" href="{{url_for('register')}}">Ruleta del Inca</a>
+                <p>Recibe el botín Inca apostando por tus números de la suerte.</p>
             </div>
             <div class="cardGames">
                 <img src="static/img/cardSlots.png" alt="cardSlots">
-                <a class="btn btn1" href="{{url_for('register')}}">Jugar</a>
+                <a class="btn btn1" href="{{url_for('register')}}">Fortuna del Sol</a>
+                <p>Obtén 3 figuras idénticas y prepárate para ganar hasta S/.100,000!</p>
             </div>
         </div>
     </section>
-	
-    <!-- Call to action -->
-    <section id="callToAction">
-        <div id="priceStatus">
-            <h4>Puedes ganar hasta</h4>
-            <div id="priceMount">
-                <span>S/.</span>
-                <p>1</p>
-                <p>9</p>
-                <p>4</p>
-                <p>2</p>
-                <p>4</p>
-                <p>5</p>
-                <p>0</p>
-            </div>
-        </div>
-    </section>
-
-    <script src="static/js/main.js"></script>
-</body>
-</html>
+{% endblock %}

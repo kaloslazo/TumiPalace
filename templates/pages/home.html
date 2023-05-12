@@ -1,0 +1,27 @@
+{% extends '_base.html' %}
+
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block content %}
+
+    <!-- Navigation -->
+    {% include 'navbar.html' %}
+        
+        <!-- Hero Wrapper-->
+        <h1 id="heroGames">Juegos disponibles</h1>
+        <div id="cardGamesContainer">
+            <div class="cardGames">
+                <h3>Ruleta del Inca</h3>
+                <img src="static/img/cardRoulette.png" alt="cardRoulette">
+                <a class="btn btn1" href="{{url_for('roulette')}}">Jugar</a>
+            </div>
+            <div class="cardGames">
+                <h3>Tragamonedas del Inca</h3>
+                <img src="static/img/cardSlots.png" alt="cardSlots">
+                <a class="btn btn1" href="{{url_for('slots')}}">Jugar</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
