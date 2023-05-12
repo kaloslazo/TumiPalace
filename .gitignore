@@ -1,1 +1,3 @@
+# Don't push environment files
+env
 .env
