@@ -1,45 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Soporte de Casino</title>
-  <style>
-    /* Estilos de la página */
-    body {
-      background-color: #3e312b; /* Cambiar el color de fondo */
-      color: #fff; /* Letras en blanco */
-    }
+{% extends '_base.html' %}
 
-    .support-window {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: auto; /* Ancho ajustado automáticamente según el contenido */
-      max-width: 90%; /* Ancho máximo permitido */
-      height: auto; /* Altura ajustada automáticamente según el contenido */
-      max-height: 90%; /* Altura máxima permitida */
-      background-color: #3e312b; /* Fondo personalizado */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      font-family: "Cinzel Decorative", sans-serif; /* Fuente personalizada */
-    }
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/soporte.css') }}">
+{% endblock %}
+{% block content %}
 
-    .faq-section {
-      margin-top: 20px;
-    }
+    <!-- Navigation -->
+    {% include 'navbar.html' %}
 
-    .faq-question {
-      font-weight: bold;
-    }
-
-    .faq-answer {
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
   <div class="support-window">
     <h2>Soporte de Casino</h2>
     <p>Si tienes alguna pregunta o necesitas ayuda, por favor contáctanos:</p>
@@ -63,5 +32,5 @@
       </div>
     </div>
   </div>
-</body>
-</html>
+
+  {% endblock %}
