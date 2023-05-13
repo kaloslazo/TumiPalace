@@ -67,6 +67,7 @@ class RegisterForm(FlaskForm):
 def index():
     return render_template('index.html');
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm();
@@ -95,6 +96,11 @@ def register():
 @login_required
 def home():
     return render_template('home.html');
+
+@app.route('/soporte', methods=['GET', 'POST'])
+@login_required
+def soporte():
+    return render_template('soporte.html');
 
 @app.route('/roulette', methods=['GET', 'POST'])
 @login_required

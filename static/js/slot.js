@@ -120,42 +120,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const rouletteMainLeft = document.getElementById('rouletteMainLeft');
     const rouletteMainMiddle = document.getElementById('rouletteMainMiddle');
     const rouletteMainRight = document.getElementById('rouletteMainRight');
+    const spinSound = document.getElementById('spin');
+    const resultSound = document.getElementById('result');
   
     // Función para generar un número aleatorio entre 1 y 4
     function getRandomNumber() {
       return Math.floor(Math.random() * 4) + 1;
     }
   
+    // Función para reproducir el sonido de giro
+    function playSpinSound() {
+    spinSound.currentTime = 0; // Reiniciar el sonido al principio
+    spinSound.play();
+    }
+
+    // Función para reproducir el sonido de resultado
+    function playResultSound() {
+    resultSound.currentTime = 0; // Reiniciar el sonido al principio
+    resultSound.play();
+    }
+
     // Función para rotar los carretes
     function rotateReels() {
-      // Generar números aleatorios para cada carrete
-      const randomNumberLeft = getRandomNumber();
-      const randomNumberMiddle = getRandomNumber();
-      const randomNumberRight = getRandomNumber();
-  
       // Deshabilitar el botón de inicio durante el giro
       btnSpin.disabled = true;
   
-      // Simular el giro de los carretes durante 5 segundos
-      setTimeout(() => {
-        // Mostrar los resultados finales en los carretes
+      // Intervalo de tiempo para cambiar las imágenes de los carretes
+      const interval = setInterval(() => {
+        // Generar nuevos números aleatorios para cada carrete
+        const newRandomNumberLeft = getRandomNumber();
+        const newRandomNumberMiddle = getRandomNumber();
+        const newRandomNumberRight = getRandomNumber();
+  
+        // Cambiar las imágenes de los carretes
         rouletteMainLeft.innerHTML = `
           <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${randomNumberLeft}.jpeg" alt="">
+            <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
           </div>
         `;
   
         rouletteMainMiddle.innerHTML = `
           <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${randomNumberMiddle}.jpeg" alt="">
+            <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
           </div>
         `;
   
         rouletteMainRight.innerHTML = `
           <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${randomNumberRight}.jpeg" alt="">
+            <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
           </div>
         `;
+        playSpinSound();
+      }, 200); // Cambia las imágenes cada 200 milisegundos
+  
+      // Detener el cambio de imágenes después de 5 segundos
+      setTimeout(() => {
+        clearInterval(interval);
+        playResultSound();
   
         // Habilitar el botón de inicio nuevamente
         btnSpin.disabled = false;
