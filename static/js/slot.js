@@ -115,7 +115,7 @@ btnControlDecrease.addEventListener('click', function onCLick(e) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener elementos del DOM
+    //===: Doom :===
     const btnSpin = document.getElementById('btnSpin');
     const rouletteMainLeft = document.getElementById('rouletteMainLeft');
     const rouletteMainMiddle = document.getElementById('rouletteMainMiddle');
@@ -123,36 +123,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinSound = document.getElementById('spin');
     const resultSound = document.getElementById('result');
   
-    // Función para generar un número aleatorio entre 1 y 4
+
     function getRandomNumber() {
       return Math.floor(Math.random() * 4) + 1;
     }
   
-    // Función para reproducir el sonido de giro
+
     function playSpinSound() {
-    spinSound.currentTime = 0; // Reiniciar el sonido al principio
+    spinSound.currentTime = 0; 
     spinSound.play();
     }
 
-    // Función para reproducir el sonido de resultado
+
     function playResultSound() {
-    resultSound.currentTime = 0; // Reiniciar el sonido al principio
+    resultSound.currentTime = 0; 
     resultSound.play();
     }
 
-    // Función para rotar los carretes
+
     function rotateReels() {
-      // Deshabilitar el botón de inicio durante el giro
+
       btnSpin.disabled = true;
   
-      // Intervalo de tiempo para cambiar las imágenes de los carretes
+
       const interval = setInterval(() => {
-        // Generar nuevos números aleatorios para cada carrete
+
         const newRandomNumberLeft = getRandomNumber();
         const newRandomNumberMiddle = getRandomNumber();
         const newRandomNumberRight = getRandomNumber();
   
-        // Cambiar las imágenes de los carretes
+
         rouletteMainLeft.innerHTML = `
           <div class="slotsResults">
             <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
@@ -171,19 +171,19 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
         playSpinSound();
-      }, 200); // Cambia las imágenes cada 200 milisegundos
+      }, 200);
   
-      // Detener el cambio de imágenes después de 5 segundos
+
       setTimeout(() => {
         clearInterval(interval);
         playResultSound();
   
-        // Habilitar el botón de inicio nuevamente
+
         btnSpin.disabled = false;
       }, 5000);
     }
   
-    // Agregar evento de clic al botón de inicio
+
     btnSpin.addEventListener('click', rotateReels);
   });
   
