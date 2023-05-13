@@ -1,25 +1,27 @@
-
-/* Estilos de la página */
-body {
-  background-color: #3e312b; /* Cambiar el color de fondo */
-  color: #332929; /* Letras en blanco */
+#support {
+  margin: 5em auto;
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  background-color: var(--yellowHover);
+  color: var(--bgColor);
+  padding: 2em 3em;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.support-window {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto; /* Ancho ajustado automáticamente según el contenido */
-  max-width: 90%; /* Ancho máximo permitido */
-  height: auto; /* Altura ajustada automáticamente según el contenido */
-  max-height: 90%; /* Altura máxima permitida */
-  background-color: #e5b621; /* Fondo personalizado */
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: "Cinzel Decorative", sans-serif; /* Fuente personalizada */
+ul li {
+  text-decoration: none;
+  list-style: none;
+}
+
+#support-header{
+  width: 100%;
+  text-align: center;
+  margin: 2em 0;
 }
 
 .faq-section {

@@ -3,18 +3,21 @@
 {% block title %}Inicio | Tumi Palace{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/soporte.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock %}
 {% block content %}
 
     <!-- Navigation -->
     {% include 'navbar.html' %}
 
-  <div class="support-window">
-    <h2>Soporte de Casino</h2>
-    <p>Si tienes alguna pregunta o necesitas ayuda, por favor contáctanos:</p>
-    <ul>
-      <li>Email: soportetumipalace@casino.com</li>
-    </ul>
+  <div id="support">
+    <div id="support-header">
+      <h2>Soporte de Casino</h2>
+      <p>Si tienes alguna pregunta o necesitas ayuda, por favor contáctanos:</p>
+      <ul>
+        <li>Email: soportetumipalace@casino.com</li>
+      </ul>
+    </div>
     
     <div class="faq-section">
       <h3>Preguntas frecuentes</h3>

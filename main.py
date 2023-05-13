@@ -1,6 +1,5 @@
 # ===: Import section
 import uuid;
-from decouple import config;
 from flask import(
     Flask,
     render_template,
@@ -21,7 +20,6 @@ from flask_bcrypt import Bcrypt;
 # ===: General config
 app = Flask(__name__); # app.py works as flask instance.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/tumipalace_db'; # local database.
-app.config['SECRET_KEY'] = config('APP_SECRET_KEY') # key saved at .env variables.
 bcrypt = Bcrypt(app);
 db = SQLAlchemy(app);
 
@@ -97,8 +95,7 @@ def register():
 def home():
     return render_template('home.html');
 
-@app.route('/soporte', methods=['GET', 'POST'])
-@login_required
+@app.route('/soporte')
 def soporte():
     return render_template('soporte.html');
 
