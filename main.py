@@ -20,6 +20,7 @@ from flask_bcrypt import Bcrypt;
 # ===: General config
 app = Flask(__name__); # app.py works as flask instance.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/tumipalace_db'; # local database.
+app.config['SECRET_KEY'] = "ece58fabceaf46bb01d2cbdd834b9ab5ee7b9e5327efc7da4b85f127c5e992a5";
 bcrypt = Bcrypt(app);
 db = SQLAlchemy(app);
 
