@@ -60,6 +60,12 @@
     width: 250px;
     margin: 2em 0;
     border-radius: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 2em auto;
+    border-radius: 8px;
 }
 
 #userActions {

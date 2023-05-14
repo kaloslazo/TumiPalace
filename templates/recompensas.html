@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Recompensas</title>
-	<!-- Agregar aquí tus etiquetas <meta> y <link> si es necesario -->
-</head>
-<body>
-	<!-- Agregar aquí el código HTML para mostrar la imagen de la recompensa -->
-	<img src="{{ url_for('static', filename='img/recompensa.jpg') }}" alt="Recompensa">
+{% extends '_base.html' %}
 
-	<!-- Agregar aquí el código HTML para mostrar el botón que otorga la recompensa -->
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recompensas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+{% block content %}
+
+    <!-- Navigation -->
+    {% include 'navbar_auth.html' %}
+
+	
+	<!-- Title -->
+	<title>Recompensas</title>
+	<img src="{{ url_for('static', filename='img/recompensa.jpg') }}" alt="Recompensa">
+	
+	<!-- Buton -->
 	<form method="POST">
 		<input type="submit" value="Reclamar recompensa">
 	</form>
-</body>
-</html>
+
+	{% endblock %}

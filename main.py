@@ -102,8 +102,6 @@ def soporte():
 
 @app.route('/recompensas', methods=['GET', 'POST'])
 def recompensas():
-    if request.method == 'POST':
-        return redirect(url_for('index'))
     return render_template('recompensas.html')
 
 @app.route('/roulette', methods=['GET', 'POST'])
