@@ -1,0 +1,50 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}Abrir cuenta | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock %}
+{% block content %}
+    <section id="formWrapper">
+      <img src="static/img/macchuPicchuBrown.png" id="macchuBottomRight">
+        <h1 id="formHeader">Abrir cuenta</h1>
+        <form method="POST" action="" id="formContainer">
+            <div id="formLogo">
+              <img src="static/img/tumiLogo.png" alt="tumi logo">
+              <p>Tumi <br/> Palace</p>
+            </div>
+            {{ form.hidden_tag() }}
+            <div class="formBox">
+              <label for="userNickname">Nombre de usuario</label>
+              {{ form.userNickname }}
+            </div>
+            <div class="formBox">
+              <label for="userAge">Edad</label>
+              {{ form.userAge }}
+            </div>
+            <div class="formBox">
+              <label for="userEmail">Correo electrónico</label>
+              {{ form.userEmail }}
+            </div>
+            <div class="formBox flc">
+              <label for="userEmail">Contraseña</label>
+              {{ form.userPass }}
+            </div>
+            {{ form.submit(class="btn-submit") }}
+            {% if form.errors %}
+              <div id="formError">
+                <div id="formErrorHeader">
+                  <svg fill="#dc2626" viewBox="-3.2 -3.2 38.40 38.40" id="icon" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(6.24,6.24), scale(0.61)"><rect x="-3.2" y="-3.2" width="38.40" height="38.40" rx="19.2" fill="#fee2e2" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style> .cls-1 { fill: none; } </style> </defs> <rect id="inner-path" class="cls-1" x="14.9004" y="7.2004" width="2.1996" height="17.5994" transform="translate(-6.6275 16.0001) rotate(-45)"></rect> <path d="M16,2A13.914,13.914,0,0,0,2,16,13.914,13.914,0,0,0,16,30,13.914,13.914,0,0,0,30,16,13.914,13.914,0,0,0,16,2Zm5.4449,21L9,10.5557,10.5557,9,23,21.4448Z"></path> <rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32"></rect> </g></svg>
+                  <div id="formErrorDesc">
+                    <h4>Error</h4>
+                    <p>{{ form.errors.values()|first|replace("['", "")|replace("']", "") }}</p>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+        </form>
+        <p>Ya tienes una cuenta? <a class="btn2 btn3" href="{{url_for('login')}}">Inicia Sesión</a></p>
+        <br/>
+        <p>Regresar al <a class="btn2 btn3" href="{{url_for('index')}}">Inicio</a></p>
+    </section>
+{% endblock %}
