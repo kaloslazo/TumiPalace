@@ -1,0 +1,80 @@
+/*===: Navbar*/
+#navbar{
+    width: 100%;
+    max-width: 1680px;
+    padding: 1.5em;
+    max-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--yellowBrig);
+}
+#navbarLogo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#navbarLogo img{
+    width: 45px;
+    margin-right: 1em;
+}
+#navbarLogo h1{
+    font-size: 1.2em !important;
+    color: var(--yellowBrig);
+    text-align: center;
+}
+#navbarAccess ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#navbarAccess ul li{
+    list-style: none;
+}
+#navbarAccess ul li a{
+    padding: 0em .5em;
+    margin: 0em .5em;
+    color: var(--whiteBrig);
+    text-decoration: none;
+}
+#navbarAccess ul li a:hover{
+    transition: 300ms all;
+    color: var(--yellowHover);
+}
+#navbarAccess ul li a:hover{
+    opacity: 90%;
+    animation: 300ms all ease;
+}
+.btn{
+    padding: .5em 2em;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn:hover{
+    transition: 300ms all ease;
+}
+.btn1{
+    margin-left: 3em;
+    border: 1px solid var(--yellowBrig);
+    color: var(--yellowBrig);
+    background-color: transparent;
+}
+.btn1:hover{
+    background-color: var(--bgColorHover);
+}
+.btn2{
+    margin-left: 1em;
+    color: var(--bgColorHover);
+    background-color: var(--yellowBrig);
+}
+.btn2 a{
+    color: var(--blackBrig);
+}
+.btn2:hover{
+    background-color: var(--yellowHover);
+}
