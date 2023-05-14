@@ -2,6 +2,9 @@
 env/
 .env
 
+#===: Migrations
+migrations/
+
 #===: Python trash files
 *.pyc
 __pycache__/
