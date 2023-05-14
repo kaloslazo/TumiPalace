@@ -12,16 +12,17 @@
         <!-- Hero Wrapper-->
         <h1 id="heroGames">Juegos disponibles</h1>
         <div id="cardGamesContainer">
-            <div class="cardGames">
-                <h3>Ruleta del Inca</h3>
-                <img src="static/img/cardRoulette.png" alt="cardRoulette">
-                <a class="btn btn1" href="{{url_for('roulette')}}">Jugar</a>
-            </div>
-            <div class="cardGames">
-                <h3>Tragamonedas del Inca</h3>
-                <img src="static/img/cardSlots.png" alt="cardSlots">
-                <a class="btn btn1" href="{{url_for('slots')}}">Jugar</a>
-            </div>
+            {% if listGames %}
+                {% for game in listGames %}
+                    <div class="cardGames">
+                        <h3>{{ game.name }}</h3>
+                        <img src="{{ game.imageGame }}" alt="{{ game.alias }}">
+                        <a class="btn btn1" href="{{url_for( game.alias )}}">Jugar</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No hay juegos disponibles.</p>
+            {% endif %}
         </div>
     </section>
 {% endblock %}
