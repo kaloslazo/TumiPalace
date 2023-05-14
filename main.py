@@ -100,6 +100,12 @@ def home():
 def soporte():
     return render_template('soporte.html');
 
+@app.route('/recompensas', methods=['GET', 'POST'])
+def recompensas():
+    if request.method == 'POST':
+        return redirect(url_for('index'))
+    return render_template('recompensas.html')
+
 @app.route('/roulette', methods=['GET', 'POST'])
 @login_required
 def roulette():
