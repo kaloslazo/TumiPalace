@@ -60,7 +60,7 @@ function spinSlots() {
 
 // Update the bet
 function updateBankBet() {
-    usrBet.innerHTML = usrBetVariable;
+    usrBet.textContent = usrBetVariable;
   }
   
   // Update the user bank
@@ -132,25 +132,6 @@ function updateBankBet() {
     }
   });
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //GIANKI SPIN
   document.addEventListener("DOMContentLoaded", () => {
