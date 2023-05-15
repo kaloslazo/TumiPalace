@@ -1,6 +1,10 @@
 // ===: ACTIONS :===
 let btnControlIncrease = document.getElementById("controlIncrease");
 let btnControlDecrease = document.getElementById("controlDecrease");
+const btnSpin = document.getElementById("btnSpin");
+const rouletteMainLeft = document.getElementById("rouletteMainLeft");
+const rouletteMainMiddle = document.getElementById("rouletteMainMiddle");
+const rouletteMainRight = document.getElementById("rouletteMainRight");
 
 // ===: SALARY :===
 let userBank = document.getElementById("userBank");
@@ -90,7 +94,7 @@ function updateBankBet() {
     }
   
     // Check if the user has enough balance
-    if (usrBankVariable > 0) {
+    if (usrBankVariable > 0 && usrBetVariable > 0){
       // Add a spinning animation to the button
       btnSpin.classList.add("anmSpinner");
       // Spin the slots and get their values
@@ -102,10 +106,7 @@ function updateBankBet() {
       updateUsrBank();
       // Play the spin sound
       playSpinSound();
-      // Handle the spin animation for each slot
-      for (let i = 0; i < arrMultiplies.length - 1; i++) {
-        handleSpinAnimation(i);
-      }
+      //
       console.log("SALDO:", usrBankVariable);
     } else {
       console.log("SALDO INSUFICIENTE");
@@ -131,60 +132,76 @@ function updateBankBet() {
     }
   });
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //GIANKI SPIN
-   document.addEventListener("DOMContentLoaded", () => {
-    // ===: Doom :===
-    const btnSpin = document.getElementById("btnSpin");
-    const rouletteMainLeft = document.getElementById("rouletteMainLeft");
-    const rouletteMainMiddle = document.getElementById("rouletteMainMiddle");
-    const rouletteMainRight = document.getElementById("rouletteMainRight");
-    
+  document.addEventListener("DOMContentLoaded", () => {
     function getRandomNumber() {
       return Math.floor(Math.random() * 4) + 1;
     }
-
+  
     function resetButtonAnimation() {
       btnSpin.classList.remove("anmSpinner");
     }
-
+  
     function rotateReels() {
-      btnSpin.disabled = true;
-      const resultSound = document.getElementById("result");
-    
-      function playResultSound() {
-        resultSound.currentTime = 0;
-        resultSound.play();
+      if (usrBankVariable > 0 && usrBetVariable > 0) {
+        btnSpin.disabled = true;
+        const resultSound = document.getElementById("result");
+  
+        function playResultSound() {
+          resultSound.currentTime = 0;
+          resultSound.play();
+        }
+  
+        const interval = setInterval(() => {
+          const newRandomNumberLeft = getRandomNumber();
+          const newRandomNumberMiddle = getRandomNumber();
+          const newRandomNumberRight = getRandomNumber();
+          rouletteMainLeft.innerHTML = `
+            <div class="slotsResults">
+              <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
+            </div>
+          `;
+          rouletteMainMiddle.innerHTML = `
+            <div class="slotsResults">
+              <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
+            </div>
+          `;
+          rouletteMainRight.innerHTML = `
+            <div class="slotsResults">
+              <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
+            </div>
+          `;
+        }, 200);
+  
+        setTimeout(() => {
+          clearInterval(interval);
+          playResultSound();
+          btnSpin.disabled = false;
+          resetButtonAnimation(); // Reiniciar la animación del botón
+        }, 5000);
       }
-    
-      const interval = setInterval(() => {
-        const newRandomNumberLeft = getRandomNumber();
-        const newRandomNumberMiddle = getRandomNumber();
-        const newRandomNumberRight = getRandomNumber();
-        rouletteMainLeft.innerHTML = `
-          <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
-          </div>
-        `;
-        rouletteMainMiddle.innerHTML = `
-          <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
-          </div>
-        `;
-        rouletteMainRight.innerHTML = `
-          <div class="slotsResults">
-            <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
-          </div>
-        `;
-      }, 200);
-    
-      setTimeout(() => {
-        clearInterval(interval);
-        playResultSound();
-        btnSpin.disabled = false;
-        resetButtonAnimation(); // Reiniciar la animación del botón
-      }, 5000);
     }
-    
+  
     btnSpin.addEventListener("click", rotateReels);
   });
   
