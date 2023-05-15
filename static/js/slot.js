@@ -168,6 +168,10 @@ function updateBankBet() {
       return Math.floor(Math.random() * 4) + 1;
     }
 
+    function resetButtonAnimation() {
+      btnSpin.classList.remove("anmSpinner");
+    }
+
     function rotateReels() {
       btnSpin.disabled = true;
       const resultSound = document.getElementById("result");
@@ -176,7 +180,7 @@ function updateBankBet() {
         resultSound.currentTime = 0;
         resultSound.play();
       }
-
+    
       const interval = setInterval(() => {
         const newRandomNumberLeft = getRandomNumber();
         const newRandomNumberMiddle = getRandomNumber();
@@ -197,14 +201,15 @@ function updateBankBet() {
           </div>
         `;
       }, 200);
-
+    
       setTimeout(() => {
         clearInterval(interval);
         playResultSound();
         btnSpin.disabled = false;
+        resetButtonAnimation(); // Reiniciar la animación del botón
       }, 5000);
     }
-  
+    
     btnSpin.addEventListener("click", rotateReels);
   });
   
