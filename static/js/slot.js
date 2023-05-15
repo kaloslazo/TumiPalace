@@ -104,11 +104,16 @@ function updateBankBet() {
     updateBankPossibleEarned();
     updateBankBet();
   }
+
   
-  // ===: Listeners :===
-  
-  // Listen for the spin button click
   btnSpin.addEventListener("click", function onClick(e) {
+    const spinSound = document.getElementById("spin");
+  
+    function playSpinSound() {
+      spinSound.currentTime = 0;
+      spinSound.play();
+    }
+  
     // Check if the user has enough balance
     if (usrBankVariable > 0) {
       // Add a spinning animation to the button
@@ -120,6 +125,8 @@ function updateBankBet() {
       usrBankVariable = usrBankVariable - usrBetVariable;
       // Update the bank
       updateUsrBank();
+      // Play the spin sound
+      playSpinSound();
       // Handle the spin animation for each slot
       for (let i = 0; i < arrMultiplies.length - 1; i++) {
         handleSpinAnimation(i);
@@ -155,25 +162,20 @@ function updateBankBet() {
     const rouletteMainLeft = document.getElementById("rouletteMainLeft");
     const rouletteMainMiddle = document.getElementById("rouletteMainMiddle");
     const rouletteMainRight = document.getElementById("rouletteMainRight");
-    const spinSound = document.getElementById("spin");
-    const resultSound = document.getElementById("result");
-  
+    
     function getRandomNumber() {
       return Math.floor(Math.random() * 4) + 1;
     }
-  
-    function playSpinSound() {
-      spinSound.currentTime = 0;
-      spinSound.play();
-    }
-  
-    function playResultSound() {
-      resultSound.currentTime = 0;
-      resultSound.play();
-    }
-  
+
     function rotateReels() {
       btnSpin.disabled = true;
+      const resultSound = document.getElementById("result");
+    
+      function playResultSound() {
+        resultSound.currentTime = 0;
+        resultSound.play();
+      }
+
       const interval = setInterval(() => {
         const newRandomNumberLeft = getRandomNumber();
         const newRandomNumberMiddle = getRandomNumber();
@@ -193,8 +195,8 @@ function updateBankBet() {
             <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
           </div>
         `;
-        playSpinSound();
       }, 200);
+
       setTimeout(() => {
         clearInterval(interval);
         playResultSound();
