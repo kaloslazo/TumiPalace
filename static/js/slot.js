@@ -156,7 +156,8 @@ function updateBankBet() {
     }
   });
   
-  document.addEventListener("DOMContentLoaded", () => {
+  //GIANKI SPIN
+   document.addEventListener("DOMContentLoaded", () => {
     // ===: Doom :===
     const btnSpin = document.getElementById("btnSpin");
     const rouletteMainLeft = document.getElementById("rouletteMainLeft");
