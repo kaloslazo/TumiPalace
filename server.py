@@ -23,6 +23,7 @@ from flask_sqlalchemy import SQLAlchemy;
 from flask_bcrypt import Bcrypt;
 from flask_migrate import Migrate;
 from flask_wtf import FlaskForm;
+from flask_wtf.file import FileAllowed;
 
 from wtforms import (
     StringField, 
@@ -43,6 +44,12 @@ from wtforms.validators import (
 from wtforms.validators import (
     ValidationError,
 );
+from werkzeug.datastructures import (
+    FileStorage
+);
+from werkzeug.utils import (
+    secure_filename
+);
 
 
 #===: UTILS :===
@@ -62,6 +69,7 @@ SECRET_KEY = os.urandom(32);
 app.config['SQLALCHEMY_DATABASE_URI'] = dbConfig;
 app.config["TEMPLATES_AUTO_RELOAD"] = True;
 app.config['SECRET_KEY'] = SECRET_KEY;
+app.config['UPLOAD_FOLDER'] = 'static/client';
 bcrypt = Bcrypt(app);
 
 db.init_app(app);
@@ -74,6 +82,10 @@ login_manager.login_view = 'login' # returns for user login.
 @login_manager.user_loader
 def load_user(client_id):
     return Client.query.get(str(client_id))
+
+
+#===: UTILS :===
+ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']; 
 
 
 #===: MODELS :===
@@ -194,9 +206,18 @@ class RegisterForm(FlaskForm):
             raise ValidationError("El correo ya se encuentra asociado a otra cuenta. Inténtalo de nuevo con uno distinto.");
 
 class UpdateUserData(FlaskForm):
-    nickname = StringField('Apodo', validators=[DataRequired(message="Ingresa un nombre de usuario válido.")])
-    email = StringField('Correo electrónico', validators=[DataRequired(message="Ingresa un correo electrónico válido."), Email()])
-    imageProfile = FileField('Imagen de perfil', validators=[Optional()]);
+    nickname = StringField('Apodo', validators=[DataRequired(message="Ingresa un nombre de usuario válido.")], render_kw={"placeholder": "@nickname"})
+    email = StringField('Correo electrónico', validators=[DataRequired(message="Ingresa un correo electrónico válido."), Email()], render_kw={"placeholder": "Correo electrónico"})
+    imageProfile = FileField('Imagen de perfil', validators=[Optional(), FileAllowed(ALLOWED_EXTENSIONS)], render_kw={"placeholder": "Imagen de perfil"});
+    submit = SubmitField("Guardar");
+    def checkNickname(self, nickname):
+        if (nickname) != (current_user.nickname):
+            client = Client.query.filter_by(nickname=nickname).first();
+            if client: raise ValidationError("El nombre de usuario ya se encuentra registrado. Inténtalo nuevamente.");
+    def checkEmail(self, email):
+            if (email) != (current_user.email):
+                client = Client.query.filter_by(nickname=email).first();
+                if client: raise ValidationError('El correo electrónico ingresado ya existe. Inténtalo nuevamente.')
 
 
 #===: ROUTES :===
@@ -213,10 +234,37 @@ def home():
 @login_required
 def config():
     form = UpdateUserData();
+
     if (request.method == 'POST') and (form.validate_on_submit()):
-        current_user.nickname = form.nickname.data;
-        current_user.email = form.nickname.email;
-        current_user.imageProfile = form.imageProfile.data;
+        try:
+            form.checkNickname(form.nickname.data);
+            form.checkEmail(form.email.data);
+            # update if no validation appears.
+            current_user.nickname = form.nickname.data;
+            current_user.email = form.email.data;
+            # handle images
+            if 'imageProfile' in request.files:
+                imageFile = request.files['imageProfile']
+                print("IMAGE", imageFile)
+                # Save the uploaded image
+                if imageFile.filename != '':
+                    client_folder = os.path.join(app.config['UPLOAD_FOLDER'], str(current_user.id))
+                    os.makedirs(client_folder, exist_ok=True)
+
+                    file_path = os.path.join(client_folder, imageFile.filename);
+                    imageFile.save(file_path);
+                    current_user.imageProfile = os.path.join(str(current_user.id), imageFile.filename);
+
+            db.session.commit()
+            return redirect(url_for('config'))
+        except ValidationError as e:
+            form.nickname.errors.append(str(e));
+    
+    # for GET, show the db data.
+    elif (request.method == 'GET'):
+        form.nickname.data = current_user.nickname;
+        form.email.data = current_user.email;
+        form.imageProfile.data = current_user.imageProfile;
     return render_template('views/config.html', user=current_user, form=form);
 
 @app.route('/roulette')
