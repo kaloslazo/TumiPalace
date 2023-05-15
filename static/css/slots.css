@@ -45,8 +45,6 @@
 
     width: 600px;
     height: 500px;
-    border: 1em solid transparent;
-    border-image: url('/static/img/slotsGame/actionStart.png') 30% round;
     margin: 0em 2em;
 }
 #rouletteMainLeft, #rouletteMainMiddle, #rouletteMainRight{
@@ -54,11 +52,10 @@
     height: 100%;
     width: 200px;
     border-right: 1em solid transparent;
-    border-image: url('/static/img/slotsGame/actionStart.png') 30% round;
+    border-left: 1em solid transparent;
+    border-image: url('/static/img/slotsGame/borderSlotsVert.jpg') 45% round;
 }
-#rouletteMainRight{
-    border-right: none;
-}
+
 
 #centerInfo{
     height: 100%;
