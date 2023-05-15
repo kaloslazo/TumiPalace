@@ -4,32 +4,15 @@ let btnControlDecrease = document.getElementById("controlDecrease");
 
 // ===: SALARY :===
 let userBank = document.getElementById("userBank");
-let bankPossibleEarned = document.getElementById("bankPossibleEarned");
 let usrBet = document.getElementById("bankBet");
 let usrBetVariable = 0;
-let usrBetPossible = 0;
 let usrBankVariable = 1580.25;
 
-// ===: Spin logic :===
-let wrapperSlotsResults = document.getElementsByClassName("slotsResults");
-let btnSpin = document.getElementById("btnSpin");
-let spinnedVal = [0, 1, 2];
 
 // ===: CONTROL :===
 let arrImages = ["logo1.jpeg", "logo2.jpeg", "logo3.jpeg", "logo4.jpeg"];
 let arrMultiplies = [2, 4, 6, 8];
 let timeRebuild = 5;
-
-// ===: FUNCTIONS :===
-
-// Reset the animation of the slots
-function resetAnimation() {
-  wrapperSlotsResults[idx].innerHTML = `
-    <img src="static/img/slotsGame/logo2.jpeg" alt="">
-    <img src="static/img/slotsGame/logo1.jpeg" alt="">
-    <img src="static/img/slotsGame/logo4.jpeg" alt="">
-  `;
-}
 
 // Handle the spin animation of a slot
 function handleSpinAnimation(idx) {
@@ -76,12 +59,6 @@ function updateBankBet() {
     usrBet.innerHTML = usrBetVariable;
   }
   
-  // Update the possible earnings
-  function updateBankPossibleEarned() {
-    usrBetPossible = usrBetVariable * arrMultiplies[arrMultiplies.length - 1];
-    bankPossibleEarned.innerHTML = usrBetPossible;
-  }
-  
   // Update the user bank
   function updateUsrBank() {
     // Check if the user won
@@ -92,7 +69,6 @@ function updateBankBet() {
       usrBetVariable = 0;
       usrBetPossible = 0;
       updateBankBet();
-      updateBankPossibleEarned();
     }
     // Display the bank
     userBank.innerHTML = usrBankVariable;
@@ -101,7 +77,6 @@ function updateBankBet() {
   // Perform the control action
   function controlAction() {
     updateUsrBank();
-    updateBankPossibleEarned();
     updateBankBet();
   }
 
