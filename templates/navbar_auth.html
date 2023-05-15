@@ -1,14 +1,15 @@
 <!-- Navigation -->
 <nav id="navbar">
     <div id="navbarLogo">
-        <img src="static/img/tumiLogo.png" alt="tumiLogo">
-        <h1>Tumi <br /> Palace</h1>
+        <a href="{{url_for('home')}}"><img src="static/img/tumiLogo.png" alt="tumiLogo"></a>
+        <a href="{{url_for('home')}}"></a><h1>Tumi <br/> Palace</h1></a>
     </div>
     <div id="navbarAccess">
         <ul>
             <li><a href="{{url_for('home')}}">Juegos</a></li>
             <li><a href="{{url_for('recompensas')}}">Recompensas</a></li>
             <li><a href="{{url_for('soporte')}}">Soporte</a></li>
+            <li><a href="{{url_for('home')}}">Transacciones</a></li>
             <style>
                 .btn {
                     font-family: "K2D", sans-serif;
