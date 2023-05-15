@@ -1,7 +1,7 @@
 /*===: CardGames :===*/
 #heroGames{
     display: inline-block;
-    margin: 1em 0em;
+    margin: 1em 1em;
     font-size: 2em;
     font-family: var(--fontPrimary);
     padding: 1em 0em;
@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    padding: 1em 1.5em;
 }
 .cardGames{
     margin: 2em 0em;
