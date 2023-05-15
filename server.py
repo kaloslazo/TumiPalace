@@ -8,7 +8,8 @@ from flask import (
     render_template,
     request,
     redirect,
-    url_for
+    url_for,
+    session
 );
 from flask_login import (
     LoginManager,
@@ -28,12 +29,16 @@ from wtforms import (
     IntegerField,
     PasswordField, 
     SubmitField,
+    FileField
 );
 from wtforms.validators import (
     InputRequired, 
     Length, 
     ValidationError,
-    NumberRange
+    NumberRange,
+    DataRequired,
+    Email,
+    Optional
 );
 from wtforms.validators import (
     ValidationError,
@@ -69,6 +74,7 @@ login_manager.login_view = 'login' # returns for user login.
 @login_manager.user_loader
 def load_user(client_id):
     return Client.query.get(str(client_id))
+
 
 #===: MODELS :===
 class Client(db.Model, UserMixin):
@@ -154,6 +160,8 @@ class Deposit(db.Model):
             'creationDate': self.creationDate,
         };
 
+
+#===: METHODS :===
 class LoginForm(FlaskForm):
     userNickname = StringField(validators=[InputRequired(message='El nombre de usuario no existe.'), Length(min=1, max=20)], render_kw={"placeholder": "@Nickname"});
     userPass = PasswordField(validators=[InputRequired(message='La contraseña es incorrecta.'), Length(min=5, max=80)], render_kw={"placeholder": "Contraseña"});
@@ -172,7 +180,7 @@ class RegisterForm(FlaskForm):
         render_kw={"placeholder": "Edad"}
     );
     userNickname = StringField(validators=[InputRequired(message='El nombre de usuario es requerido.'), Length(min=1, max=20)], render_kw={"placeholder": "@Nickname"});
-    userEmail = StringField(validators=[InputRequired(message='El correo electrónico es requerido.'), Length(min=1, max=80)], render_kw={"placeholder": "Email"});
+    userEmail = StringField(validators=[InputRequired(message='El correo electrónico es requerido.'), Length(min=1, max=80), Email()], render_kw={"placeholder": "Email"});
     userPass = PasswordField(validators=[InputRequired(message='La contraseña es requerida.'), Length(min=1, max=80)], render_kw={"placeholder": "Contraseña"});
     submit = SubmitField("Registrarse");
     def checkDatabaseRepetition(self, userAge, userNickname, userEmail):
@@ -185,6 +193,11 @@ class RegisterForm(FlaskForm):
         if userEmailExists:
             raise ValidationError("El correo ya se encuentra asociado a otra cuenta. Inténtalo de nuevo con uno distinto.");
 
+class UpdateUserData(FlaskForm):
+    nickname = StringField('Apodo', validators=[DataRequired(message="Ingresa un nombre de usuario válido.")])
+    email = StringField('Correo electrónico', validators=[DataRequired(message="Ingresa un correo electrónico válido."), Email()])
+    imageProfile = FileField('Imagen de perfil', validators=[Optional()]);
+
 
 #===: ROUTES :===
 @app.route('/')
@@ -196,9 +209,15 @@ def index():
 def home():
     return render_template('views/home.html', listGames=Game.query.all());
 
-@app.route('/config')
+@app.route('/config/', methods=['GET', 'POST'])
+@login_required
 def config():
-    return "Config";
+    form = UpdateUserData();
+    if (request.method == 'POST') and (form.validate_on_submit()):
+        current_user.nickname = form.nickname.data;
+        current_user.email = form.nickname.email;
+        current_user.imageProfile = form.imageProfile.data;
+    return render_template('views/config.html', user=current_user, form=form);
 
 @app.route('/roulette')
 def roulette():
@@ -218,7 +237,8 @@ def support():
 
 @app.route('/logout')
 def logout():
-    return "Logout";
+    logout_user();
+    return redirect(url_for('index'));
 
 @app.route('/delete/<string:id>')
 def deleteUser():
@@ -235,6 +255,7 @@ def login():
             form.checkDatabaseRepetition(form.userNickname.data, form.userPass.data);
             # if data passed validation
             login_user(user);
+            session['google-chrome-no-password-prompt'] = True;
             return redirect(url_for('home'));
         except ValidationError as e:
             form.userNickname.errors.append(str(e));
