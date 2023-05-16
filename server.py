@@ -9,7 +9,9 @@ from flask import (
     request,
     redirect,
     url_for,
-    session
+    session,
+    flash,
+    get_flashed_messages
 );
 from flask_login import (
     LoginManager,
@@ -209,7 +211,8 @@ class UpdateUserData(FlaskForm):
     nickname = StringField('Apodo', validators=[DataRequired(message="Ingresa un nombre de usuario válido.")], render_kw={"placeholder": "@nickname"})
     email = StringField('Correo electrónico', validators=[DataRequired(message="Ingresa un correo electrónico válido."), Email()], render_kw={"placeholder": "Correo electrónico"})
     imageProfile = FileField('Imagen de perfil', validators=[Optional(), FileAllowed(ALLOWED_EXTENSIONS)], render_kw={"placeholder": "Imagen de perfil"});
-    submit = SubmitField("Guardar");
+    delete = SubmitField("Eliminar Cuenta");
+    update = SubmitField("Guardar");
     def checkNickname(self, nickname):
         if (nickname) != (current_user.nickname):
             client = Client.query.filter_by(nickname=nickname).first();
@@ -228,38 +231,54 @@ def index():
 @app.route('/home')
 @login_required
 def home():
-    return render_template('views/home.html', listGames=Game.query.all());
+    return render_template('views/home.html', listGames=Game.query.all(), user=current_user);
 
 @app.route('/config/', methods=['GET', 'POST'])
 @login_required
 def config():
     form = UpdateUserData();
 
+    # Hace implementacion si se presiona eliminar cuenta
+    # ...
+
     if (request.method == 'POST') and (form.validate_on_submit()):
-        try:
-            form.checkNickname(form.nickname.data);
-            form.checkEmail(form.email.data);
-            # update if no validation appears.
-            current_user.nickname = form.nickname.data;
-            current_user.email = form.email.data;
-            # handle images
-            if 'imageProfile' in request.files:
-                imageFile = request.files['imageProfile']
-                print("IMAGE", imageFile)
-                # Save the uploaded image
-                if imageFile.filename != '':
-                    client_folder = os.path.join(app.config['UPLOAD_FOLDER'], str(current_user.id))
-                    os.makedirs(client_folder, exist_ok=True)
+        if form.update.data:
+            try:
+                form.checkNickname(form.nickname.data);
+                form.checkEmail(form.email.data);
+                # update if no validation appears.
+                current_user.nickname = form.nickname.data;
+                current_user.email = form.email.data;
+                # handle images
+                if 'imageProfile' in request.files:
+                    imageFile = request.files['imageProfile']
+                    print("IMAGE", imageFile)
+                    # Save the uploaded image
+                    if imageFile.filename != '':
+                        client_folder = os.path.join(app.config['UPLOAD_FOLDER'], str(current_user.id));
+                        os.makedirs(client_folder, exist_ok=True);
 
-                    file_path = os.path.join(client_folder, imageFile.filename);
-                    imageFile.save(file_path);
-                    current_user.imageProfile = os.path.join(str(current_user.id), imageFile.filename);
+                        # Remove if there's previouse image.
+                        if (current_user.imageProfile != '') and (current_user.imageProfile != None):
+                            previousImagePath = os.path.join(app.config['UPLOAD_FOLDER'], str(current_user.imageProfile));
+                            os.remove(previousImagePath);
 
-            db.session.commit()
-            return redirect(url_for('config'))
-        except ValidationError as e:
-            form.nickname.errors.append(str(e));
-    
+                        file_path = os.path.join(client_folder, imageFile.filename);
+                        imageFile.save(file_path);
+                        current_user.imageProfile = os.path.join(str(current_user.id), imageFile.filename);
+
+                db.session.commit()
+                return redirect(url_for('config'))
+            except ValidationError as e:
+                form.nickname.errors.append(str(e));
+        elif form.delete.data:
+            client = Client.query.get(current_user.id);
+            if not client:
+                return flash("ERROR! Usuario no encontrado", "error");
+            db.session.delete(client);
+            db.session.commit();
+            flash('Te extrañaremos! Tu cuenta ha sido eliminada correctamente.', 'success')
+            return redirect(url_for('message'))
     # for GET, show the db data.
     elif (request.method == 'GET'):
         form.nickname.data = current_user.nickname;
@@ -288,9 +307,10 @@ def logout():
     logout_user();
     return redirect(url_for('index'));
 
-@app.route('/delete/<string:id>')
-def deleteUser():
-    return "Delete user";
+@app.route('/msg')
+def message():
+    message = get_flashed_messages();
+    return render_template('messageTemplate.html', message=message);
 
 
 #===: Auth modules
