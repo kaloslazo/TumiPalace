@@ -1,0 +1,17 @@
+#storeUser {
+    width: 100%;
+}
+
+.userSectionData{
+    margin-left: 1em;
+}
+
+.btn20 {
+    margin-top: 2.5em;
+    background-color: var(--yellowBrig) !important;
+    border-color: var(--yellowHover) !important;
+}
+
+.formBox {
+    padding: .5em 0;
+}
