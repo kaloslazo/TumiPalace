@@ -83,6 +83,11 @@ def login():
 def deposito():
     return render_template('deposito.html');
 
+@app.route('/retiro', methods=['GET', 'POST'])
+@login_required
+def retiro():
+    return render_template('retiro.html');
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm();
