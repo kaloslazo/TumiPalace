@@ -21,15 +21,15 @@
             <div id="userLabels">
                 <div class="userLabel">
                     <label for="nickname">Nombre de usuario</label>
-                    <span id="nickname">{{ user.nickname }}</span>
+                    <span id="nickname">@{{ user.nickname }}</span>
                 </div>
                 <div class="userLabel">
                     <label for="email">Correo electrónico</label>
                     <span id="email">{{ user.email }}</span>
                 </div>
                 <div class="userLabel">
-                    <label for="imageProfile">Foto de perfil</label>
-                    <span id="nickname">{{ user.imageProfile }}</span>
+                    <label for="bank">Saldo disponible</label>
+                    <span id="bank">S/. {{ user.bank }}</span>
                 </div>
             </div>
         </div>
@@ -64,9 +64,9 @@
                     </div>
                     </div>
                 {% endif %}
-                <div class="formBox">
-                    <button class="btn">Eliminar cuenta</button>
-                    {{ form.submit(class="btn btn4") }}
+                <div class="formBox" id="btnForm">
+                    {{ form.delete(class="btn20 btn25") }}
+                    {{ form.update(class="btn20 btn24") }}
                 </div>
             </form>
         </div>
