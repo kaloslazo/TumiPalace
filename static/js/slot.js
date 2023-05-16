@@ -24,6 +24,9 @@ function checkWin() {
   if (leftImage === middleImage && middleImage === rightImage) {
     // El jugador ganó
     let winnings;
+    const winSound = document.getElementById("win");
+        winSound.currentTime = 0;
+        winSound.play();
     
     if (leftImage.includes("logo2")) {
       winnings = usrBetVariable * 2;
