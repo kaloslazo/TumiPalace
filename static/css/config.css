@@ -114,10 +114,12 @@
 }
 
 .formBox input[type="text"],
-.formBox input[type="file"]{
+.formBox input[type="file"],
+.formBox input[type="number"]
+{
     width: 400px;
     margin-top: 1.5em;
-    padding: .5em 1em;
+    padding: .5em 1em !important;
     background-color: var(--bgColorHoverBrig) !important;
     color: #FFF;
     outline: none;
