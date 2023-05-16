@@ -3,7 +3,7 @@
     align-items: start;
     justify-content: left;
     flex-direction: row;
-    margin-top: 1em;
+    margin-top: 0em;
     padding: 0em 1.5em;
 }
 
@@ -41,11 +41,10 @@
 }
 
 #userData img {
-    width: 350px;
-    height: 350px;
-    max-height: 350px;
-    max-width: 350px;
-    min-width: 350px;
+    width: 250px;
+    height: 250px;
+    max-width: 250px;
+    min-width: 250px;
     border-radius: 99%;
 }
 
@@ -99,7 +98,7 @@
 
 #userDataForm .formBox {
     font-size: 1.2em;
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 .formBox label {
@@ -108,6 +107,10 @@
     max-width: 200px;
     min-width: 200px;
     margin-right: 10px;
+}
+
+#btnForm{
+    padding-top: 1.5em;
 }
 
 .formBox input[type="text"],
@@ -122,7 +125,7 @@
     border-radius: 4px;
 }
 
-.btn {
+.btn20 {
     width: 100%;
     max-width: 200px;
     display: block;
@@ -133,16 +136,31 @@
     border-bottom: 5px solid #9a3412;
 }
 
-.btn4 {
+.btn20{
+    padding: .8em 2em;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn24 {
     color: #1f2937;
     background-color: #e5e7eb !important;
     border-bottom: 5px solid #9ca3af !important; 
 }
 
-.btn:active,
-.btn4:active {
-    transition: 300ms all ease;
-    border-bottom: 5px solid transparent;
+.btn25 {
+    color: #FFF;
+    background-color: #ea580c ;
+    border-bottom: 5px solid #9a3412;
+}
+
+.btn25:active,
+.btn24:active {
+    border-bottom: 5px solid transparent !important;
 }
 
 /*===: FORM ERROR :===*/
@@ -191,3 +209,17 @@
 }
 
 /*===: Form helpers :===*/
+/* MESSAGE TEMPLATE */
+#configUserMessageTemplate {
+    width: 100%;
+    max-width: 600px;
+    margin: 5em auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 2em;
+    border-radius: 8px;
+    background-color: var(--bgColorHoverBrig);
+    font-size: 2em;
+    text-align: justify;
+}

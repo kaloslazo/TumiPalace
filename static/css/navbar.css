@@ -47,7 +47,7 @@
     animation: 300ms all ease;
 }
 .btn{
-    padding: .5em 2em;
+    padding: .8em 2em;
     font-size: 1em;
     font-weight: 600;
     text-align: center;
@@ -77,4 +77,32 @@
 }
 .btn2:hover{
     background-color: var(--yellowHover);
+}
+
+/*===: Navbar auth :===*/
+#userDataBox {
+    width: auto;
+    padding: .5em 0em;
+    background-color: var(--bgColorHoverBrig);
+    border-radius: 4px;
+    margin-left: 1em;
+}
+#userDataBox a {
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    flex-direction: row;
+    padding: 1em 1.5em;
+}
+#userDataBox a img {
+    border-radius: 99%;
+    width: 35px;
+    height: 35px;
+    margin-right: .7em;
+}
+#userDataBox a span{
+    margin-right: 1.3em;
+}
+#userDataBox a svg {
+    width: 20px;
 }
