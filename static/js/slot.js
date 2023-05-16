@@ -22,15 +22,16 @@ let usrBankVariable = 100;
     
       if (leftImage === middleImage && middleImage === rightImage) {
         // El jugador ganó
-        // Actualizar el banco del usuario con las ganancias
-        usrBankVariable += usrBetVariable;
-        // Mostrar el nuevo valor del banco
+        usrBankVariable = usrBankVariable + usrBetVariable;
+        // Mostrar el nuevo valor
         userBank.textContent = usrBankVariable;
+        // El jugador Gano
         console.log("¡Ganaste!");
-      }else {
-        // El jugador perdió
-        console.log("Perdiste. Inténtalo de nuevo.");
       }
+        else {
+          // El jugador perdió
+          console.log("Perdiste. Inténtalo de nuevo.");
+        }
     }
   
   // Llamada para el boton de aumento
