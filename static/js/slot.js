@@ -14,25 +14,35 @@ let usrBankVariable = 100;
 
 // ===: Funciones :===
 
-  // Ver si Ganó
-    function checkWin() {
-      const leftImage = rouletteMainLeft.querySelector("img").getAttribute("src");
-      const middleImage = rouletteMainMiddle.querySelector("img").getAttribute("src");
-      const rightImage = rouletteMainRight.querySelector("img").getAttribute("src");
-    
-      if (leftImage === middleImage && middleImage === rightImage) {
-        // El jugador ganó
-        usrBankVariable = usrBankVariable + usrBetVariable;
-        // Mostrar el nuevo valor
-        userBank.textContent = usrBankVariable;
-        // El jugador Gano
-        console.log("¡Ganaste!");
-      }
-        else {
-          // El jugador perdió
-          console.log("Perdiste. Inténtalo de nuevo.");
-        }
+// Ver si Ganó
+function checkWin() {
+  const leftImage = rouletteMainLeft.querySelector("img").getAttribute("src");
+  const middleImage = rouletteMainMiddle.querySelector("img").getAttribute("src");
+  const rightImage = rouletteMainRight.querySelector("img").getAttribute("src");
+
+  if (leftImage === middleImage && middleImage === rightImage) {
+    // El jugador ganó
+    let winnings;
+
+    if (leftImage.includes("logo1")) {
+      winnings = usrBetVariable * 2;
+    } else if (leftImage.includes("logo2")) {
+      winnings = usrBetVariable * 4;
+    } else if (leftImage.includes("logo3")) {
+      winnings = usrBetVariable * 6;
+    } else if (leftImage.includes("logo4")) {
+      winnings = usrBetVariable * 8;
     }
+
+    usrBankVariable += winnings;
+    // Mostrar el nuevo valor
+    userBank.textContent = usrBankVariable;
+    console.log("¡Ganaste! Tus ganancias son: " + winnings);
+  } else {
+    // El jugador perdió
+    console.log("Perdiste. Inténtalo de nuevo.");
+  }
+}
   
   // Llamada para el boton de aumento
     btnControlIncrease.addEventListener("click", function onCLick(e) {
