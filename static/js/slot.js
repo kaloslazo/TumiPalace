@@ -96,6 +96,8 @@ function checkWin() {
     function rotateReels() {
       if (usrBankVariable > 0 && usrBetVariable > 0) {
         btnSpin.disabled = true;
+        btnControlDecrease.disabled=true;
+        btnControlIncrease.disabled=true;
         const resultSound = document.getElementById("result");
     
         function playResultSound() {
@@ -128,6 +130,8 @@ function checkWin() {
           clearInterval(interval);
           playResultSound();
           btnSpin.disabled = false;
+          btnControlDecrease.disabled=false;
+          btnControlIncrease.disabled=false;
           resetButtonAnimation(); // Reiniciar la animación del botón
           checkWin();
         }, 5000);
