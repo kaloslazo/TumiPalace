@@ -1,0 +1,57 @@
+body {
+    background-color: #3E312B;
+    margin: 0;
+    padding: 0;
+  }
+  
+.deposit-window {
+    font-family: "K2D", ans-sserif;
+    width: 550px;
+    margin: 50px auto;
+    background-color: #322823;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+
+.deposit-window h2 {
+    text-align: center;
+  }
+  
+.form-group {
+    margin-bottom: 15px;
+  }
+  
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+button[type="submit"] {
+    font-family: "K2D", ans-sserif;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f7c420;
+    color: #3E312B;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+button[type="submit"]:hover {
+    background-color: #f7c420;
+  }
+  
+button[type="submit"]:focus {
+    outline: none;
+  }
+  

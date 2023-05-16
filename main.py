@@ -78,6 +78,11 @@ def login():
                 return redirect(url_for('home'));
     return render_template('login.html', form=form);
 
+@app.route('/deposito', methods=['GET', 'POST'])
+@login_required
+def deposito():
+    return render_template('deposito.html');
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm();

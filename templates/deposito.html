@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+
+{% block title %}Inicio | Tumi Palace{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/deposito.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+{% block content %}
+
+    <!-- Navigation -->
+    {% include 'navbar_auth.html' %}
+  
+  <div class="deposit-window">
+  <h2>Depósito</h2>
+  
+  <form action="#" method="post">
+    <div class="form-group">
+      <label for="amount">Código de Bono:</label>
+      <input placeholder/>
+    </div>
+    <button type="submit">Aplicar</button>
+  </form>
+  <form action="#" method="post">
+      <div class="form-group">
+        <label for="amount">Monto:</label>
+        <input placeholder="Monto mínimo S/20" />
+      </div>
+      <button type="submit">Realizar depósito</button>
+    </form>
+  </div>
+
+{% endblock %}
