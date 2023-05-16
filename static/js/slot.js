@@ -10,7 +10,8 @@ const rouletteMainRight = document.getElementById("rouletteMainRight");
 let userBank = document.getElementById("userBank");
 let usrBet = document.getElementById("bankBet");
 let usrBetVariable = 0;
-let usrBankVariable = 100;
+let usrBankVariable = 1000;
+userBank.textContent = usrBankVariable;
 
 // ===: Funciones :===
 
@@ -23,14 +24,14 @@ function checkWin() {
   if (leftImage === middleImage && middleImage === rightImage) {
     // El jugador ganó
     let winnings;
-
-    if (leftImage.includes("logo1")) {
+    
+    if (leftImage.includes("logo2")) {
       winnings = usrBetVariable * 2;
-    } else if (leftImage.includes("logo2")) {
-      winnings = usrBetVariable * 4;
-    } else if (leftImage.includes("logo3")) {
-      winnings = usrBetVariable * 6;
     } else if (leftImage.includes("logo4")) {
+      winnings = usrBetVariable * 4;
+    } else if (leftImage.includes("logo1")) {
+      winnings = usrBetVariable * 6;
+    } else if (leftImage.includes("logo3")) {
       winnings = usrBetVariable * 8;
     }
 
