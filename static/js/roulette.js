@@ -25,7 +25,6 @@ let usrSalary = 1940.50;
 const szTokens = 6;
 let winnerValue = 0;
 
-
 //===: Functions
 calcBank();
 
@@ -82,25 +81,25 @@ for(const token of tokens){
 };
 
 // Evento de clic en el botón de acción seleccionada
-
 btnActionSelected.addEventListener('click', function onclick(e) {
     console.log("CLICKED", tempSelected[0]);
     if(tempSelected[0] == "0"){
         btnActionSelected.disabled = true;
     }else{
         btnActionSelected.disabled = false;
-    };
+    }
     const pos = arrTokens.findIndex((subArr) => subArr[0] == tempSelected[0]);
     if(tempSelected[1].length > 2){
         const fixToNum = arrTweaks.findIndex((subArr) => subArr[1] == tempSelected[1]);
         console.log(fixToNum);
         tempSelected[1] = arrTweaks[fixToNum][0];
-    };
+    }
     console.log(arrTokens);
     arrTokens[pos].push(tempSelected[1]);
     let nameSelect = `playedActions${tempSelected[0]}`;
     let tokenSelected = document.getElementById(nameSelect);
     tokenSelected.innerHTML = (arrTokens[pos]).slice(1).join(' - ');
+    
     tempSelected[0] = '0';
     tempSelected[1] = '0';
     actionSelected.innerHTML = `${tempSelected[0]}, ${tempSelected[1]}`;
