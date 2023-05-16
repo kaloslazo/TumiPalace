@@ -219,8 +219,17 @@ class UpdateUserData(FlaskForm):
             if client: raise ValidationError("El nombre de usuario ya se encuentra registrado. Inténtalo nuevamente.");
     def checkEmail(self, email):
             if (email) != (current_user.email):
-                client = Client.query.filter_by(nickname=email).first();
+                client = Client.query.filter_by(email=email).first();
                 if client: raise ValidationError('El correo electrónico ingresado ya existe. Inténtalo nuevamente.')
+
+class AddFoundUser(FlaskForm):
+    foundQuantity = IntegerField('Monto', validators=[DataRequired(message="Ingrese un monto entero válido.")],  render_kw={"placeholder": "Monto en soles"});
+    cardData = IntegerField('Dígitos de la tarjeta', validators=[DataRequired(message="Ingresa un número de tarjeta válido.")], render_kw={"placeholder": "Ingresar dígitos de tarjeta"});
+    cardOwner = StringField('Dueño de la tarjeta', validators=[DataRequired(message="El nombre no es válido.")], render_kw={"placeholder": "Nombre que figura en la tarjeta."});
+    expDay = IntegerField('Día de expiración', validators=[DataRequired(message="Ingresa un día de expiración válido.")], render_kw={"placeholder": "Día de expiración"});
+    expMonth = IntegerField('Mes de expiración', validators=[DataRequired(message="Ingresa un mes de expiración válido.")], render_kw={"placeholder": "Mes de expiración"});
+    expYear = IntegerField('Año de expiración', validators=[DataRequired(message="Ingresa un año de expiración válido.")], render_kw={"placeholder": "Año de expiración"});
+    submit = SubmitField("Pagar");
 
 
 #===: ROUTES :===
@@ -237,9 +246,6 @@ def home():
 @login_required
 def config():
     form = UpdateUserData();
-
-    # Hace implementacion si se presiona eliminar cuenta
-    # ...
 
     if (request.method == 'POST') and (form.validate_on_submit()):
         if form.update.data:
@@ -294,9 +300,17 @@ def roulette():
 def slots():
     return "Slots";
 
-@app.route('/rewards')
-def rewards():
-    return "Slots";
+@app.route('/store', methods=['GET', 'POST'])
+@login_required
+def store():
+    form = AddFoundUser();
+    if form.validate_on_submit():
+        cliente = Client.query.get(current_user.id);
+        cliente.bank = cliente.bank +  form.foundQuantity.data;
+        db.session.commit();
+        print(f"Nuevo saldo de {cliente.nickname}: {cliente.bank}")
+        return redirect(url_for('home'));
+    return render_template('views/store.html', user=current_user, form=form);
 
 @app.route('/support')
 def support():
