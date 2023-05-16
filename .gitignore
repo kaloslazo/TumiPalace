@@ -5,6 +5,9 @@ env/
 #===: Migrations
 migrations/
 
+#===: Client env
+client/
+
 #===: Python trash files
 *.pyc
 __pycache__/
