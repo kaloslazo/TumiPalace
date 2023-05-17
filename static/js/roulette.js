@@ -39,10 +39,7 @@ let winnerValue = 0;
 
 
 //===: Functions
-function calcBank() {
-}
-
-// Calcula las acciones jugadas
+calcBank();
 
 function calcPlayed(){
     arrTokens.forEach(arrToken => {
@@ -50,7 +47,9 @@ function calcPlayed(){
     });
 };
 
-// Obtiene el salario del usuario
+function calcBank(){
+    getSalary(); 
+};
 
 function getSalary(){
     salaryCounter.innerHTML = usrSalary;
