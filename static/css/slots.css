@@ -107,6 +107,11 @@
     flex-direction: column;
 }
 
+#resultContainer {
+    margin-top: 50px; 
+}
+  
+
 .btnA{
     margin: 0 auto;
     width: 100px;

@@ -25,9 +25,9 @@ function checkWin() {
     // El jugador ganó
     let winnings;
     const winSound = document.getElementById("win");
-        winSound.currentTime = 0;
-        winSound.play();
-    
+    winSound.currentTime = 0;
+    winSound.play();
+
     if (leftImage.includes("logo2")) {
       winnings = usrBetVariable * 2;
     } else if (leftImage.includes("logo4")) {
@@ -41,13 +41,29 @@ function checkWin() {
     usrBankVariable += winnings;
     // Mostrar el nuevo valor
     userBank.textContent = usrBankVariable;
-    console.log("¡Ganaste! Tus ganancias son: " + winnings);
+    const message = "¡Ganaste! Tus ganancias son: " + winnings;
+    console.log(message);
+    resultMessage.textContent = message; // Mostrar mensaje de ganancia en la página
+
+    // Limpiar el mensaje después de medio segundo (500 ms)
+    setTimeout(function() {
+      resultMessage.textContent = "";
+    }, 1000);
   } else {
     // El jugador perdió
-    console.log("Perdiste. Inténtalo de nuevo.");
+    const message = "Perdiste. Inténtalo de nuevo.";
+    console.log(message);
+    resultMessage.textContent = message; // Mostrar mensaje de pérdida en la página
+
+    // Limpiar el mensaje después de medio segundo (500 ms)
+    setTimeout(function() {
+      resultMessage.textContent = "";
+    }, 1000);
   }
 }
-  
+
+
+
   // Llamada para el boton de aumento
     btnControlIncrease.addEventListener("click", function onCLick(e) {
       // Incrementar en 5
