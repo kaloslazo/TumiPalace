@@ -53,6 +53,13 @@ function checkWin() {
       resultMessage.textContent = "";
     }, 1000);
   } 
+
+  if (leftImage !== middleImage && middleImage !== rightImage) {  
+    const message = "Sigue Intentando";
+    console.log(message);
+    resultMessage.textContent = message; 
+  }
+  
 }
 
 
@@ -154,11 +161,11 @@ function checkWin() {
         setTimeout(() => {
           clearInterval(interval);
           playResultSound();
+          checkWin()
           btnSpin.disabled = false;
           btnControlDecrease.disabled=false;
           btnControlIncrease.disabled=false;
           resetButtonAnimation(); 
-          checkWin();
         }, 5000);
       }
     }
