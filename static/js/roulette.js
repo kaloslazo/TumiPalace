@@ -24,7 +24,7 @@ let winnerWrapper = document.getElementById("winnerWrapper");
 var arrTokens = [[ 1], [5], [10], [25], [50], [100]];
 var values_numero = []
 const values = [[ "token1" ,1], [ "token5" ,5 ], ["token10", 10], ["token25" , 25], [ "token50" , 50 ], [ "token100" , 100 ]];
-const arrTweaks = [['34', '1st 12'], ['35', '2nd 12'], ['36', '3rd 12'], ['37', '1 to 18'], ['38', '19 to 36'], ['39', 'Even'], ['40', 'Odd']];
+const arrTweaks = [[ 1, 12, '1st 12'], [  13,  24, '2nd 12'], [25 , 36 , '3rd 12'], [1 , 18, '1 to 18'], [19 , 36, '19 to 36'], [ 1,  36, 'Even'], [ 1 , 36, 'Odd']];
 const arr1=[]
 const arr5=[]
 const arr10=[]
@@ -36,6 +36,7 @@ let currentToken, idx;
 let usrSalary = 1940.0;
 const szTokens = 6;
 let winnerValue = 0;
+
 
 //===: Functions
 function calcBank() {
