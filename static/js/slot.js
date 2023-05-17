@@ -1,4 +1,3 @@
-// ===: ACTIONS :===
 let btnControlIncrease = document.getElementById("controlIncrease");
 let btnControlDecrease = document.getElementById("controlDecrease");
 const btnSpin = document.getElementById("btnSpin");
@@ -11,16 +10,15 @@ const rouletteMainRightUP = document.getElementById("rouletteRightUp");
 const rouletteMainLeftDown = document.getElementById("rouletteLeftDown");
 const rouletteMainMiddleDown = document.getElementById("rouletteMiddleDown");
 const rouletteMainRightDown = document.getElementById("rouletteRightDown");
+const resultMessage = document.getElementById("resultMessage")
 
-
-// ===: BANK :===
 let userBank = document.getElementById("userBank");
 let usrBet = document.getElementById("bankBet");
 let usrBetVariable = 0;
 let usrBankVariable = 1000;
 userBank.textContent = usrBankVariable;
 
-// ===: Funciones :===
+
 // Ver si Ganó
 function checkWin() {
   const leftImage = rouletteMainLeft.querySelector("img").getAttribute("src");
@@ -28,7 +26,6 @@ function checkWin() {
   const rightImage = rouletteMainRight.querySelector("img").getAttribute("src");
 
   if (leftImage === middleImage && middleImage === rightImage) {
-    // El jugador ganó
     let winnings;
     const winSound = document.getElementById("win");
     winSound.currentTime = 0;
@@ -43,18 +40,15 @@ function checkWin() {
     } else if (leftImage.includes("logo3") && middleImage.includes("logo3") && rightImage.includes("logo3")) {
       winnings = usrBetVariable * 8;
     } else {
-      // No se cumplió ninguna condición, el jugador no ganó
       return;
     }
 
     usrBankVariable += winnings;
-    // Mostrar el nuevo valor
     userBank.textContent = usrBankVariable;
     const message = "¡Ganaste! Tus ganancias son: " + winnings;
     console.log(message);
-    resultMessage.textContent = message; // Mostrar mensaje de ganancia en la página
+    resultMessage.textContent = message; 
 
-    // Limpiar el mensaje después de medio segundo (500 ms)
     setTimeout(function() {
       resultMessage.textContent = "";
     }, 1000);
@@ -65,43 +59,37 @@ function checkWin() {
 
   // Llamada para el boton de aumento
     btnControlIncrease.addEventListener("click", function onCLick(e) {
-      // Incrementar en 5
       usrBetVariable = usrBetVariable + 5;
-      // Mostrar el Nuevo Valor
       usrBet.textContent = usrBetVariable;
     });
     
   // Llamada para el boton de disminuir
     btnControlDecrease.addEventListener("click", function onCLick(e) {
-      // Ver si la apuesta es mayor a 0
-      if (usrBetVariable > 0) {
-        // Restar en 5
+      if (usrBetVariable > 0){
         usrBetVariable = usrBetVariable - 5;
-        // Mostrar el Nuevo Valor
+        
         usrBet.textContent = usrBetVariable;
       }
     });  
 
   // LLamada para el boton de girar
     btnSpin.addEventListener("click", function onClick(e) {
-      // Check if the user has enough balance
-      if (usrBankVariable > 0 && usrBetVariable > 0){
-        // Add a spinning animation to the button
+      if (usrBankVariable > 0 && usrBetVariable > 0 && usrBankVariable>=usrBetVariable){
         btnSpin.classList.add("anmSpinner");
-        // Play the spin sound
         const spinSound = document.getElementById("spin");
         spinSound.currentTime = 0;
         spinSound.play();
-        // Spin the slots and get their values
         rotateReels();
-        // Update the bet and subtract it from the bank
         usrBankVariable = usrBankVariable - usrBetVariable;
-        // Mostrar el nuevo valor
         userBank.textContent = usrBankVariable;
-        // Update the bank
         console.log("SALDO:", usrBankVariable);
       } else {
         console.log("SALDO INSUFICIENTE");
+        resultMessage.textContent = "SALDO INSUFICIENTE";
+
+        setTimeout(function() {
+          resultMessage.textContent = "";
+        }, 1000);
       }
     });
     
@@ -109,7 +97,7 @@ function checkWin() {
     function getRandomNumber() {return Math.floor(Math.random() * 4) + 1;}
     function resetButtonAnimation() {btnSpin.classList.remove("anmSpinner");}
     function rotateReels() {
-      if (usrBankVariable > 0 && usrBetVariable > 0) {
+      if (usrBankVariable > 0 && usrBetVariable > 0 && usrBankVariable>=usrBetVariable) {
         btnSpin.disabled = true;
         btnControlDecrease.disabled=true;
         btnControlIncrease.disabled=true;
@@ -169,7 +157,7 @@ function checkWin() {
           btnSpin.disabled = false;
           btnControlDecrease.disabled=false;
           btnControlIncrease.disabled=false;
-          resetButtonAnimation(); // Reiniciar la animación del botón
+          resetButtonAnimation(); 
           checkWin();
         }, 5000);
       }
