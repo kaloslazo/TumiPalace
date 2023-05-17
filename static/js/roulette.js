@@ -58,32 +58,35 @@ function getSalary(){
 // Boton de Spin
 
 let isClicked = false;
-rouletteSpin.addEventListener('click', function onclick(event) {
-    getSalary();
+rouletteSpin.addEventListener('click', function onclick(event){
+    getSalary()
 
-    if (usrSalary <= 0){
-        document.getElementById("resultadoAviso").innerHTML = "¡Saldo insuficiente!";
-        return;
-    }
     const randomNumber = Math.floor(Math.random() * 34); // Generar número aleatorio entre 0 y 99
-    console.log(values_numero);
-    console.log(arrTokens);
-    temp = 0;
-    if (values_numero.includes(randomNumber)) {
-        for (let i = 0; i < arrTokens.length; i++) {
-            if (arrTokens[i].includes(randomNumber)) {
-                temp += arrTokens[i][0] * 2;
+    console.log(values_numero)
+    console.log(arrTokens)
+    temp = 0
+    if(values_numero.includes(randomNumber)){
+        for ( let i  = 0 ; i < arrTokens.length ; i++){
+            if(arrTokens[i].includes(randomNumber)){
+                suma = arrTokens[i][0] * 2
+                console.log("suma", suma)
+                temp += suma
+            }else{
+               console.log("NO SALE")       
             }
         }
     }
-    usrSalary += temp;
-    getSalary();
-
-    if (temp === 0) {
-        document.getElementById("resultadoAviso").innerHTML = "¡Perdiste!";
-    } else {
-        document.getElementById("resultadoAviso").innerHTML = "¡Ganaste!";
+    usrSalary += temp
+    console.log("usrSalary" , usrSalary     )
+    getSalary()
+    arrTokens = [[ 1], [5], [10], [25], [50], [100]];
+    values_numero = []
+    for(let i = 0 ; i < arrTokens.length; i ++){
+        let nameSelect = `playedActions${arrTokens[i][0]}`;
+        let tokenSelected = document.getElementById(nameSelect);
+        tokenSelected.innerHTML = "";
     }
+
 
     console.log("Número aleatorio:", randomNumber);
 });
@@ -129,18 +132,45 @@ btnActionSelected.addEventListener('click', function onclick(e) {
     }
     const pos = arrTokens.findIndex((subArr) => subArr[0] == tempSelected[0]);
     if(tempSelected[1].length > 2){
-        const fixToNum = arrTweaks.findIndex((subArr) => subArr[1] == tempSelected[1]);
-        console.log(fixToNum);
-        tempSelected[1] = arrTweaks[fixToNum][0];
+        const fixToNum = arrTweaks.findIndex((subArr) => subArr[2] == tempSelected[1]);
+        console.log("fixToNum", fixToNum);
+        tempSelected[1] = arrTweaks[fixToNum][2];
+        console.log( "TEMP ", arrTweaks[fixToNum][1])
+        for(let i = arrTweaks[fixToNum][0]; i <= arrTweaks[fixToNum][1] ; i ++){
+            arrTokens[pos].push(parseInt(i))
+            values_numero.push(parseInt(i))
+        }
+        console.log(  "ARR : ", arrTokens)
+    }else{
+        console.log(" Arr" , arrTokens);
+        arrTokens[pos].push(parseInt(tempSelected[1]));
+        values_numero.push(parseInt(tempSelected[1]))
     }
-    console.log(arrTokens);
-    arrTokens[pos].push(parseInt(tempSelected[1]));
     let nameSelect = `playedActions${tempSelected[0]}`;
     let tokenSelected = document.getElementById(nameSelect);
+
     tokenSelected.innerHTML = (arrTokens[pos]).slice(1).join(' - ');
-    values_numero.push(parseInt(tempSelected[1]))
     console.log(values_numero)
     tempSelected[0] = '0';
     tempSelected[1] = '0';
     actionSelected.innerHTML = `${tempSelected[0]}, ${tempSelected[1]}`;
+    
 });
+
+// Obtener referencia al botón Clear
+const clearButton = document.getElementById('rouletteClear');
+
+// Agregar evento de clic al botón Clear
+clearButton.addEventListener('click', resetTokens);
+
+// Función para reiniciar los tokens
+function resetTokens() {
+    arrTokens = [[1], [5], [10], [25], [50], [100]];
+    values_numero = [];
+    
+    for (let i = 0; i < arrTokens.length; i++) {
+      let nameSelect = `playedActions${arrTokens[i][0]}`;
+      let tokenSelected = document.getElementById(nameSelect);
+      tokenSelected.innerHTML = "-";
+    }
+  }

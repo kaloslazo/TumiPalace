@@ -103,10 +103,9 @@
                 <a id="token25" href="" class="tokenCoin"><img src="static/img/rouletteGame/token25.png" alt="token 25"></a>
                 <a id="token50" href="" class="tokenCoin"><img src="static/img/rouletteGame/token50.png" alt="token 50"></a>
                 <a id="token100" href="" class="tokenCoin"><img src="static/img/rouletteGame/token100.png" alt="token 100"></a>
-            <div id="saldoAviso"></div>
-            <div id="resultadoAviso"></div>
+            </div>
             <div id="roulleteBtn">
-                <button class="btn">Clear</button>
+                <button class="btn" id="rouletteClear">Clear</button>
                 <button class="btn" id="rouletteSpin">Girar</button>
             </div>
         </div>
@@ -115,29 +114,5 @@
 
     <!-- Javascript -->
     <script src="static/js/roulette.js"></script>
-    <script>
-     // Agregar funcionalidad para mostrar el aviso en pantalla
-        function mostrarAviso(mensaje) {
-                var resultadoAviso = document.getElementById("resultadoAviso");
-                resultadoAviso.textContent = mensaje;
-        
-                // Ocultar el aviso después de 2 segundos
-            setTimeout(function() {
-                resultadoAviso.textContent = '';
-            }, 2000);
-            }
-        
-            rouletteSpin.addEventListener('click', function onclick(event) {
-                // Código existente para generar número aleatorio y actualizar el saldo
-                
-                if (temp === 0) {
-                    mostrarAviso("¡Perdiste!");
-                } else {
-                    mostrarAviso("¡Ganaste!");
-                }
-            });
-        </script>
-        
-    
 
 {% endblock %}
