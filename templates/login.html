@@ -23,6 +23,9 @@
               {{ form.userpass }}
             </div>
             {{ form.submit(class="btn-submit") }}
+            {% if error_message %}
+              <p class="error-message">{{ error_message }}</p>
+            {% endif %}
         </form>
         <p>Aún no tienes una cuenta? <a class="btn2 btn3" href="{{url_for('register')}}">Regístrate</a></p>
         <br/>

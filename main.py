@@ -69,14 +69,18 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm();
+    form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first();
+        user = User.query.filter_by(username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.userpass, form.userpass.data):
-                login_user(user);
-                return redirect(url_for('home'));
-    return render_template('login.html', form=form);
+                login_user(user)
+                return redirect(url_for('home'))
+            else:
+                return render_template('login.html', form=form, error_message="Contraseña o usuario incorrectos")
+        else:
+            return render_template('login.html', form=form, error_message="Usuario no encontrado")
+    return render_template('login.html', form=form)
 
 @app.route('/deposito', methods=['GET', 'POST'])
 @login_required
