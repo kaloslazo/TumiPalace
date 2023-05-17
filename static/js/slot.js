@@ -14,7 +14,6 @@ let usrBankVariable = 1000;
 userBank.textContent = usrBankVariable;
 
 // ===: Funciones :===
-
 // Ver si Ganó
 function checkWin() {
   const leftImage = rouletteMainLeft.querySelector("img").getAttribute("src");
@@ -28,14 +27,17 @@ function checkWin() {
     winSound.currentTime = 0;
     winSound.play();
 
-    if (leftImage.includes("logo2")) {
+    if (leftImage.includes("logo2") && middleImage.includes("logo2") && rightImage.includes("logo2")) {
       winnings = usrBetVariable * 2;
-    } else if (leftImage.includes("logo4")) {
+    } else if (leftImage.includes("logo4") && middleImage.includes("logo4") && rightImage.includes("logo4")) {
       winnings = usrBetVariable * 4;
-    } else if (leftImage.includes("logo1")) {
+    } else if (leftImage.includes("logo1") && middleImage.includes("logo1") && rightImage.includes("logo1")) {
       winnings = usrBetVariable * 6;
-    } else if (leftImage.includes("logo3")) {
+    } else if (leftImage.includes("logo3") && middleImage.includes("logo3") && rightImage.includes("logo3")) {
       winnings = usrBetVariable * 8;
+    } else {
+      // No se cumplió ninguna condición, el jugador no ganó
+      return;
     }
 
     usrBankVariable += winnings;
@@ -49,17 +51,7 @@ function checkWin() {
     setTimeout(function() {
       resultMessage.textContent = "";
     }, 1000);
-  } else {
-    // El jugador perdió
-    const message = "Perdiste. Inténtalo de nuevo.";
-    console.log(message);
-    resultMessage.textContent = message; // Mostrar mensaje de pérdida en la página
-
-    // Limpiar el mensaje después de medio segundo (500 ms)
-    setTimeout(function() {
-      resultMessage.textContent = "";
-    }, 1000);
-  }
+  } 
 }
 
 
@@ -128,15 +120,21 @@ function checkWin() {
           rouletteMainLeft.innerHTML = `
             <div class="slotsResults">
               <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
+              <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
+              <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
             </div>
           `;
           rouletteMainMiddle.innerHTML = `
             <div class="slotsResults">
               <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
+              <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
+              <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
             </div>
           `;
           rouletteMainRight.innerHTML = `
             <div class="slotsResults">
+              <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
+              <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
               <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
             </div>
           `;
