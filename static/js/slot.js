@@ -2,9 +2,16 @@
 let btnControlIncrease = document.getElementById("controlIncrease");
 let btnControlDecrease = document.getElementById("controlDecrease");
 const btnSpin = document.getElementById("btnSpin");
-const rouletteMainLeft = document.getElementById("rouletteMainLeft");
-const rouletteMainMiddle = document.getElementById("rouletteMainMiddle");
-const rouletteMainRight = document.getElementById("rouletteMainRight");
+const rouletteMainLeft = document.getElementById("rouletteLeftMid");
+const rouletteMainMiddle = document.getElementById("rouletteMiddleMid");
+const rouletteMainRight = document.getElementById("rouletteRightMid");
+const rouletteMainLeftUP = document.getElementById("rouletteLeftUp");
+const rouletteMainMiddleUP = document.getElementById("rouletteMiddleUp");
+const rouletteMainRightUP = document.getElementById("rouletteRightUp");
+const rouletteMainLeftDown = document.getElementById("rouletteLeftDown");
+const rouletteMainMiddleDown = document.getElementById("rouletteMiddleDown");
+const rouletteMainRightDown = document.getElementById("rouletteRightDown");
+
 
 // ===: BANK :===
 let userBank = document.getElementById("userBank");
@@ -117,26 +124,42 @@ function checkWin() {
           const newRandomNumberLeft = getRandomNumber();
           const newRandomNumberMiddle = getRandomNumber();
           const newRandomNumberRight = getRandomNumber();
+          const newRandomNumberLeftUp = getRandomNumber();
+          const newRandomNumberLeftDown = getRandomNumber();
+          const newRandomNumberMiddleUp = getRandomNumber();
+          const newRandomNumberMiddleDown = getRandomNumber();
+          const newRandomNumberRightUp = getRandomNumber();
+          const newRandomNumberRightDown = getRandomNumber();
+
+
+          rouletteMainLeftUP.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberLeftUp}.jpeg" alt="">
+          `;
+          rouletteMainMiddleUP.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberMiddleUp}.jpeg" alt="">
+          `;
+          rouletteMainRightUP.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberRightUp}.jpeg" alt="">
+          `;
+
           rouletteMainLeft.innerHTML = `
-            <div class="slotsResults">
               <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberLeft}.jpeg" alt="">
-            </div>
           `;
           rouletteMainMiddle.innerHTML = `
-            <div class="slotsResults">
               <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberMiddle}.jpeg" alt="">
-            </div>
           `;
           rouletteMainRight.innerHTML = `
-            <div class="slotsResults">
               <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
-              <img src="static/img/slotsGame/logo${newRandomNumberRight}.jpeg" alt="">
-            </div>
+          `;
+
+          rouletteMainLeftDown.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberLeftDown}.jpeg" alt="">
+          `;
+          rouletteMainMiddleDown.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberMiddleDown}.jpeg" alt="">
+          `;
+          rouletteMainRightDown.innerHTML = `
+              <img src="static/img/slotsGame/logo${newRandomNumberRightDown}.jpeg" alt="">
           `;
         }, 200);
     
