@@ -48,6 +48,39 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 - Blinker: Es una librería de señales y eventos que nos ayuda a facilitar la comunicación entre diferentes componentes de nuestra web, la utilizamos dentro del casino web para notificar eventos como la finalización de un juego, actualización de saldo, etc.
 - Click: Es un paquete para crear interfaces de línea de comandos(CLI) de manera sencilla, lo utilizamos para construir herramientas de administración o scripts para automatizar las tareas relacionadascon la gestión del casino web.
 
+## Endpoints
+1. Index: `'/'`
+   - Sección principal, que muestra los juegos más populares, el call action para que el usuario se registre y demás.
+2. Home: `'/home'`
+   - Sólo se accede si el usuario está registrado.
+   - Muestra los juegos disponibles en conjunto con una barra de navegación personalizada: `navbar_auth.html`.
+3. Config: `'/config/'`
+   - Sólo se accede si el usuario está registrado.
+   - Muestra la configuración disponible para el usuario. De esta forma es posible cambiar nombre, actualizar datos, eliminar usuario, añadir/cambiar foto de perfil, etc.
+4. Ruleta: `'/roulette'`
+   - Sólo se accede si el usuario está registrado.
+   - Juego de la ruleta que maneja POST, GET, de tal forma que muestra el saldo del usuario y lo actualiza dependiendo si el usuario acerta la apuesta o caso contrario lo descuenta.
+5. Slots: `'/slots'`
+   - Sólo se accede si el usuario está registrado.
+   - Juego de tragamonedas, que cuenta con 3 botones interactivos, hace petición POST y GET.
+6. Store `'/store'`
+   - Sólo se accede si el usuario está registrado.
+   - Permite al current_user cargar nuevo dinero a su cuenta actual, y lo actualiza usando la base de datos POSTGRES.
+7. Support: `'/support'`
+   - Sólo se accede si el usuario está registrado.
+   - Muestra una pagina HTML tal que, el usuario cuenta con preguntas frecuentes y número de ayuda.
+8. Logout: `'/logout'`
+   - Sólo se accede si el usuario está registrado.
+   - Se cierra la sesión y se redirige al inicio.
+9.  Msg: `'/msg'`
+   - Sólo se accede si el usuario está registrado.
+   - Muestra mensajes: 404, Advertencia, Error, etc.
+10. Login: `'/login'`
+    - Formulario que permite al usuario iniciar sesión en su cuenta, se encuentra afectado por parámetros: Verificar nombre, verificar contraseña, etc.
+11. Register: `'/register'`
+    - Formulario que permite al usuario crear una cuenta, se encuentra afectado por parámetros: verificar edad, verificar nombre, verificar correo, etc.
+
+
 ## 🚀 Desplegar aplicación
 <p align="justify">
     Para correr la aplicación <strong>TumiPalaceApp</strong>, es necesario instalar los módulos de python necesarios. Estos están detallados dentro del archivo requirements.txt, que muestra el nombre del módulo, seguido de su versión. Por otro lado, al usar librerías generadoras de código como <strong>uuid</strong>, es necesario colocar comandos en nuestro postgresql. Para ello hemos detallado la siguiente lista de puntos a considerar:
