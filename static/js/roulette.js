@@ -4,7 +4,10 @@ console.log("===: TumiPalace | Roulette Logic :===");
 
 //===: Variables
 // Elementos HTML
+
 const tokens = document.querySelectorAll('.tokenCoin');
+const TOKENS = document.getElementsByClassName('tokenCoin')
+const tokensID = document.getElementById("rouletteMenu")
 const tokenNumbers = document.querySelectorAll('.token');
 let actionSelected = document.getElementById("actionSelected");
 let btnActionSelected = document.getElementById("btnActionSelected");
@@ -16,12 +19,21 @@ let salaryCounter = document.getElementById("userSalary");
 let winnerValueCont = document.getElementById("winnerVal");
 let winnerWrapper = document.getElementById("winnerWrapper");
 
+
 // Valores y arreglos
-const arrTokens = [['1'], ['5'], ['10'], ['25'], ['50'], ['100']];
+var arrTokens = [[ 1], [5], [10], [25], [50], [100]];
+var values_numero = []
+const values = [[ "token1" ,1], [ "token5" ,5 ], ["token10", 10], ["token25" , 25], [ "token50" , 50 ], [ "token100" , 100 ]];
 const arrTweaks = [['34', '1st 12'], ['35', '2nd 12'], ['36', '3rd 12'], ['37', '1 to 18'], ['38', '19 to 36'], ['39', 'Even'], ['40', 'Odd']];
+const arr1=[]
+const arr5=[]
+const arr10=[]
+const arr25=[]
+const arr50=[]
+const arr100=[]
 let tempSelected = ['0', '0'];
 let currentToken, idx;
-let usrSalary = 1940.50;
+let usrSalary = 1940.0;
 const szTokens = 6;
 let winnerValue = 0;
 
@@ -52,9 +64,32 @@ function getSalary(){
 
 let isClicked = false;
 rouletteSpin.addEventListener('click', function onclick(event){
+    getSalary()
+
     const randomNumber = Math.floor(Math.random() * 34); // Generar número aleatorio entre 0 y 99
+    console.log(values_numero)
+    console.log(arrTokens)
+    temp = 0
+    if(values_numero.includes(randomNumber)){
+        for ( let i  = 0 ; i < arrTokens.length ; i++){
+            if(arrTokens[i].includes(randomNumber)){
+                temp += (arrTokens[i][0] * 2)
+            }
+        }
+    }
+    usrSalary += temp
+    getSalary()
+
+    
     console.log("Número aleatorio:", randomNumber);
 });
+
+for(let i = 0 ; i < TOKENS.length ; i ++){
+    TOKENS[i].addEventListener("click", function(){
+        const ButonID = values[i][1];
+        usrSalary -= ButonID 
+    })
+}
 
 
 //Selecciona el numero
@@ -95,11 +130,12 @@ btnActionSelected.addEventListener('click', function onclick(e) {
         tempSelected[1] = arrTweaks[fixToNum][0];
     }
     console.log(arrTokens);
-    arrTokens[pos].push(tempSelected[1]);
+    arrTokens[pos].push(parseInt(tempSelected[1]));
     let nameSelect = `playedActions${tempSelected[0]}`;
     let tokenSelected = document.getElementById(nameSelect);
     tokenSelected.innerHTML = (arrTokens[pos]).slice(1).join(' - ');
-    
+    values_numero.push(parseInt(tempSelected[1]))
+    console.log(values_numero)
     tempSelected[0] = '0';
     tempSelected[1] = '0';
     actionSelected.innerHTML = `${tempSelected[0]}, ${tempSelected[1]}`;
