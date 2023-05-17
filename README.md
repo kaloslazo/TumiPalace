@@ -19,7 +19,7 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 ## 📌 Objetivos principales
 ### Misión
 <p align="justify">
-    Ofrecer a los clientes una experiencia de entretenimiento segura y de alta calidad. Nos esforzamos por ofrecer una amplia gama de emocionantes juegos y servicios. Al mismo tiempo que garantizamos altos   estándares de seguridad web y protegemos la seguridad del usuarios con algoritmos encriptación.
+    Ofrecer a los clientes una experiencia de entretenimiento segura y de alta calidad. Nos esforzamos por ofrecer una amplia gama de emocionantes juegos y servicios. Al mismo tiempo que garantizamos altos estándares de seguridad web y protegemos la seguridad del usuarios con algoritmos encriptación.
 </p>
 
 ### Visión
@@ -33,6 +33,12 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 - UUID
 - SQLAlchemy
 - WT
+
+## 📄 Acerca de las Librerías
+- Flask: Framework web ligero y flexible para Python, nos permite construir aplicaciones web de manera sencilla. La utilizamos para manejar las rutas y las solicitudes HTTP en el casino web.
+- UUID: Es una librería que nos ayuda a generar identificadores únicos, es útil dentro del programa porque lo usamos para asignar identificadores únicos a los usuarios, juegos, transacciones, etc.
+- SQLAlchemy: Es una librería ORM para python, la utilizamos para interactuar con las bases de datos relacionales de una manera sencilla y orientada a objetos.
+- WT: Es una librería de Python que facilita la validación y el manejo de formularios, lo utilizamos dentro del programa para crear formularios de registro, inicio de sesión, entre otras.
 
 ## 🚀 Desplegar aplicación
 <p align="justify">
