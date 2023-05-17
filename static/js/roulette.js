@@ -38,7 +38,8 @@ const szTokens = 6;
 let winnerValue = 0;
 
 //===: Functions
-calcBank();
+function calcBank() {
+}
 
 // Calcula las acciones jugadas
 
@@ -46,12 +47,6 @@ function calcPlayed(){
     arrTokens.forEach(arrToken => {
         console.log(arrToken);
     });
-};
-
-// Calcula el saldo del usuario
-
-function calcBank(){
-    getSalary(); // Obtiene el salario inicial.
 };
 
 // Obtiene el salario del usuario
@@ -63,24 +58,33 @@ function getSalary(){
 // Boton de Spin
 
 let isClicked = false;
-rouletteSpin.addEventListener('click', function onclick(event){
-    getSalary()
+rouletteSpin.addEventListener('click', function onclick(event) {
+    getSalary();
 
+    if (usrSalary <= 0){
+        document.getElementById("resultadoAviso").innerHTML = "¡Saldo insuficiente!";
+        return;
+    }
     const randomNumber = Math.floor(Math.random() * 34); // Generar número aleatorio entre 0 y 99
-    console.log(values_numero)
-    console.log(arrTokens)
-    temp = 0
-    if(values_numero.includes(randomNumber)){
-        for ( let i  = 0 ; i < arrTokens.length ; i++){
-            if(arrTokens[i].includes(randomNumber)){
-                temp += (arrTokens[i][0] * 2)
+    console.log(values_numero);
+    console.log(arrTokens);
+    temp = 0;
+    if (values_numero.includes(randomNumber)) {
+        for (let i = 0; i < arrTokens.length; i++) {
+            if (arrTokens[i].includes(randomNumber)) {
+                temp += arrTokens[i][0] * 2;
             }
         }
     }
-    usrSalary += temp
-    getSalary()
+    usrSalary += temp;
+    getSalary();
 
-    
+    if (temp === 0) {
+        document.getElementById("resultadoAviso").innerHTML = "¡Perdiste!";
+    } else {
+        document.getElementById("resultadoAviso").innerHTML = "¡Ganaste!";
+    }
+
     console.log("Número aleatorio:", randomNumber);
 });
 
