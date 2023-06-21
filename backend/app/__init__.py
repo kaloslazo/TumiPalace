@@ -72,24 +72,25 @@ def create_app(test_config=None):
         data = request.get_json();
         
         # handle errors for incomplete data
-        if not data: return jsonify({"message": "No data provided"}), 400;
+        if not data: return jsonify({"message": "No se proporcionó información."}), 400;
         username = data.get("username");
         password = data.get("password");
         email = data.get("email");
         age = data.get("age");
-        if (not username) or (not password): return jsonify({"message": "No username or userpass provided"}), 400;
+        if (not username): return jsonify({"message": "No se proporcionó nombre de usuario."}), 400;
+        if (not password): return jsonify({"message": "No se proporcionó contraseña."}), 400;
         
         # validate data
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email): return jsonify({"message": "Invalid email"}), 400;
-        if age < 18: return jsonify({"message": "User must be at least 18 years old"}), 400;
-        if len(password) < 6: return jsonify({"message": "Password must be at least 6 characters long"}), 400;
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email): return jsonify({"message": "El correo electrónico es inválido."}), 400;
+        if age < 18: return jsonify({"message": "El usuario debe ser mayor de edad."}), 400;
+        if len(password) < 5: return jsonify({"message": "La contraseña debe tener como mínimo 5 carácteres."}), 400;
         
         # check if user exists
         user = User.query.filter_by(nickname=username).first();
-        if user: return jsonify({"message": "User already exists"}), 400;
+        if user: return jsonify({"message": "El usuario ya existe. Inténtelo de nuevo."}), 400;
         
         user = User.query.filter_by(email=email).first();
-        if user: return jsonify({"message": "Email already exists"}), 400;
+        if user: return jsonify({"message": "El correo electrónico está asociado con otra cuenta."}), 400;
         
         # encrypt password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8');
@@ -105,14 +106,18 @@ def create_app(test_config=None):
         data = request.get_json();
         
         # handle errors if no data provided
-        if not data: return jsonify({"message": "No data provided"}), 400;
+        if not data: return jsonify({"message": "No se proporcionó información"}), 400;
         username = data.get("username");
-        user_pass = data.get("password");
-        if (not username) or (not user_pass): return jsonify({"message": "No username or userpass provided"}), 400;
+        password = data.get("password");
+        if (not username): return jsonify({"message": "No se proporcionó nombre de usuario."}), 400;
+        if (not password): return jsonify({"message": "No se proporcionó contraseña."}), 400;
+        
+        #check if user exits
+        user = User.query.filter_by(nickname=username).first();
+        if (not user): return jsonify({"message": "El usuario no existe."}), 404;  
     
         # check user pass & return access_token
-        user = User.query.filter_by(nickname=username).first();
-        if user and bcrypt.check_password_hash(user.password, user_pass): 
+        if user and bcrypt.check_password_hash(user.password, password): 
             access_token = create_access_token(identity=user.id);
             return jsonify({
                 "message": "Logged successfully",
@@ -123,7 +128,7 @@ def create_app(test_config=None):
                     "image": user.imageProfile,
                 }}), 200;
         else:
-            return jsonify(message="Invalid credentials"), 401;
+            return jsonify({ "message": "La contraseña no es correcta. Inténtelo de nuevo." }), 401;
 
 
     #===: Handle example protected ===:
