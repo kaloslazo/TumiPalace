@@ -1,0 +1,6 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;500;600&display=swap');
