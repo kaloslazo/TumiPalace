@@ -23,8 +23,11 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 
 ## Estructura del proyecto
 ### Backend/
+...
 
 ### Frontend/
+...
+
 
 ## 📚 Librerías
 - Flask
@@ -37,45 +40,42 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 - **Flask-Bcrypt**: Extensión de Flask, que la utilizamos para que nos facilite el uso de Bcrypt para el hash y verificación de contraseñas en una aplicación Flask.
 - **Flask-Login**: Extensión de Flask que simplifica la gestión de autenticación de usuarios, nos ayuda en las funciones de inicio de sesión, cierre de sesión, recordar contraseñas y proteger rutas específicas de acceso no autorizado.
 - **Flask-Migrate**: Extensión de Flask que facilita la migración de la base de datos utilizando Alembic. nos ayuda a simplificar el proceso de realizar y aplicar cambios en la estructura de la base de datos a medida que evoluciona el programa del casino virtual.
-- Flask-SQLAlchemy: Extensión de Flask que proporciona integración con SQLAlchemy, que nos ayuda bastante a interactuar con la base de datos de manera más sencilla y directa.
-- UUID: Es una librería que nos ayuda a generar identificadores únicos, es útil dentro del programa porque lo usamos para asignar identificadores únicos a los usuarios, juegos, transacciones, etc.
-- SQLAlchemy: Es una librería ORM para python, la utilizamos para interactuar con las bases de datos relacionales de una manera sencilla y orientada a objetos.
-- WTForms: Es una librería de Python que facilita la validación y el manejo de formularios, lo utilizamos dentro del programa para crear formularios de registro, inicio de sesión, entre otras.
-- Alembic: Herramienta de migración de bases de datos para SQLAlchemy, lo utilizamos para realizar actualizaciones y revisiones de la base de datos de manera controlada y actualizada.
-- Bcrypt: Algoritmo de hashing utilizado para el almacenamiento seguro de contraseñas; nos ayuda a generar y verificar hashes de contraseñas, por lo que nos ayuda a aumentar la seguridad y dificulta el acceso no autorizado a las cuentas de los usuarios.
-- Blinker: Es una librería de señales y eventos que nos ayuda a facilitar la comunicación entre diferentes componentes de nuestra web, la utilizamos dentro del casino web para notificar eventos como la finalización de un juego, actualización de saldo, etc.
-- Click: Es un paquete para crear interfaces de línea de comandos(CLI) de manera sencilla, lo utilizamos para construir herramientas de administración o scripts para automatizar las tareas relacionadascon la gestión del casino web.
+- **Flask**-SQLAlchemy: Extensión de Flask que proporciona integración con SQLAlchemy, que nos ayuda bastante a interactuar con la base de datos de manera más sencilla y directa.
+- **UUID**: Es una librería que nos ayuda a generar identificadores únicos, es útil dentro del programa porque lo usamos para asignar identificadores únicos a los usuarios, juegos, transacciones, etc.
+- **SQLAlchemy**: Es una librería ORM para python, la utilizamos para interactuar con las bases de datos relacionales de una manera sencilla y orientada a objetos.
+- **WTForms**: Es una librería de Python que facilita la validación y el manejo de formularios, lo utilizamos dentro del programa para crear formularios de registro, inicio de sesión, entre otras.
+- **Alembic**: Herramienta de migración de bases de datos para SQLAlchemy, lo utilizamos para realizar actualizaciones y revisiones de la base de datos de manera controlada y actualizada.
+- **Bcrypt**: Algoritmo de hashing utilizado para el almacenamiento seguro de contraseñas; nos ayuda a generar y verificar hashes de contraseñas, por lo que nos ayuda a aumentar la seguridad y dificulta el acceso no autorizado a las cuentas de los usuarios.
+- **Blinker**: Es una librería de señales y eventos que nos ayuda a facilitar la comunicación entre diferentes componentes de nuestra web, la utilizamos dentro del casino web para notificar eventos como la finalización de un juego, actualización de saldo, etc.
+- **Click**: Es un paquete para crear interfaces de línea de comandos(CLI) de manera sencilla, lo utilizamos para construir herramientas de administración o scripts para automatizar las tareas relacionadascon la gestión del casino web.
 
 ## Endpoints
-1. Index: `'/'`
+1. **Index**: `'/'`
    - Sección principal, que muestra los juegos más populares, el call action para que el usuario se registre y demás.
-2. Home: `'/home'`
+2. **Home**: `'/home'`
    - Sólo se accede si el usuario está registrado.
    - Muestra los juegos disponibles en conjunto con una barra de navegación personalizada: `navbar_auth.html`.
-3. Config: `'/config/'`
+3. **Config**: `'/profile/'`
    - Sólo se accede si el usuario está registrado.
    - Muestra la configuración disponible para el usuario. De esta forma es posible cambiar nombre, actualizar datos, eliminar usuario, añadir/cambiar foto de perfil, etc.
-4. Ruleta: `'/roulette'`
+4. **Ruleta**: `'/roulette'`
    - Sólo se accede si el usuario está registrado.
    - Juego de la ruleta que maneja POST, GET, de tal forma que muestra el saldo del usuario y lo actualiza dependiendo si el usuario acerta la apuesta o caso contrario lo descuenta.
-5. Slots: `'/slots'`
+5. **Slots**: `'/slots'`
    - Sólo se accede si el usuario está registrado.
    - Juego de tragamonedas, que cuenta con 3 botones interactivos, hace petición POST y GET.
-6. Store `'/store'`
+6. **Store** `'/store'`
    - Sólo se accede si el usuario está registrado.
    - Permite al current_user cargar nuevo dinero a su cuenta actual, y lo actualiza usando la base de datos POSTGRES.
-7. Support: `'/support'`
+7. **Support**: `'/support'`
    - Sólo se accede si el usuario está registrado.
    - Muestra una pagina HTML tal que, el usuario cuenta con preguntas frecuentes y número de ayuda.
-8. Logout: `'/logout'`
+8. **Logout**: `'/logout'`
    - Sólo se accede si el usuario está registrado.
    - Se cierra la sesión y se redirige al inicio.
-9.  Msg: `'/msg'`
-   - Sólo se accede si el usuario está registrado.
-   - Muestra mensajes: 404, Advertencia, Error, etc.
-10. Login: `'/login'`
-    - Formulario que permite al usuario iniciar sesión en su cuenta, se encuentra afectado por parámetros: Verificar nombre, verificar contraseña, etc.
-11. Register: `'/register'`
+10. **Login**: `'/login'`
+    - Formulario que permite al usuario iniciar sesión en su cuenta, se encuentra afectado por parámetros: Verificar nombre, verificar contraseña, etc. Trabaja en conjunto con el endpoint de la API `'/api/login'`, realiza la acción y guarda la variable usando `jwt-forms` dependiendo la respuesta de la API. 
+11. **Register**: `'/register'`
     - Formulario que permite al usuario crear una cuenta, se encuentra afectado por parámetros: verificar edad, verificar nombre, verificar correo, etc.
 
 
