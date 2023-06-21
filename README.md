@@ -93,4 +93,4 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 5. Conectarnos a nuestra tabla `\c tumipalace_db;`. Recordar que con `\dt` listamos las relaciones.
 6. Correr el programa principal `python3 server.py`.
 
-> Si obtenemos un error parecido a `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`, es por que debemos añadir la siguiente extensión dentro de postgresql (fijarnos que estamos conectados a nuestra tabla): `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`.
+> Si obtenemos un error parecido a `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`, es por que debemos añadir la siguiente extensión dentro de postgresql (fijarnos que estamos conectados a nuestra tabla).
