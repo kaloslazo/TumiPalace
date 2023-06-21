@@ -60,7 +60,7 @@ from werkzeug.utils import (
 
 #===: INITIAL SETUP :===
 db = SQLAlchemy();
-dbConfig = "postgresql://postgres@localhost:5432/dev_tumipalace_db";
+dbConfig = "postgresql://postgres:postgres@localhost:5432/dev_tumipalace_db";
 app = Flask(
     __name__,
     template_folder='templates',
@@ -372,4 +372,4 @@ if __name__ == "__main__":
     # check if db exists & commit changes.
     with app.app_context():
         db.create_all();
-    app.run(debug=True, port=8080);
+    app.run(debug=True, port=8484);
