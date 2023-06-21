@@ -23,6 +23,7 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 
 ## Estructura del proyecto
 ### Backend/
+..
 
 ### Frontend/
 
