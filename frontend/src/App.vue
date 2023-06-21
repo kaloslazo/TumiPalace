@@ -1,7 +1,8 @@
 <!-- Router logic -->
 <template>
   <div class="max-w-7xl mx-auto">
-    <NavbarDefault />
+    <NavbarDefault v-if="!$route.meta.hideNavigation"/>
+    <router-view />
   </div>
 </template>
 
@@ -11,7 +12,9 @@
 import NavbarDefault from './components/NavbarDefault.vue'
 
 export default {
-  components: { "NavbarDefault": NavbarDefault },
+  components: {
+    NavbarDefault
+  },
 }
 </script>
 

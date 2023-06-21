@@ -16,7 +16,7 @@ export default createStore({
             state.status = 'success'
             state.user = user
         },
-        auth_error(state) {
+        auth_error(state, err) {
             state.status = 'error'
         },
         logout(state) {
@@ -38,9 +38,9 @@ export default createStore({
                 }
                 return res
             } catch (err) {
-                commit('auth_error')
-                localStorage.removeItem('user')
-                throw err
+                commit('auth_error');
+                localStorage.removeItem('user');
+                throw err;
             }
         },
         async logout({ commit }) {

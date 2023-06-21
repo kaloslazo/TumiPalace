@@ -47,6 +47,9 @@ export default {
             }
         },
     },
+    created() {
+        document.title = "Register | TumiPalace";
+    },
 };
 </script>
   

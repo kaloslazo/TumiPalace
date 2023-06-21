@@ -8,6 +8,9 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+    meta: {
+      title: 'Claim your welcome bonus',
+    },
   },
   {
     path: "/login",
@@ -15,6 +18,7 @@ const routes = [
     component: () => import("@/views/LoginView.vue"),
     meta: {
       title: 'Login',
+      hideNavigation: true,
     }
   },
   {
@@ -23,30 +27,34 @@ const routes = [
     component: () => import("@/views/RegisterView.vue"),
     meta: {
       title: 'Register',
+      hideNavigation: true,
     }
   },
   {
     path: "/profile",
     name: "profile",
     component: () => import("@/views/ProfileView.vue"),
-    meta: { 
-      requiresAuth: true,
+    meta: {
       title: 'Profile',
+      requiresAuth: true,
     },
   },
   {
     path: "/dashboard",
     name: "dashboard",
     component: () => import("@/views/DashboardView.vue"),
-    meta: { requiresAuth: true },
+    meta: { 
+      title: "Avaliable Games",
+      requiresAuth: true 
+    },
   },
   {
     path: "/support",
     name: "support",
     component: () => import("@/views/SupportView.vue"),
-    meta: { 
-      requiresAuth: true,
+    meta: {
       title: 'Support',
+      requiresAuth: true,
     },
   },
   {
@@ -80,7 +88,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next()
     }
-  } 
+  }
   else {
     next()
   }

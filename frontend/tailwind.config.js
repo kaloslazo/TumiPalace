@@ -14,11 +14,16 @@ module.exports = {
       "brown-600": "#6d4c41",
       "brown-700": "#5d4037",
       "brown-800": "#4e342e",
+      "brown-850": "#322823",
       "brown-900": "#28201C",
       "brown-950": "#3E312B",
       "yellow-600": "#fbbf24",
       "yellow-700": "#e4ad0a",
       'white': '#ffffff',
+      'gray': '#ccc',
+      'red-alert': '#ef4444',
+      'red-alert-bg': '#fecaca',
+      'red-alert-darker': '#991b1b',
     },
     extend: {
       fontFamily: {
