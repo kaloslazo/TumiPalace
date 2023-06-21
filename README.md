@@ -26,7 +26,7 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 ..
 
 ### Frontend/
-
+...
 
 ## 📚 Librerías
 - Flask
