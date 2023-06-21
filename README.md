@@ -33,10 +33,10 @@ Aplicación web que permite a los usuarios realizar apuestas de distinta índole
 - WTForms
 
 ## 📄 Información acerca de las herramientas utilizadas
-- Flask: Framework web ligero y flexible para Python, nos permite construir aplicaciones web de manera sencilla. La utilizamos para manejar las rutas y las solicitudes HTTP en el casino web.
-- Flask-Bcrypt: Extensión de Flask, que la utilizamos para que nos facilite el uso de Bcrypt para el hash y verificación de contraseñas en una aplicación Flask.
-- Flask-Login: Extensión de Flask que simplifica la gestión de autenticación de usuarios, nos ayuda en las funciones de inicio de sesión, cierre de sesión, recordar contraseñas y proteger rutas específicas de acceso no autorizado.
-- Flask-Migrate: Extensión de Flask que facilita la migración de la base de datos utilizando Alembic. nos ayuda a simplificar el proceso de realizar y aplicar cambios en la estructura de la base de datos a medida que evoluciona el programa del casino virtual.
+- **Flask**: Framework web ligero y flexible para Python, nos permite construir aplicaciones web de manera sencilla. La utilizamos para manejar las rutas y las solicitudes HTTP en el casino web.
+- **Flask-Bcrypt**: Extensión de Flask, que la utilizamos para que nos facilite el uso de Bcrypt para el hash y verificación de contraseñas en una aplicación Flask.
+- **Flask-Login**: Extensión de Flask que simplifica la gestión de autenticación de usuarios, nos ayuda en las funciones de inicio de sesión, cierre de sesión, recordar contraseñas y proteger rutas específicas de acceso no autorizado.
+- **Flask-Migrate**: Extensión de Flask que facilita la migración de la base de datos utilizando Alembic. nos ayuda a simplificar el proceso de realizar y aplicar cambios en la estructura de la base de datos a medida que evoluciona el programa del casino virtual.
 - Flask-SQLAlchemy: Extensión de Flask que proporciona integración con SQLAlchemy, que nos ayuda bastante a interactuar con la base de datos de manera más sencilla y directa.
 - UUID: Es una librería que nos ayuda a generar identificadores únicos, es útil dentro del programa porque lo usamos para asignar identificadores únicos a los usuarios, juegos, transacciones, etc.
 - SQLAlchemy: Es una librería ORM para python, la utilizamos para interactuar con las bases de datos relacionales de una manera sencilla y orientada a objetos.
