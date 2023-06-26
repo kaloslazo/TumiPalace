@@ -1,6 +1,7 @@
 #===: Don't push environment files
 env/
 .env
+setup_email.sh
 
 #===: Migrations
 migrations/
