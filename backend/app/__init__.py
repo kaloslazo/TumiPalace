@@ -20,7 +20,7 @@ from flask import (
     jsonify,
     abort,
     url_for,
-    send_from_directory
+    send_file
 );
 from .models import (
     db,
@@ -74,6 +74,7 @@ def create_app(test_config=None):
                     "id": current_user.id,
                     "username": current_user.nickname,
                     "email": current_user.email,
+                    "imageProfile": current_user.imageProfile,
                 }
             });
         else: return jsonify({"status": "not authenticated"}), 401;
@@ -235,10 +236,11 @@ def create_app(test_config=None):
         return jsonify(user.serialize()), 200
 
     #===: Handle static image ===:
-    @app.route("/api/static/<path>", methods=['GET', 'POST'])
+    @app.route("/api/<path:path>")
     def serve_file(path):
-        print("PATH:", path);
-        return send_from_directory(path)
+        print("PATH", path);
+        absolute_path = os.path.join(os.getcwd(), path)
+        return send_file(absolute_path, mimetype='image/png');
 
     # return app as instance
     return app

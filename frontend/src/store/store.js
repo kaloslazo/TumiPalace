@@ -23,9 +23,6 @@ export default createStore({
             state.status = ''
             state.user = {}
         },
-        setUser(state, user) {
-            state.user = user;
-        },
     },
     actions: {
         async login({ commit }, user) {

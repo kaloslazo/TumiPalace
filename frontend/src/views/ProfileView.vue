@@ -149,9 +149,18 @@ export default {
     },
     computed: {
         user_data() { return this.$store.getters.user_data },
-        imageUrl() { return this.user_data.imageProfile ? `http://127.0.0.1:8080/${this.user_data.imageProfile}` : this.defaultImage; }
+        imageUrl() { return this.user_data.imageProfile ? `http://127.0.0.1:5004/api/${this.user_data.imageProfile}` : this.defaultImage; }
     },
     methods: {
+        async mounted() {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('/current_user', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.data.status === 'authenticated') { this.user_data = response.data.user; }
+        },
         set_personal() {
             this.security_checked = false;
             this.membership_checked = false;
@@ -175,15 +184,10 @@ export default {
                 if (this.username != "") { formData.append('username', this.username); }
                 if (this.email != "") { formData.append('email', this.email); }
                 if (this.imageProfile != null) { formData.append('imageProfile', this.imageProfile); }
-                console.log(this.imageProfile);
 
                 const response = await axios.put(`/users/${userId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
-
-                console.log("RESPONSE-DATA", response.data)
-                // actualizar Vuex con nuevo objeto usuario
-                this.$store.commit('setUser', response.data);
             } catch (err) { this.error = err.response.data.message }
         },
         async updateSecurity() {
@@ -196,13 +200,6 @@ export default {
             const file = e.target.files[0];
             this.imageProfile = file;
         },
-        async mounted() {
-            // obtener imagen de perfil de backedn
-            console.log("2", this.$store.getters.user_data.imageProfile);
-            const response = await axios.get(`${this.$store.getters.user_data.imageProfile}`);
-            console.log("res", response);
-            this.user_data = response.data;
-        }
     },
 }
 </script>

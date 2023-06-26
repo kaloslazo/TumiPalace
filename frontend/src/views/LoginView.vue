@@ -6,7 +6,7 @@
         
         <div class="bg-brown-850 max-w-2xl w-full flex flex-col justify-center items-center rounded-md py-12">
             <div class="flex flex-row justify-center mb-12 items-center">
-                <img class="h-14 w-auto mr-3" src="../assets/img/tumiLogo.png" alt="">
+                <img class="h-14 w-auto mr-3" src="@/assets/img/tumiLogo.png" alt="">
                 <span class="mx-2 text-left text-yellow-600 font-light text-lg">
                     <h1>Tumi <br /> Palace</h1>
                 </span>
