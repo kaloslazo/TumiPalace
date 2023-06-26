@@ -37,7 +37,7 @@
               <h4 class="py-3 border-b border-yellow-600">Revisa tu bandeja!</h4><br/>
               <h4>Hemos enviado un correo electrónico a: <span class="text-yellow-600">{{ email }}</span> con las instrucciones para actualizar tu contraseña.</h4>
               <br/>
-              <h4 class="text-grey-400 italic">Si no recibes el correo electrónico en unos minutos, revisa tu carpeta de spam.</h4>
+              <h4 class="text-grey-400 italic">Si no recibes el correo electrónico en unos minutos, revisa tu carpeta de spam. El token expira en 10 minutos.</h4>
             </div>
           </div>
           

@@ -172,7 +172,7 @@ def create_app(test_config=None):
         <p>Hola,</p>
         <p>Recibimos una solicitud para restablecer tu contraseña. Si tú hiciste esta solicitud, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
         <p><a target="_BLANK" href="http://127.0.0.1:8080/reset_password/{token}">Cambiar contraseña</a></p>
-        <p>Si tú no realizaste la solicitud de cambio de contraseña, ignora este correo electrónico.</p>
+        <p>El token expira en 10 minutos. Si tú no realizaste la solicitud de cambio de contraseña, ignora este correo electrónico.</p>
         <p>Saludos,</p>
         <p>El equipo de TumiPalace Perú.</p>
         '''
@@ -181,10 +181,11 @@ def create_app(test_config=None):
     #===: Handle password reset as email link ===:
     @app.route("/api/reset_password/<token>", methods=["POST"])
     def reset_password(token):
-        data = request.get_json();
-        password = data.get("password");
         user = User.verify_reset_password_token(token);
         if not user: return jsonify(message="El token es inválido o ya expiró."), 400
+        
+        data = request.get_json();
+        password = data.get("password");
         
         # si la contraseña es la misma que la anterior no se actualiza
         if bcrypt.check_password_hash(user.password, password): return jsonify(message="La contraseña es la misma que la anterior."), 400;
@@ -192,6 +193,8 @@ def create_app(test_config=None):
         # encrypt password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8');
         user.password = hashed_password;
+        user.reset_password_token = None
+        user.reset_password_token_expires_at = None
         db.session.commit();
         return jsonify(message="La contraseña se actualizó exitosamente."), 200;
 

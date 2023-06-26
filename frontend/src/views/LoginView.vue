@@ -63,7 +63,7 @@ export default {
                 await this.$store.dispatch('login', user)
                 this.$router.push('/dashboard')
             } catch (err) {
-                this.error = err.response.data.message
+                this.error = err.response.data.message;
             }
         }
     },
