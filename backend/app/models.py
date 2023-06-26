@@ -2,7 +2,7 @@ import uuid;
 from datetime import datetime;
 from config.development import config;
 from flask_sqlalchemy import SQLAlchemy;
-from itsdangerous import URLSafeTimedSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer;
 from flask import current_app;
 
 
@@ -11,6 +11,7 @@ db = SQLAlchemy();
 
 def setup_db(app, db_uri):
     app.config["SQLALCHEMY_DATABASE_URI"] = config["DATABASE_URI"] if db_uri is None else db_uri;
+    app.config["SECRET_KEY"] = "dev_secret_key";
     db.app = app;
     db.init_app(app);
     db.create_all();
@@ -43,8 +44,8 @@ class User(db.Model):
             'imageProfile': self.imageProfile,
             'creationDate': self.creationDate,
         };
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec);
+    def get_reset_password_token(self, expires_sec=1800):
+        s = Serializer(str(current_app.config['SECRET_KEY']), expires_sec);
         return s.dumps({'user_id': self.id}).decode('utf-8');
     @staticmethod
     def verify_reset_password_token(token):
