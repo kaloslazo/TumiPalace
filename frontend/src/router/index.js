@@ -43,9 +43,9 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: () => import("@/views/DashboardView.vue"),
-    meta: { 
+    meta: {
       title: "Avaliable Games",
-      requiresAuth: true 
+      requiresAuth: true
     },
   },
   {
@@ -72,7 +72,25 @@ const routes = [
     meta: {
       title: 'Not Authorized',
     }
-  }
+  },
+  {
+    path: "/reset_password",
+    name: "reset_password_request",
+    component: () => import("@/views/RequestResetPasswordView.vue"),
+    meta: {
+      title: 'Solicitud de restablecimiento de contraseña.',
+      hideNavigation: true,
+    },
+  },
+  {
+    path: "/reset_password/:token",
+    name: "reset_password",
+    component: () => import("@/views/FormResetPasswordView.vue"),
+    meta: {
+      title: 'Restablecer contraseña',
+      hideNavigation: true,
+    },
+  },
 ];
 
 const router = createRouter({

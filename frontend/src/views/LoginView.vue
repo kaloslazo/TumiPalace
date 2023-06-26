@@ -20,7 +20,7 @@
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Contraseña</label>
                     <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" type="password" v-model="password" placeholder="Contraseña" required />
-                    <p class="mt-2"><router-link class="text-yellow-600 hover:text-yellow-700 hover:underline text-sm" to="/lost-password">Olvidaste tu contraseña?</router-link></p>
+                    <p class="mt-2"><router-link class="text-yellow-600 hover:text-yellow-700 hover:underline text-sm" to="/reset_password">Olvidaste tu contraseña?</router-link></p>
                 </div>
                 <button class="rounded-sm bg-yellow-600 w-full mt-8 py-2 font-medium" type="submit">Ingresa</button>
             </form>
