@@ -20,6 +20,7 @@ from flask import (
     jsonify,
     abort,
     url_for,
+    send_from_directory
 );
 from .models import (
     db,
@@ -29,7 +30,7 @@ from .models import (
 
 
 def create_app(test_config=None):
-    app = Flask(__name__);
+    app = Flask(__name__, static_folder='static');
     CORS(app, origins='*', supports_credentials=True);
     
     # jwt config
@@ -232,6 +233,12 @@ def create_app(test_config=None):
         db.session.commit()
 
         return jsonify(user.serialize()), 200
+
+    #===: Handle static image ===:
+    @app.route("/api/static/<path>", methods=['GET', 'POST'])
+    def serve_file(path):
+        print("PATH:", path);
+        return send_from_directory(path)
 
     # return app as instance
     return app

@@ -23,6 +23,9 @@ export default createStore({
             state.status = ''
             state.user = {}
         },
+        setUser(state, user) {
+            state.user = user;
+        },
     },
     actions: {
         async login({ commit }, user) {
@@ -54,5 +57,5 @@ export default createStore({
         authStatus: state => state.status,
         user: state => state.user,
         user_data: state => state.user_data,
-    }
+    },
 })
