@@ -3,6 +3,7 @@ import os;
 import re;
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt;
+from werkzeug.utils import secure_filename;
 from flask_mail import (
     Mail,
     Message,
@@ -135,6 +136,7 @@ def create_app(test_config=None):
                 "message": "Logged successfully",
                 "access_token": access_token,
                 "user": {
+                    "id": user.id,
                     "username": user.nickname,
                     "email": user.email,
                     "image": user.imageProfile,
@@ -198,6 +200,33 @@ def create_app(test_config=None):
         db.session.commit();
         return jsonify(message="La contraseña se actualizó exitosamente."), 200;
 
+    #===: Handle update account ===:
+    @app.route("/api/users/<user_id>", methods=["PUT"])
+    def update_user(user_id):
+        user = User.query.get(user_id);
+        if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404
+
+        data = request.get_json()
+        new_nickname = data.get("nickname", user.nickname)
+        new_email = data.get("email", user.email)
+
+        if new_nickname and (new_nickname != user.nickname) and (User.query.filter_by(nickname=new_nickname).first()): return jsonify({"message": "El nickname está registrado en otra cuenta."}), 400
+        if new_email and (new_email != user.email) and (User.query.filter_by(email=new_email).first()): return jsonify({"message": "Email already in use"}), 400
+
+        user.nickname = new_nickname if new_nickname else user.nickname
+        user.email = new_email if new_email else user.email
+
+        # Handle the profile image
+        image = request.files.get('imageProfile')
+        
+        if image:
+            filename = secure_filename(image.filename);
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            user.imageProfile = url_for('uploaded_file', filename=filename)
+
+        db.session.commit()
+
+        return jsonify(user.serialize()), 200
 
     # return app as instance
     return app

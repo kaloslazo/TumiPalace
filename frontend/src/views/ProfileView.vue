@@ -1,7 +1,7 @@
 <template>
-    <div class="flex lg:flex-row flex-col mx-auto px-6 mt-5 w-full">
+    <div class="flex lg:flex-row flex-col mx-auto px-6 mt-5 w-full gap-10 lg:gap-0">
         <!-- start left-->
-        <div class="bg-brown-1000 rounded flex flex-col w-full max-w-sm py-10">
+        <div class="bg-brown-1000 rounded flex flex-col w-full lg:max-w-xs py-10">
             <div class="px-12">
                 <img class="h-40 w-auto mr-4 rounded-full" :src="user_data.imageProfile ? user_data.imageProfile : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'" alt="user_image_profile" >
                 <h2 class="font-semibold text-3xl mt-10 text-white">{{ user_data.username }}</h2>
@@ -25,59 +25,62 @@
         <!-- end left -->
 
         <!-- start right -->
-        <div class="bg-brown-1000 pl-6 py-10 mx-auto ml-10 flex flex-col w-full max-w-4xl h-auto">
+        <div class="bg-brown-1000 px-12 py-10 mx-auto lg:ml-10 flex flex-col w-full lg:max-w-4xl h-auto">
 
             <!-- PERSONAL INFORMATION  -->
-            <form @submit.prevent="register" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="personal_checked == true">
+            <form @submit.prevent="updatePersonalInfo" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="personal_checked == true">
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Información Personal</h2>
                 <div class="flex flex-col gap-2 w-full">
-                    <label for="nickname" class="text-white font-medium">Nickname</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" type="text" v-model="username" placeholder="Nickname" required />
+                    <label for="nickname" class="text-white font-medium">Actualizar nickname</label>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" type="text" v-model="username" placeholder="Nickname"/>
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Actualizar correo electrónico</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="email" type="email" placeholder="Correo electrónico" required/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="email" type="email" placeholder="Correo electrónico"/>
                 </div>
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium" type="submit">Eliminar cuenta</button>
-                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium" type="submit">Guardar cambios</button>
+                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
+                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar cambios</button>
                 </p>
             </form>
             
             <!-- SECURITY -->
-            <form @submit.prevent="register" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="security_checked">
+            <form @submit.prevent="updateSecurity" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="security_checked">
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Seguridad</h2>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Contraseña actual</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual" required/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
                 </div>
                 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña" required/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
                 </div>
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium" type="submit">Eliminar cuenta</button>
-                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium" type="submit">Guardar cambios</button>
+                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
+                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar cambios</button>
                 </p>
             </form>
 
             <!-- MEMBERSHIP -->
-            <form @submit.prevent="register" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="membership_checked == true">
+            <form @submit.prevent="updateMembership" class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="membership_checked == true">
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Membresía</h2>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Contraseña actual</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual" required/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
                 </div>
                 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña" required/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
                 </div>
+
+                <ShowError :error="error" />
+
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium" type="submit">Eliminar cuenta</button>
-                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium" type="submit">Guardar cambios</button>
+                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
+                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar cambios</button>
                 </p>
             </form>
 
@@ -87,12 +90,20 @@
 </template>
 
 <script>
+import axios from 'axios';
+import ShowError from '@/components/ShowError.vue';
+
 export default {
     data() {
         return {
             personal_checked: true,
             security_checked: false,
             membership_checked: false,
+            error: "",
+            username: "",
+            email: "",
+            password: "",
+            imageProfile: null,
         }
     },
     computed: {
@@ -113,6 +124,30 @@ export default {
             this.personal_checked = false;
             this.security_checked = false;
             this.membership_checked = true;
+        },
+        async updatePersonalInfo() {
+            const userId = this.$store.getters.user_data.id;
+
+            try {
+                let formData = new FormData();
+                formData.append('username', this.username);
+                formData.append('email', this.email);
+                
+                if (this.imageProfile) { formData.append('imageProfile', this.imageProfile); }
+
+                const response = await axios.put(`/users/${userId}`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+
+                // actualizar Vuex con nuevo objeto usuario
+                this.$store.commit('setUser', response.data);
+            } catch (err) { this.error = err.response.data.message }
+        },
+        async updateSecurity() {
+            // Implementar la lógica para actualizar la seguridad aquí
+        },
+        async updateMembership() {
+            // Implementar la lógica para actualizar la membresía aquí
         },
     },
 }
