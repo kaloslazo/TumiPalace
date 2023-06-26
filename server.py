@@ -94,15 +94,13 @@ ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif'];
 class Client(db.Model, UserMixin):
     __tablename__ = 'client';
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"), unique=True);
-    age = db.Column(db.Integer, unique=False, nullable=False);
     nickname = db.Column(db.String(20), nullable=False, unique=True);
     email = db.Column(db.String(80), nullable=False, unique=True);
     password = db.Column(db.String(80), nullable=False, unique=False);
     bank = db.Column(db.Integer(), nullable=False, unique=False, default=0);
     creationDate = db.Column(db.DateTime, default=datetime.utcnow());
     imageProfile = db.Column(db.String(255), default=None);
-    def __init__(self, age, nickname, email, password):
-        self.age = age;
+    def __init__(self, nickname, email, password):
         self.nickname = nickname;
         self.email = email;
         self.password = password;
@@ -112,7 +110,6 @@ class Client(db.Model, UserMixin):
     def serialize(self):
         return {
             'id': self.id,
-            'age': self.age,
             'nickname': self.nickname,
             'email': self.email,
             'password': self.password,
@@ -188,20 +185,13 @@ class LoginForm(FlaskForm):
             raise ValidationError("La contraseña no es correcta, inténtelo de nuevo.");
     
 class RegisterForm(FlaskForm):
-    userAge = IntegerField(validators=[
-        InputRequired(message='La edad es requerida.'),
-        NumberRange(min=1, message="La edad debe ser un número mayor a 1.")],
-        render_kw={"placeholder": "Edad"}
-    );
     userNickname = StringField(validators=[InputRequired(message='El nombre de usuario es requerido.'), Length(min=1, max=20)], render_kw={"placeholder": "@Nickname"});
     userEmail = StringField(validators=[InputRequired(message='El correo electrónico es requerido.'), Length(min=1, max=80), Email()], render_kw={"placeholder": "Email"});
     userPass = PasswordField(validators=[InputRequired(message='La contraseña es requerida.'), Length(min=1, max=80)], render_kw={"placeholder": "Contraseña"});
     submit = SubmitField("Registrarse");
-    def checkDatabaseRepetition(self, userAge, userNickname, userEmail):
+    def checkDatabaseRepetition(self, userNickname, userEmail):
         nicknameExists = Client.query.filter_by(nickname=userNickname).first();
         userEmailExists = Client.query.filter_by(email=userEmail).first();
-        if userAge < 18:
-            raise ValidationError("Lo lamentamos, para poder crear una cuenta debes ser mayor de edad.");
         if nicknameExists:
             raise ValidationError("El nickname ya existe. Inténtalo de nuevo con uno distinto.");
         if userEmailExists:
@@ -348,16 +338,14 @@ def register():
     form = RegisterForm();
     if form.validate_on_submit():
         try:
-            form.checkDatabaseRepetition(form.userAge.data, form.userNickname.data, form.userEmail.data);
+            form.checkDatabaseRepetition(form.userNickname.data, form.userEmail.data);
             # if data passed validators
             hashedPass = bcrypt.generate_password_hash(form.userPass.data).decode('utf-8');
             newUser = Client(
                 nickname=form.userNickname.data, 
                 password=hashedPass, 
-                age=form.userAge.data, 
                 email=form.userEmail.data
             );
-            print(f"Client ('{newUser.nickname}', '{newUser.email}', '{newUser.age}', '{newUser.password}')");
             db.session.add(newUser);
             db.session.commit();
             db.session.close();

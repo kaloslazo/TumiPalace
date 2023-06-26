@@ -1,8 +1,6 @@
 <template>
     <div>
         <h1>Dashboard</h1>
-        <button v-if="isLoggedIn" @click="logout">Logout</button>
-        <p>Is logged in: {{ isLoggedIn }}</p>
     </div>
 </template>
 
