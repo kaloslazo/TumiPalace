@@ -186,6 +186,9 @@ def create_app(test_config=None):
         user = User.verify_reset_password_token(token);
         if not user: return jsonify(message="El token es inválido o ya expiró."), 400
         
+        # si la contraseña es la misma que la anterior no se actualiza
+        if bcrypt.check_password_hash(user.password, password): return jsonify(message="La contraseña es la misma que la anterior."), 400;
+        
         # encrypt password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8');
         user.password = hashed_password;

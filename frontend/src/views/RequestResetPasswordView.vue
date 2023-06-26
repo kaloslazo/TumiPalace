@@ -18,7 +18,7 @@
               <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="email" type="email" placeholder="Correo electrónico" required />
             </div>
               <p class="text-yellow-600" v-if="loading_text">Enviando correo...</p>
-              <button class="rounded-sm bg-yellow-600 w-full mt-8 py-2 font-medium" type="submit">Restablecer contraseña</button>
+              <button class="rounded-sm bg-yellow-600 w-full mt-5 py-2 font-medium hover:bg-yellow-700" type="submit">Restablecer contraseña</button>
           </form>
           
           <!-- Error form -->
@@ -30,7 +30,7 @@
               </div>
           </div>
 
-          <!-- Error form -->
+          <!-- Check mail form -->
           <div v-if="is_sended == true" class="max-w-md">
             <img class="h-20 w-auto mb-5 text-yellow-600" src="@/assets/svg/email.svg" alt="error-icon">
             <div class="text-white">
@@ -69,7 +69,6 @@ export default {
         this.is_sended = true;
         this.loading_text = false;
         this.error = "";
-        console.log("RESPUESTA: ", response.data);
       } catch (err) {
         this.is_sended = false;
         this.loading_text = false;
