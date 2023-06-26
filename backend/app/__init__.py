@@ -1,7 +1,12 @@
-import sys
-import re
+import sys;
+import os;
+import re;
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt;
+from flask_mail import (
+    Mail,
+    Message,
+);
 from flask_jwt_extended import (
     JWTManager,
     create_access_token,
@@ -13,6 +18,7 @@ from flask import (
     request,
     jsonify,
     abort,
+    url_for,
 );
 from .models import (
     db,
@@ -30,6 +36,14 @@ def create_app(test_config=None):
     app.config['JWT_SECRET_KEY'] = 'pass';
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
     jwt = JWTManager(app);
+    
+    # mail config
+    app.config["MAIL_SERVER"] = "smtp.googlemail.com";
+    app.config["MAIL_PORT"] = 587;
+    app.config["MAIL_USE_TLS"] = True;
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME');
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD');
+    mail = Mail(app);
     
     bcrypt = Bcrypt(app);
     with app.app_context():
@@ -135,6 +149,47 @@ def create_app(test_config=None):
     def protected():
         current_user = get_jwt_identity()
         return jsonify(logged_in_as=current_user), 200;
+    
+    #===: Handle forgot password ===:
+    @app.route("/api/reset_password", methods=["POST"])
+    def reset_password_request():
+        data = request.get_json();
+        email = data.get("email");
+        user = User.query.filter_by(email=email).first();
+        if user: 
+            token = user.get_reset_password_token();
+            send_reset_email(user, token);
+            return jsonify(message="Petición enviada correctamente. Revisa el código de confirmación que enviamos a tu correo electrónico."), 200;
+        else:
+            return jsonify(message="El correo electrónico ingresado no existe."), 400;        
+    def send_reset_email(user, token):
+        msg = Message(
+                'Restablecimiento de contraseña | Tumipalace',
+                sender='noreply@tumipalace.com',
+                recipients=[user.email]);
+        msg.body = f'''
+        Para restablecer tu contraseña, visita el siguiente enlace: {url_for('reset_password', token=token, _external=True)}
+        
+        Si tu no realizaste la solicitud de cambio de contraseña, ignora este correo electrónico.
+        
+        Saludos,
+        TumiPalace Perú.
+        '''
+        mail.send(msg);
+
+    #===: Handle password reset as email link ===:
+    @app.route("/api/reset_password/<token>", methods=["POST"])
+    def reset_password(token):
+        data = request.get_json();
+        password = data.get("password");
+        user = User.verify_reset_password_token(token);
+        if not user: return jsonify(message="El token es inválido o ya expiró."), 400
+        
+        # encrypt password
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8');
+        user.password = hashed_password;
+        db.session.commit();
+        return jsonify(message="La contraseña se actualizó exitosamente."), 200;
 
 
     # return app as instance

@@ -2,6 +2,8 @@ import uuid;
 from datetime import datetime;
 from config.development import config;
 from flask_sqlalchemy import SQLAlchemy;
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask import current_app;
 
 
 db = SQLAlchemy();
@@ -41,6 +43,15 @@ class User(db.Model):
             'imageProfile': self.imageProfile,
             'creationDate': self.creationDate,
         };
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec);
+        return s.dumps({'user_id': self.id}).decode('utf-8');
+    @staticmethod
+    def verify_reset_password_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try: user_id = s.loads(token)['user_id']
+        except: return None;
+        return User.query.get(user_id);
 
 
 #===: games class :===
