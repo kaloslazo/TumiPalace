@@ -164,16 +164,17 @@ def create_app(test_config=None):
             return jsonify(message="El correo electrónico ingresado no existe."), 400;        
     def send_reset_email(user, token):
         msg = Message(
-                'Restablecimiento de contraseña | Tumipalace',
+                'Restablecer contraseña | TumiPalace',
                 sender='noreply@tumipalace.com',
                 recipients=[user.email]);
-        msg.body = f'''
-        Para restablecer tu contraseña, visita el siguiente enlace: {url_for('reset_password', token=token, _external=True)}
-        
-        Si tu no realizaste la solicitud de cambio de contraseña, ignora este correo electrónico.
-        
-        Saludos,
-        TumiPalace Perú.
+        msg.html = f'''
+        <h1>Restablecimiento de contraseña</h1>
+        <p>Hola,</p>
+        <p>Recibimos una solicitud para restablecer tu contraseña. Si tú hiciste esta solicitud, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+        <p><a target="_BLANK" href="http://127.0.0.1:8080/reset_password/{token}">Cambiar contraseña</a></p>
+        <p>Si tú no realizaste la solicitud de cambio de contraseña, ignora este correo electrónico.</p>
+        <p>Saludos,</p>
+        <p>El equipo de TumiPalace Perú.</p>
         '''
         mail.send(msg);
 
