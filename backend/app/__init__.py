@@ -31,7 +31,6 @@ from .models import (
 def create_app(test_config=None):
     app = Flask(__name__);
     CORS(app, origins='*', supports_credentials=True);
-    app.config['UPLOAD_FOLDER'] = 'static/employees';
     
     # jwt config
     app.config['JWT_SECRET_KEY'] = 'pass';
@@ -206,23 +205,29 @@ def create_app(test_config=None):
         user = User.query.get(user_id);
         if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404
 
-        data = request.get_json()
-        new_nickname = data.get("nickname", user.nickname)
-        new_email = data.get("email", user.email)
+        if 'username' in request.form:
+            new_username = request.form['username']
+            if (new_username == user.nickname): return jsonify({"message": "El nombre de usuario debe ser distinto al actual."}), 400
+            if (User.query.filter_by(nickname=new_username).first()): return jsonify({"message": "El nombre de usuario ya se encuentra asociado a otra cuenta."}), 400
+            user.nickname = new_username if new_username else user.nickname
 
-        if new_nickname and (new_nickname != user.nickname) and (User.query.filter_by(nickname=new_nickname).first()): return jsonify({"message": "El nickname está registrado en otra cuenta."}), 400
-        if new_email and (new_email != user.email) and (User.query.filter_by(email=new_email).first()): return jsonify({"message": "Email already in use"}), 400
+        if 'email' in request.form:
+            new_email = request.form['email']
+            if (new_email != user.email): return jsonify({"message": "El correo electrónico debe ser distinto al actual."}), 400
+            if (User.query.filter_by(email=new_email).first()): return jsonify({"message": "El email ya se encuentra asociado a otra cuenta."}), 400
+            user.email = new_email if new_email else user.email
 
-        user.nickname = new_nickname if new_nickname else user.nickname
-        user.email = new_email if new_email else user.email
-
-        # Handle the profile image
-        image = request.files.get('imageProfile')
-        
-        if image:
-            filename = secure_filename(image.filename);
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            user.imageProfile = url_for('uploaded_file', filename=filename)
+        if 'imageProfile' in request.files:
+            new_image = request.files['imageProfile']
+            filename = secure_filename(new_image.filename)
+            
+            user_dir = os.path.join(app.config["UPLOAD_FOLDER"], user_id) 
+            if not os.path.exists(user_dir):
+                os.makedirs(user_dir);
+            
+            user_image_path = os.path.join(user_dir, filename);
+            new_image.save(user_image_path);
+            user.imageProfile = user_image_path if new_image else user.imageProfile;
 
         db.session.commit()
 

@@ -32,13 +32,21 @@
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Información Personal</h2>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Actualizar nickname</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" type="text" v-model="username" placeholder="Nickname"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" type="text" v-model="username" placeholder="Nickname"/>
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Actualizar correo electrónico</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="email" type="email" placeholder="Correo electrónico"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="email" type="email" placeholder="Correo electrónico"/>
                 </div>
+
+                <div class="flex flex-col gap-2 w-full">
+                    <label for="imageProfile" class="text-white font-medium">Actualizar imagen de perfil:</label>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" type="file" id="imageProfile" name="imageProfile" accept="image/*" @change="onFileChange">
+                </div>
+
+                <ShowError v-bind:error="error" />
+
                 <p class="flex flex-row gap-5 mt-5 w-full">
                     <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
                     <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar cambios</button>
@@ -50,13 +58,16 @@
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Seguridad</h2>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Contraseña actual</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
                 </div>
                 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
                 </div>
+                
+                <ShowError v-bind:error="error" />
+
                 <p class="flex flex-row gap-5 mt-5 w-full">
                     <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
                     <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar cambios</button>
@@ -68,15 +79,15 @@
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Membresía</h2>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Contraseña actual</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual"/>
                 </div>
                 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
-                    <input class="border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Nueva contraseña"/>
                 </div>
 
-                <ShowError :error="error" />
+                <ShowError v-bind:error="error" />
 
                 <p class="flex flex-row gap-5 mt-5 w-full">
                     <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
@@ -130,10 +141,10 @@ export default {
 
             try {
                 let formData = new FormData();
-                formData.append('username', this.username);
-                formData.append('email', this.email);
-                
-                if (this.imageProfile) { formData.append('imageProfile', this.imageProfile); }
+                if (this.username != "") { formData.append('username', this.username); }
+                if (this.email != "") { formData.append('email', this.email); }
+                if (this.imageProfile != null) { formData.append('imageProfile', this.imageProfile); }
+                console.log(this.imageProfile);
 
                 const response = await axios.put(`/users/${userId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
@@ -148,6 +159,10 @@ export default {
         },
         async updateMembership() {
             // Implementar la lógica para actualizar la membresía aquí
+        },
+        onFileChange(e) {
+            const file = e.target.files[0];
+            this.imageProfile = file;
         },
     },
 }

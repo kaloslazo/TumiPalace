@@ -1,3 +1,4 @@
+import os;
 import uuid;
 from datetime import datetime, timedelta
 from config.development import config;
@@ -13,6 +14,11 @@ def setup_db(app, db_uri):
     app.config["SQLALCHEMY_DATABASE_URI"] = config["DATABASE_URI"] if db_uri is None else db_uri;
     app.config["SECRET_KEY"] = "dev_secret_key";
     app.config["UPLOAD_FOLDER"] = "static/users";
+
+    # si no existe la carpeta para usuarios.
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+
     db.app = app;
     db.init_app(app);
     db.create_all();
