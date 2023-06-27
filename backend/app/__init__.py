@@ -1,5 +1,6 @@
 import sys;
 import os;
+import img2pdf;
 import re;
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt;
@@ -202,7 +203,7 @@ def create_app(test_config=None):
         return jsonify(message="La contraseña se actualizó exitosamente."), 200;
 
     #===: Handle update account ===:
-    @app.route("/api/users/<user_id>", methods=["PUT"])
+    @app.route("/api/users/<user_id>", methods=["PUT", "GET"])
     def update_user(user_id):
         user = User.query.get(user_id);
         if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404

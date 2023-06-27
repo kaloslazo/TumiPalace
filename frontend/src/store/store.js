@@ -32,6 +32,7 @@ export default createStore({
             commit('auth_request')
             try {
                 const res = await axios.post('login', user);
+
                 this.state.user_data = res.data.user;
                 if (res.data.access_token) {
                     const user = { token: res.data.access_token };
