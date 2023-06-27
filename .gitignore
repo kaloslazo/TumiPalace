@@ -2,6 +2,7 @@
 env/
 .env
 setup_email.sh
+static/users/
 
 #===: Migrations
 migrations/
