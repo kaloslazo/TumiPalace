@@ -159,7 +159,8 @@ export default {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            if (response.data.status === 'authenticated') { this.user_data = response.data.user; }
+            console.log(response.data);
+            if (response.data.status === 'authenticated') { this.$store.commit('updateUser', response.data); }
         },
         set_personal() {
             this.security_checked = false;
@@ -188,7 +189,11 @@ export default {
                 const response = await axios.put(`/users/${userId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
-            } catch (err) { this.error = err.response.data.message }
+
+                this.$store.commit('updateUser', response.data);
+            } catch (err) { 
+                this.error = err.response.data.message
+            }
         },
         async updateSecurity() {
             // Implementar la lógica para actualizar la seguridad aquí

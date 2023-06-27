@@ -23,6 +23,9 @@ export default createStore({
             state.status = ''
             state.user = {}
         },
+        updateUser(state, updatedUser) {
+            state.user = { ...state.user, ...updatedUser };
+        },
     },
     actions: {
         async login({ commit }, user) {
