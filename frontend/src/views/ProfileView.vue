@@ -3,7 +3,7 @@
         <!-- start left-->
         <div class="bg-brown-1000 rounded flex flex-col w-full lg:max-w-xs py-10">
             <div class="px-12">
-                <img class="h-40 w-auto mr-4 rounded-full" :src="imageUrl" alt="user_image_profile">
+                <img class="h-40 w-auto mr-4 rounded-full" :src="imageUrl" alt="user_image_profile"> 
                 <h2 class="font-semibold text-3xl mt-10 text-white">{{ user_data.username }}</h2>
                 <h4 class="font-thin text-grey-400">{{ user_data.email }}</h4>
             </div>
@@ -112,7 +112,15 @@
                         v-model="password" type="password" placeholder="Nueva contraseña" />
                 </div>
 
-                <ShowError v-bind:error="error" />
+                <!-- <ShowError v-bind:error="error" /> -->
+                <!-- Error form -->
+                <div class="mt-5 bg-red-alert-bg border-t-4 border-red-alert-darker w-full max-w-sm flex flex-row py-3 px-3 z-10 items-center" v-if="error">
+                    <img class="h-10 w-auto" src="@/assets/svg/error.svg" alt="error-icon">
+                    <div class="flex flex-col ml-5">
+                        <h4 class="text-red-alert-darker font-medium text-lg">Error</h4>
+                        <p class="text-red-alert-darker text-sm">{{ error }}</p>
+                    </div>
+                </div>
 
                 <p class="flex flex-row gap-5 mt-5 w-full">
                     <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar
@@ -121,6 +129,8 @@
                         cambios</button>
                 </p>
             </form>
+
+            <img :src=imageUrl alt="">
 
         </div>
         <!-- end left -->
@@ -147,7 +157,7 @@ export default {
     },
     computed: {
         user_data() { return this.$store.getters.user_data },
-        imageUrl() { return this.user_data.image ? `http://127.0.0.1:5004/api/${this.user_data.image}` : this.defaultImage; }
+        imageUrl() { return this.user_data.image ? `http://127.0.0.1:5004/api/${this.user_data.image}` : this.defaultImage; },
     },
     methods: {
         async mounted() {
@@ -188,10 +198,8 @@ export default {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
 
-                const response = await axios.get(`/users/${userId}`);
-                
-                this.$store.commit('updateUser', response.data);
-                this.$vue.set(this.$store.state.user, 'image', response.data.image);
+                const response_updated = await axios.get(`/users/${userId}`);
+                this.$store.commit('updateUser', response_updated.data);
             } catch (err) { 
                 this.error = err.response.data.message
             }

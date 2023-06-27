@@ -66,6 +66,7 @@ export default {
         this.error = "";
         this.loading_text = true;
         const response = await axios.post('/reset_password', { email: this.email });
+        console.log("Respuesta:", response);
         this.is_sended = true;
         this.loading_text = false;
         this.error = "";

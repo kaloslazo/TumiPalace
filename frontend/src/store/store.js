@@ -24,7 +24,9 @@ export default createStore({
             state.user = {}
         },
         updateUser(state, updatedUser) {
-            state.user = { ...state.user, ...updatedUser };
+            console.log("ANTES", state.user_data)
+            state.user_data = { ...state.user_data, ...updatedUser };
+            console.log("DESPUES", state.user_data)
         },
     },
     actions: {

@@ -2,6 +2,7 @@ import sys;
 import os;
 import img2pdf;
 import re;
+from PIL import Image;
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt;
 from werkzeug.utils import secure_filename;
@@ -157,19 +158,22 @@ def create_app(test_config=None):
     #===: Handle forgot password ===:
     @app.route("/api/reset_password", methods=["POST"])
     def reset_password_request():
+        
         data = request.get_json();
         email = data.get("email");
         user = User.query.filter_by(email=email).first();
+        
         if user: 
             token = user.get_reset_password_token();
             send_reset_email(user, token);
             return jsonify(message="Petición enviada correctamente. Revisa el código de confirmación que enviamos a tu correo electrónico."), 200;
         else:
-            return jsonify(message="El correo electrónico ingresado no existe."), 400;        
+            return jsonify(message="El correo electrónico ingresado no existe."), 400;       
+     
     def send_reset_email(user, token):
         msg = Message(
                 'Restablecer contraseña | TumiPalace',
-                sender='noreply@tumipalace.com',
+                sender='tumipalace@gmail.com',
                 recipients=[user.email]);
         msg.html = f'''
         <h1>Restablecimiento de contraseña</h1>
@@ -222,15 +226,23 @@ def create_app(test_config=None):
 
         if 'imageProfile' in request.files:
             new_image = request.files['imageProfile']
-            filename = secure_filename(new_image.filename)
             
             user_dir = os.path.join(app.config["UPLOAD_FOLDER"], user_id) 
             if not os.path.exists(user_dir):
                 os.makedirs(user_dir);
             
-            user_image_path = os.path.join(user_dir, filename);
-            new_image.save(user_image_path);
-            user.imageProfile = user_image_path if new_image else user.imageProfile;
+            filename = secure_filename(new_image.filename);
+            current_image_path = user.imageProfile;
+            
+            if os.path.isfile(current_image_path):
+                os.remove(current_image_path)
+                        
+            # convertir a png y guardar
+            img = Image.open(new_image)
+            user_image_path = os.path.join(user_dir, filename)
+            img.convert('RGBA').save(user_image_path, "PNG")
+            
+            user.imageProfile = user_image_path;
 
         db.session.commit()
 
@@ -239,7 +251,6 @@ def create_app(test_config=None):
     #===: Handle static image ===:
     @app.route("/api/<path:path>")
     def serve_file(path):
-        print("PATH", path);
         absolute_path = os.path.join(os.getcwd(), path)
         return send_file(absolute_path, mimetype='image/png');
 
