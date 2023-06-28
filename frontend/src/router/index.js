@@ -91,6 +91,25 @@ const routes = [
       hideNavigation: true,
     },
   },
+  /*=== GAMES ===*/ 
+  {
+    path: "/games/slots",
+    name: "slots",
+    component: () => import("@/views/SlotsView.vue"),
+    meta: {
+      title: 'Slots',
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/games/roulette",
+    name: "roulette",
+    component: () => import("@/views/RouletteView.vue"),
+    meta: {
+      title: 'Roulette',
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({
