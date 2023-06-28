@@ -46,6 +46,7 @@ export default {
     },
     methods: {
         async submit() {
+            console.log("llamada a submit");
             this.success = "";
             this.error = "";
             this.processing = true;
@@ -63,11 +64,20 @@ export default {
 
                 if (result.error) { this.error = result.error.message; }
                 else {
-                    this.success = "Pago realizado con éxito.";
+                    
+                    // Comenzar a hacer polling para obtener el saldo del usuario
+                    const intervalId = setInterval(async () => {
+                        const userResponse = await axios.get('/current_user');
+                        const updatedBank = userResponse.data.user.bank;
+                        console.log("haciendo polling");
 
-                    // Actualizar el saldo del usuario
-                    const userResponse = await axios.get('/current_user');
-                    this.$store.commit('updateUserBank', userResponse.data.user.bank);
+                        // Si el saldo del usuario se ha actualizado, actualizar el estado y detener el polling
+                        if (updatedBank !== this.$store.state.bank) {
+                            this.success = "Pago realizado con éxito.";
+                            this.$store.commit('updateUserBank', updatedBank);
+                            clearInterval(intervalId);
+                        }
+                    }, 2000);
                 }
             } catch (error) {
                 console.error("ERROR", error);
