@@ -1,6 +1,6 @@
 import sys;
 import os;
-import img2pdf;
+import shutil
 import re;
 from PIL import Image;
 from flask_cors import CORS
@@ -22,7 +22,7 @@ from flask import (
     jsonify,
     abort,
     url_for,
-    send_file
+    send_file,
 );
 from .models import (
     db,
@@ -208,34 +208,36 @@ def create_app(test_config=None):
 
     #===: Handle update account ===:
     @app.route("/api/users/<user_id>", methods=["PUT", "GET"])
+    @jwt_required()
     def update_user(user_id):
         user = User.query.get(user_id);
         if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404
 
         if 'username' in request.form:
             new_username = request.form['username']
+            
+            if " " in new_username: return jsonify({"message": "El nombre de usuario no puede contener espacios."}), 400
             if (new_username == user.nickname): return jsonify({"message": "El nombre de usuario debe ser distinto al actual."}), 400
             if (User.query.filter_by(nickname=new_username).first()): return jsonify({"message": "El nombre de usuario ya se encuentra asociado a otra cuenta."}), 400
             user.nickname = new_username if new_username else user.nickname
 
         if 'email' in request.form:
             new_email = request.form['email']
-            if (new_email != user.email): return jsonify({"message": "El correo electrónico debe ser distinto al actual."}), 400
-            if (User.query.filter_by(email=new_email).first()): return jsonify({"message": "El email ya se encuentra asociado a otra cuenta."}), 400
+            if (new_email == user.email): return jsonify({"message": "El correo electrónico debe ser distinto al actual."}), 400
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", new_email): return jsonify({"message": "El correo electrónico es inválido."}), 400;
+            if (User.query.filter_by(email=new_email).first()): return jsonify({"message": "El correo electrónico ya se encuentra asociado a otra cuenta."}), 400
             user.email = new_email if new_email else user.email
 
         if 'imageProfile' in request.files:
             new_image = request.files['imageProfile']
             
             user_dir = os.path.join(app.config["UPLOAD_FOLDER"], user_id) 
-            if not os.path.exists(user_dir):
-                os.makedirs(user_dir);
+            if not os.path.exists(user_dir): os.makedirs(user_dir);
             
             filename = secure_filename(new_image.filename);
             current_image_path = user.imageProfile;
             
-            if os.path.isfile(current_image_path):
-                os.remove(current_image_path)
+            if current_image_path and os.path.isfile(current_image_path): os.remove(current_image_path)
                         
             # convertir a png y guardar
             img = Image.open(new_image)
@@ -253,6 +255,54 @@ def create_app(test_config=None):
     def serve_file(path):
         absolute_path = os.path.join(os.getcwd(), path)
         return send_file(absolute_path, mimetype='image/png');
+
+    #===: Handle delete account ===:
+    @app.route("/api/users/<user_id>", methods=["DELETE"])
+    @jwt_required()
+    def delete_user(user_id):
+        user = User.query.get(user_id);
+        if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404
+
+        # verificar contraseña
+        data = request.get_json();
+        password = data.get("password");
+        
+        if not bcrypt.check_password_hash(user.password, password): return jsonify(message="La contraseña es incorrecta."), 401;
+
+        # eliminar media del usuario
+        user_folder = os.path.join(app.static_folder, 'user', user_id)
+        if os.path.exists(user_folder): shutil.rmtree(user_folder)
+
+        db.session.delete(user);
+        db.session.commit();
+
+        return jsonify({"message": "El usuario fue eliminado exitosamente. Redirigiéndote al inicio en 3 segundos..."}), 200
+
+    #===: Handle change password ===:
+    @app.route("/api/users/<user_id>/change_password", methods=["POST"])
+    @jwt_required()
+    def change_password(user_id):
+        user = User.query.get(user_id)
+        if not user: return jsonify({"message": "El usuario no fue encontrado."}), 404
+
+        data = request.get_json();
+        password = data.get("password");
+        new_password = data.get("new_password");
+        
+        if (not password): return jsonify({"message": "No se proporcionó contraseña actual."}), 400;
+        if not bcrypt.check_password_hash(user.password, password): return jsonify({"message": "Contraseña actual incorrecta."}), 401
+        if bcrypt.check_password_hash(user.password, new_password): return jsonify({"message": "La nueva contraseña debe ser diferente de la actual."}), 400
+
+        if (not new_password): return jsonify({"message": "No se proporcionó nueva contraseña."}), 400;
+        if len(new_password) < 5: return jsonify({"message": "La contraseña debe tener como mínimo 5 carácteres."}), 400;
+        if " " in new_password: return jsonify({"message": "La contraseña no puede contener espacios."}), 400;
+        
+        # Cambiar la contraseña
+        hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8');
+        user.password = hashed_password;
+        db.session.commit()
+
+        return jsonify({"message": "La contraseña ha sido cambiada exitosamente."}), 200
 
     # return app as instance
     return app
