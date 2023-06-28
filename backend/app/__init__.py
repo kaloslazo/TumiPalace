@@ -111,7 +111,7 @@ def create_app(test_config=None):
         
         # encrypt password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8');
-        new_user = User(nickname=username, password=hashed_password, email=email);
+        new_user = User(nickname=username, password=hashed_password, email=email, bank=1000);
         db.session.add(new_user);
         db.session.commit();
         return jsonify(message="User created successfully"), 201;
@@ -145,6 +145,7 @@ def create_app(test_config=None):
                     "username": user.nickname,
                     "email": user.email,
                     "image": user.imageProfile,
+                    "bank": user.bank,
                 }}), 200;
         else:
             return jsonify({ "message": "La contraseña no es correcta. Inténtelo de nuevo." }), 401;
@@ -312,6 +313,21 @@ def create_app(test_config=None):
         games = Game.query.all()
         return jsonify([game.serialize() for game in games])
 
+    #===: Update user bank :===
+    @app.route('/api/users/<user_id>/update_balance', methods=['POST'])
+    @jwt_required()
+    def update_balance(user_id):
+        data = request.get_json()
+        new_balance = data.get('balance')
+
+        user = User.query.get(user_id)
+        if not user: return jsonify({"message": "Usuario no encontrado"}), 404
+        if not new_balance: return jsonify({"message": "No se proporcionó un nuevo balance"}), 400
+        if new_balance < 0: return jsonify({"message": "El balance no puede ser negativo"}), 400
+
+        user.bank = new_balance;
+        db.session.commit();
+        return jsonify({"message": "Balance actualizado exitosamente"}), 200
 
     # return app as instance
     return app

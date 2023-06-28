@@ -27,6 +27,9 @@ export default createStore({
             // usar destructuring: actualizar lo necesario
             state.user_data = { ...state.user_data, ...updatedUser };
         },
+        updateUserBank(state, newBalance) {
+            state.user_data.bank = newBalance;
+        },
     },
     actions: {
         async login({ commit }, user) {

@@ -288,7 +288,7 @@ def roulette():
 
 @app.route('/slots')
 def slots():
-    return "Slots";
+    return render_template('slots.html', user=current_user);
 
 @app.route('/store', methods=['GET', 'POST'])
 @login_required

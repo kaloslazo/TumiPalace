@@ -231,12 +231,14 @@ export default {
             const userId = this.$store.getters.user_data.id;
 
             try {
+                this.error = "";
+                this.success = "";
                 let formData = new FormData();
                 if (this.username != "") { formData.append('username', this.username); }
                 if (this.email != "") { formData.append('email', this.email); }
                 if (this.imageProfile != null) { formData.append('imageProfile', this.imageProfile); }
 
-                await axios.put(`/users/${userId}`, formData, {
+                const response = await axios.put(`/users/${userId}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
 
@@ -247,6 +249,8 @@ export default {
                     username: response_updated.data.nickname,
                     email: response_updated.data.email
                 });
+
+                this.success = "Actualizado correctamente";
 
                 // Limpiar los campos de entrada
                 this.username = "";

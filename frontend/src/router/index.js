@@ -95,7 +95,7 @@ const routes = [
   {
     path: "/games/slots",
     name: "slots",
-    component: () => import("@/views/SlotsView.vue"),
+    component: () => import("@/views/games/SlotsView.vue"),
     meta: {
       title: 'Slots',
       requiresAuth: true,
@@ -104,7 +104,7 @@ const routes = [
   {
     path: "/games/roulette",
     name: "roulette",
-    component: () => import("@/views/RouletteView.vue"),
+    component: () => import("@/views/games/RouletteView.vue"),
     meta: {
       title: 'Roulette',
       requiresAuth: true,

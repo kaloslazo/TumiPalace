@@ -38,13 +38,13 @@ class User(db.Model):
     creationDate = db.Column(db.DateTime, default=datetime.utcnow());
     imageProfile = db.Column(db.String(255), default=None);
     
-    def __init__(self, nickname, email, password):
+    def __init__(self, nickname, email, password, bank=0):
         self.nickname = nickname;
         self.email = email;
         self.password = password;
         self.reset_password_token = None;
         self.reset_password_token_expires_at = datetime.utcnow();
-        self.bank = 0;
+        self.bank = bank;
         self.imageProfile = None;
         self.creationDate = datetime.utcnow();
         
