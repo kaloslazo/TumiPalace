@@ -3,7 +3,7 @@
         <!-- start left-->
         <div class="bg-brown-1000 rounded flex flex-col w-full lg:max-w-xs py-10">
             <div class="px-12">
-                <img class="h-40 w-auto mr-4 rounded-full" :src="imageUrl" alt="user_image_profile"> 
+                <img class="h-40 w-40 mr-4 rounded-full object-cover" :src="imageUrl" alt="user_image_profile"> 
                 <h2 class="font-semibold text-3xl mt-10 text-white">{{ user_data.username }}</h2>
                 <h4 class="font-thin text-grey-400">{{ user_data.email }}</h4>
             </div>
@@ -17,9 +17,12 @@
                     <span>Seguridad</span>
                 </button>
                 <button class="flex flex-row hover:text-yellow-600 transition-all" @click="set_membership">
-                    <img class="h-5 text-yellow-600 w-auto mx-5 my-auto" src="@/assets/svg/vip_crown.svg"
-                        alt="setting-icon">
+                    <img class="h-5 text-yellow-600 w-auto mx-5 my-auto" src="@/assets/svg/vip_crown.svg" alt="setting-icon">
                     <span>Membresía</span>
+                </button>
+                <button class="flex flex-row hover:text-yellow-600 transition-all" @click="set_delete_account">
+                    <img class="h-5 text-yellow-600 w-auto mx-5 my-auto" src="@/assets/svg/delete.svg" alt="setting-icon">
+                    <span>Eliminar cuenta</span>
                 </button>
             </div>
         </div>
@@ -52,14 +55,13 @@
                     <label for="imageProfile" class="text-white font-medium">Actualizar imagen de perfil:</label>
                     <input
                         class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0"
-                        type="file" id="imageProfile" name="imageProfile" accept="image/*" @change="onFileChange">
+                        type="file" id="imageProfile" name="imageProfile" accept="image/*" @change="onFileChange" ref="fileInput">
                 </div>
 
                 <ShowError v-bind:error="error" />
+                <ShowSuccess v-bind:success="success" />
 
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar
-                        cuenta</button>
                     <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar
                         cambios</button>
                 </p>
@@ -70,24 +72,23 @@
                 class="flex flex-col justify-center- items-start gap-5 w-full max-w-sm z-10" v-if="security_checked">
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Seguridad</h2>
                 <div class="flex flex-col gap-2 w-full">
-                    <label for="nickname" class="text-white font-medium">Contraseña actual</label>
+                    <label for="pass" class="text-white font-medium">Contraseña actual</label>
                     <input
                         class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0"
                         v-model="password" type="password" placeholder="Contraseña actual" />
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
-                    <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
+                    <label for="new_pass" class="text-white font-medium">Nueva contraseña</label>
                     <input
                         class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0"
-                        v-model="password" type="password" placeholder="Nueva contraseña" />
+                        v-model="new_password" type="password" placeholder="Nueva contraseña" />
                 </div>
 
                 <ShowError v-bind:error="error" />
+                <ShowSuccess v-bind:success="success" />
 
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar
-                        cuenta</button>
                     <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar
                         cambios</button>
                 </p>
@@ -99,39 +100,51 @@
                 v-if="membership_checked == true">
                 <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Membresía</h2>
                 <div class="flex flex-col gap-2 w-full">
-                    <label for="nickname" class="text-white font-medium">Contraseña actual</label>
+                    <label for="pass" class="text-white font-medium">Contraseña actual</label>
                     <input
                         class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0"
                         v-model="password" type="password" placeholder="Contraseña actual" />
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
-                    <label for="nickname" class="text-white font-medium">Nueva contraseña</label>
+                    <label for="newpass" class="text-white font-medium">Nueva contraseña</label>
                     <input
                         class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0"
-                        v-model="password" type="password" placeholder="Nueva contraseña" />
+                        v-model="new_password" type="password" placeholder="Nueva contraseña" />
                 </div>
 
-                <!-- <ShowError v-bind:error="error" /> -->
-                <!-- Error form -->
-                <div class="mt-5 bg-red-alert-bg border-t-4 border-red-alert-darker w-full max-w-sm flex flex-row py-3 px-3 z-10 items-center" v-if="error">
-                    <img class="h-10 w-auto" src="@/assets/svg/error.svg" alt="error-icon">
-                    <div class="flex flex-col ml-5">
-                        <h4 class="text-red-alert-darker font-medium text-lg">Error</h4>
-                        <p class="text-red-alert-darker text-sm">{{ error }}</p>
-                    </div>
-                </div>
+                <ShowError v-bind:error="error" />
 
                 <p class="flex flex-row gap-5 mt-5 w-full">
-                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="submit">Eliminar
-                        cuenta</button>
                     <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Guardar
                         cambios</button>
                 </p>
             </form>
 
-            <img :src=imageUrl alt="">
+            <!-- DELETE ACCOUNT -->
+            <form @submit.prevent="deleteUser"
+                class="flex flex-col justify-center items-start gap-5 w-full max-w-sm z-10" v-if="delete_account_checked == true">
+                <h2 class="text-yellow-600 font-semibold py-2 border-b-2 border-yellow-600 inline-block">Eliminar cuenta</h2>
+                <p class="text-white">Estás seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+                
+                <div class="flex flex-col gap-2 w-full">
+                    <label for="nickname" class="text-white font-medium">Contraseña</label>
+                    <input class="border-2 text-white border-brown-950 bg-brown-950 py-3 px-4 focus:border-brown-950 focus:outline-0" v-model="password" type="password" placeholder="Contraseña actual" />
+                    <!-- checkbox accept delete -->
+                    <div class="flex items-start gap-2 w-full mt-5">
+                        <input id="age_verification" class="mt-1 border-2 text-white border-brown-950 bg-brown-1000 py-3 px-4 focus:border-brown-950 focus:outline-0" type="checkbox" required/>
+                        <label for="age_verification" class="text-white font-thin text-xs">Acepto que al eliminar mi cuenta todo mi progreso se perderá y es irrecuperable.</label>
+                    </div>
+                </div>
+                
+                <ShowError v-bind:error="error" />
+                <ShowSuccess v-bind:success="success" />
 
+                <p class="flex flex-row gap-5 mt-5 w-full">
+                    <button class="rounded-sm bg-yellow-600 w-full py-2 font-medium text-sm" type="submit">Eliminar cuenta</button>
+                    <button class="rounded-sm bg-red-600 w-full py-2 font-medium text-sm" type="button" @click="cancelDelete">Cancelar</button>
+                </p>
+            </form>
         </div>
         <!-- end left -->
     </div>
@@ -140,17 +153,25 @@
 <script>
 import axios from 'axios';
 import ShowError from '@/components/ShowError.vue';
+import ShowSuccess from '@/components/ShowSuccess.vue';
 
 export default {
+    components: {
+        ShowError,
+        ShowSuccess
+    },
     data() {
         return {
             personal_checked: true,
             security_checked: false,
             membership_checked: false,
+            delete_account_checked: false,
+            success: "",
             error: "",
             username: "",
             email: "",
             password: "",
+            new_password: "",
             imageProfile: null,
             defaultImage: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
         }
@@ -174,16 +195,37 @@ export default {
             this.security_checked = false;
             this.membership_checked = false;
             this.personal_checked = true;
+            this.delete_account_checked = false;
+            this.error = "";
+            this.success = "";
         },
         set_security() {
             this.personal_checked = false;
             this.membership_checked = false;
             this.security_checked = true;
+            this.delete_account_checked = false;
+            this.success = "";
+            this.error = "";
         },
         set_membership() {
             this.personal_checked = false;
             this.security_checked = false;
             this.membership_checked = true;
+            this.delete_account_checked = false;
+            this.error = "";
+            this.success = "";
+        },
+        set_delete_account(){
+            this.personal_checked = false;
+            this.security_checked = false;
+            this.membership_checked = false;
+            this.delete_account_checked = true;
+            this.error = "";
+            this.success = "";
+        },
+        // methods async
+        async deleteAccount(){
+
         },
         async updatePersonalInfo() {
             const userId = this.$store.getters.user_data.id;
@@ -199,13 +241,60 @@ export default {
                 });
 
                 const response_updated = await axios.get(`/users/${userId}`);
-                this.$store.commit('updateUser', response_updated.data);
+
+                this.$store.commit('updateUser', {
+                    image: response_updated.data.imageProfile,
+                    username: response_updated.data.nickname,
+                    email: response_updated.data.email
+                });
+
+                // Limpiar los campos de entrada
+                this.username = "";
+                this.email = "";
+                this.imageProfile = null;
+                this.$refs.fileInput.value = null;
             } catch (err) { 
                 this.error = err.response.data.message
             }
         },
+        async deleteUser(){
+            try {
+                this.error = "";
+                this.success = "";
+
+                const userID = this.$store.getters.user_data.id;
+                const response = await axios.delete(`/users/${userID}`, {
+                    data: { password: this.password }
+                });
+
+                this.success = response.data.message;
+                
+                // despues de 5 segundos...
+                setTimeout(() => {
+                    this.$store.commit('logout');
+                    this.$router.push('/login');
+                }, 3000);
+            } catch (err) {
+                this.error = err.response.data.message;
+            }
+        },
         async updateSecurity() {
             // Implementar la lógica para actualizar la seguridad aquí
+            const userId = this.$store.getters.user_data.id;
+            try {
+                this.error = "";
+                this.success = "";
+
+                const response = await axios.post(`/users/${userId}/change_password`, { password: this.password, new_password: this.new_password });
+
+                this.success = response.data.message;
+                
+                // Limpiar los campos de entrada
+                this.new_password = "";
+                this.password = "";
+            } catch (err) { 
+                this.error = err.response.data.message
+            }
         },
         async updateMembership() {
             // Implementar la lógica para actualizar la membresía aquí

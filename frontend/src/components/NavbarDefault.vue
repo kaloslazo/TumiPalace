@@ -28,7 +28,7 @@
             <!-- SHOW USER CONFIG BTN -->
             <router-link to="/profile" v-if="isLoggedIn"
               class="flex flex-row items-center bg-brown-1000 text-white mx-5 px-6 py-2 rounded-sm text-xs">
-              <img class="h-6 w-auto mr-4 rounded-full" v-if="isLoggedIn"
+              <img class="h-6 w-6 mr-4 rounded-full object-cover" v-if="isLoggedIn"
                 :src="imageUrl"
                 alt="user_image_profile">
               <p> {{ user_data.username }} </p>
@@ -48,14 +48,14 @@
 export default {
   data() {
     return {
-      default_image: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+      defaultImage: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
     }
   },
   computed: {
     isLoggedIn() { return this.$store.getters.isLoggedIn },
     user() { return this.$store.getters.user },
-    imageUrl() { return this.user_data.image ? `http://127.0.0.1:5004/api/${this.user_data.image}` : this.defaultImage; },
     user_data() { return this.$store.getters.user_data },
+    imageUrl() { return this.user_data.image ? `http://127.0.0.1:5004/api/${this.user_data.image}` : this.defaultImage }
   },
   methods: {
     logout() {

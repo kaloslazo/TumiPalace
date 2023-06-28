@@ -24,9 +24,8 @@ export default createStore({
             state.user = {}
         },
         updateUser(state, updatedUser) {
-            console.log("ANTES", state.user_data)
+            // usar destructuring: actualizar lo necesario
             state.user_data = { ...state.user_data, ...updatedUser };
-            console.log("DESPUES", state.user_data)
         },
     },
     actions: {
