@@ -257,7 +257,14 @@ def create_app(test_config=None):
     @app.route("/api/<path:path>")
     def serve_file(path):
         absolute_path = os.path.join(os.getcwd(), path)
-        return send_file(absolute_path, mimetype='image/png');
+        if path.endswith(".png"):
+            return send_file(absolute_path, mimetype='image/png')
+        if path.endswith(".jpg"):
+            return send_file(absolute_path, mimetype='image/jpg')
+        elif path.endswith(".mp3"):
+            return send_file(absolute_path, mimetype='audio/mpeg')
+        else:
+            return "File type not supported", 400
 
     #===: Handle delete account ===:
     @app.route("/api/users/<user_id>", methods=["DELETE"])
