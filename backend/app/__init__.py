@@ -47,7 +47,7 @@ def create_app(test_config=None):
     # stripe config
     stripe_public_key = os.getenv('STRIPE_PUBLIC_KEY')
     stripe_secret_key = os.getenv('STRIPE_SECRET_KEY')
-    stripe.api_key = stripe_secret_key;
+    stripe.api_key = os.getenv('STRIPE_SECRET_KEY');
     
     # mail config
     app.config["MAIL_SERVER"] = "smtp.gmail.com";
@@ -349,7 +349,6 @@ def create_app(test_config=None):
     def add_funds():
         try:
             user_id = get_jwt_identity();
-            print("USER", user_id);
             amount = request.json.get('amount')
 
             if not user_id: return jsonify({"message": "Usuario no encontrado."}), 404
@@ -369,13 +368,15 @@ def create_app(test_config=None):
         except Exception as e:
             return jsonify({'error': str(e)}), 403
 
-    @app.route('/stripe_webhook', methods=['POST'])
+    @app.route('/webhook', methods=['POST'])
     def stripe_webhook():
         payload = request.data
         sig_header = request.headers.get('STRIPE_SIGNATURE')
+        print(sig_header);
 
         try:
             event = stripe.Webhook.construct_event( payload, sig_header, os.getenv('STRIPE_WEBHOOK_SECRET'))
+            print(os.getenv('STRIPE_WEBHOOK_SECRET'));
         except ValueError as e:
             return jsonify({'error': str(e)}), 400
         except stripe.error.SignatureVerificationError as e:
@@ -384,12 +385,18 @@ def create_app(test_config=None):
         if event['type'] == 'payment_intent.succeeded':
             payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
             user_id = payment_intent['metadata']['user_id']
+            amount = payment_intent['amount']
+            
             print('PaymentIntent was successful! del id:', user_id);
-            # Aquí puedes actualizar el saldo del usuario
+            
+            user = User.query.get(user_id)
+            print("AMOUNT", amount);
+            if user: user.bank = user.bank + amount;
+            db.session.commit()
+        
         elif event['type'] == 'payment_intent.payment_failed':
             payment_intent = event['data']['object']
             print('PaymentIntent was unsuccessful.')
-            # Aquí puedes manejar el fallo del pago
 
         return '', 200
 
