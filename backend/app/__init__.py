@@ -28,6 +28,8 @@ from .models import (
     db,
     setup_db,
     User,
+    Game,
+    Transaction
 );
 
 
@@ -303,6 +305,13 @@ def create_app(test_config=None):
         db.session.commit()
 
         return jsonify({"message": "La contraseña ha sido cambiada exitosamente."}), 200
+
+    #===: Handle games ===:
+    @app.route("/api/games", methods=["GET"])
+    def get_games():
+        games = Game.query.all()
+        return jsonify([game.serialize() for game in games])
+
 
     # return app as instance
     return app
