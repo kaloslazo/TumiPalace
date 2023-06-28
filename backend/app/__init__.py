@@ -86,6 +86,7 @@ def create_app(test_config=None):
                     "username": current_user.nickname,
                     "email": current_user.email,
                     "imageProfile": current_user.imageProfile,
+                    "bank": current_user.bank,
                 }
             });
         else: return jsonify({"status": "not authenticated"}), 401;
@@ -387,12 +388,16 @@ def create_app(test_config=None):
             user_id = payment_intent['metadata']['user_id']
             amount = payment_intent['amount']
             
-            print('PaymentIntent was successful! del id:', user_id);
+            print('\n\nPaymentIntent was successful! del id:', user_id);
             
-            user = User.query.get(user_id)
-            print("AMOUNT", amount);
-            if user: user.bank = user.bank + amount;
-            db.session.commit()
+            try:
+                user = User.query.get(user_id)
+                if user:
+                    user.bank = user.bank + amount
+                    db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({'error': str(e)}), 400
         
         elif event['type'] == 'payment_intent.payment_failed':
             payment_intent = event['data']['object']

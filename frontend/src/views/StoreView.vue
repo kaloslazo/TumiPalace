@@ -4,7 +4,7 @@
             <h1>Añadir fondos</h1>
             <input class="bg-brown-1000 px-6 py-3" v-model="amount" type="number" placeholder="Cantidad a añadir">
             <div class="text-white" id="card-element" />
-            <button type="submit">Pagar</button>
+            <button :disabled="processing" type="submit">Pagar</button>
         </form>
 
         <ShowError :error="error" />
@@ -27,6 +27,7 @@ export default {
         return {
             stripe: null,
             card: null,
+            processing: false,
             publishableKey: process.env.VUE_APP_STRIPE_PUBLIC_KEY,
             amount: 0,
             success: "",
@@ -47,6 +48,7 @@ export default {
         async submit() {
             this.success = "";
             this.error = "";
+            this.processing = true;
 
             try {
                 const response = await axios.post('/add_funds', { amount: this.amount });
@@ -62,10 +64,16 @@ export default {
                 if (result.error) { this.error = result.error.message; }
                 else {
                     this.success = "Pago realizado con éxito.";
+
+                    // Actualizar el saldo del usuario
+                    const userResponse = await axios.get('/current_user');
+                    this.$store.commit('updateUserBank', userResponse.data.user.bank);
                 }
             } catch (error) {
                 console.error("ERROR", error);
                 this.error = error.response ? error.response.data.error : error.message;
+            } finally {
+                this.processing = false;
             }
         },
     }
