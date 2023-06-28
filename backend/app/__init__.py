@@ -1,7 +1,8 @@
-import sys;
 import os;
 import shutil
+import stripe;
 import re;
+from dotenv import load_dotenv;
 from PIL import Image;
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt;
@@ -34,6 +35,7 @@ from .models import (
 
 
 def create_app(test_config=None):
+    load_dotenv();
     app = Flask(__name__, static_folder='static');
     CORS(app, origins='*', supports_credentials=True);
     
@@ -41,6 +43,11 @@ def create_app(test_config=None):
     app.config['JWT_SECRET_KEY'] = 'pass';
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
     jwt = JWTManager(app);
+    
+    # stripe config
+    stripe_public_key = os.getenv('STRIPE_PUBLIC_KEY')
+    stripe_secret_key = os.getenv('STRIPE_SECRET_KEY')
+    stripe.api_key = stripe_secret_key;
     
     # mail config
     app.config["MAIL_SERVER"] = "smtp.gmail.com";
@@ -335,6 +342,56 @@ def create_app(test_config=None):
         user.bank = new_balance;
         db.session.commit();
         return jsonify({"message": "Balance actualizado exitosamente"}), 200
+
+    #===: Handle transactions ===:
+    @app.route('/api/add_funds', methods=['POST'])
+    @jwt_required()
+    def add_funds():
+        try:
+            user_id = get_jwt_identity();
+            print("USER", user_id);
+            amount = request.json.get('amount')
+
+            if not user_id: return jsonify({"message": "Usuario no encontrado."}), 404
+            if not amount: return jsonify({"message": "No se proporcionó una cantidad."}), 400
+            if amount <= 0: return jsonify({"message": "La cantidad no puede ser igual o menor que 0."}), 400
+            if not isinstance(amount, (int, float)) or amount < 0.50: return jsonify({'error': 'La cantidad debe ser un número mayor o igual a 0.50'}), 400
+
+            # intencion de pago
+            intent = stripe.PaymentIntent.create(
+                amount=int(amount),
+                currency='pen',
+                description='Abono de tokens | TumiPalace',
+                metadata={'user_id': user_id}
+            );
+            return jsonify({'clientSecret': intent['client_secret']})
+        
+        except Exception as e:
+            return jsonify({'error': str(e)}), 403
+
+    @app.route('/stripe_webhook', methods=['POST'])
+    def stripe_webhook():
+        payload = request.data
+        sig_header = request.headers.get('STRIPE_SIGNATURE')
+
+        try:
+            event = stripe.Webhook.construct_event( payload, sig_header, os.getenv('STRIPE_WEBHOOK_SECRET'))
+        except ValueError as e:
+            return jsonify({'error': str(e)}), 400
+        except stripe.error.SignatureVerificationError as e:
+            return jsonify({'error': str(e)}), 400
+
+        if event['type'] == 'payment_intent.succeeded':
+            payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
+            user_id = payment_intent['metadata']['user_id']
+            print('PaymentIntent was successful! del id:', user_id);
+            # Aquí puedes actualizar el saldo del usuario
+        elif event['type'] == 'payment_intent.payment_failed':
+            payment_intent = event['data']['object']
+            print('PaymentIntent was unsuccessful.')
+            # Aquí puedes manejar el fallo del pago
+
+        return '', 200
 
     # return app as instance
     return app

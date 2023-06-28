@@ -63,6 +63,7 @@ const routes = [
     component: () => import("@/views/StoreView.vue"),
     meta: {
       title: 'Store',
+      requiresAuth: true
     }
   },
   {
@@ -80,6 +81,7 @@ const routes = [
     meta: {
       title: 'Solicitud de restablecimiento de contraseña.',
       hideNavigation: true,
+      requiresAuth: true
     },
   },
   {
