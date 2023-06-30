@@ -81,7 +81,7 @@ const routes = [
     meta: {
       title: 'Solicitud de restablecimiento de contraseña.',
       hideNavigation: true,
-      requiresAuth: true
+      requiresAuth: false
     },
   },
   {

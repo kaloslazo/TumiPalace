@@ -176,6 +176,7 @@ def create_app(test_config=None):
         
         if user: 
             token = user.get_reset_password_token();
+            print(token);
             send_reset_email(user, token);
             return jsonify(message="Petición enviada correctamente. Revisa el código de confirmación que enviamos a tu correo electrónico."), 200;
         else:
