@@ -11,7 +11,7 @@ En la última versión de la aplicación transladamos todo el contenido de archi
 </p>
 
 
-## 2. Estructura del proyecto
+## 📁 2. Estructura del proyecto
 
 ### 2.1 Backend/
 Dentro de esta carpeta hemos configurado toda la lógica de la parte backend, actúa como puente entre la base de datos y la aplicación frontend. En esta carpeta se encuentra el archivo `app.py` que es el encargado de ejecutar la aplicación y escuchar en el puerto $5004$.
@@ -36,7 +36,7 @@ Para poder usar esta implementación debes crear un archivo `.env` en tu directo
 npm run serve
 ```
 
-## 3. Capturas de pantalla
+## 🖼️ 3. Capturas de pantalla
 
 ### 3.1 Configuración de Perfil 
 
@@ -46,7 +46,7 @@ npm run serve
 
 <img src="./src/img2.png" alt="roulette" width="960px">
 
-## 4. Endpoints
+## 📍 4. Endpoints
 
 ### 4.1 Autenticación y usuarios
 
@@ -80,7 +80,7 @@ npm run serve
 | `/api/roulette/bet` | `POST` | Realiza una apuesta en la ruleta. | Autenticado |
 | `/api/roulette/result` | `GET` | Obtiene los resultados de la ruleta. | Autenticado |
 
-## 5. Despliegue
+## ✈️ 5. Despliegue
 
 Para poder usar esta implementación debes crear un archivo `.env` en tu directorio raíz, este guardará información sensible como tu `API` de stripe  de google accounts, para poder correr el sistema de pagos y recuperación de contraseñas respectivamente. Así mismo para ejecutar stripe en un servidor local es necesario instalar su CLI, revisa la documentación [aquí](https://stripe.com/docs/stripe-cli).
 
@@ -108,7 +108,7 @@ Ahora debes crear las base de datos y los juegos iniciales. Suponiendo la creaci
 CREATE DATABASE tumipalace_db;
 ```
 
-## 6. Librerías
+## 📚 6. Librerías
 
 Para desarrollar nuestro programa necesitamos de librerías indispensables tanto en el lado frontend como backend. A continuación se detallan las librerías utilizadas en cada uno de los lados.
 
