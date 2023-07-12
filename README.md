@@ -2,7 +2,7 @@
 
 <img src="./src/tumipalace.gif"/>
 
-## 1. Descripción
+## 📎 1. Descripción
 
 <p align="justify">
 TumiPalace es una aplicación web que permite a los usuarios realizar apuestas de distinta índole, su principal atractivo es la Fortuna del Sol (Tragamonedas). Este proyecto permite a los usuarios mantener sus registros, jugadas, transacciones y muchas mas opciones almacenadas desde cualquier dispositivo tanto en escritorio como en moviles y desde la simple comodidad de su casa.
@@ -36,29 +36,15 @@ Para poder usar esta implementación debes crear un archivo `.env` en tu directo
 npm run serve
 ```
 
-## 3. Librerías
+## 3. Capturas de pantalla
 
-Para desarrollar nuestro programa necesitamos de librerías indispensables tanto en el lado frontend como backend. A continuación se detallan las librerías utilizadas en cada uno de los lados.
+### 3.1 Configuración de Perfil 
 
-### 3.1 Frontend
+<img src="./src/img1.png" alt="roulette" width="960px">
 
-- [Vue 3](https://v3.vuejs.org/): Framework de desarrollo web.
-- [Vue Router](https://router.vuejs.org/): Enrutamiento de la aplicación.
-- [Vuex](https://vuex.vuejs.org/): Almacenamiento de datos.
-- [Axios](https://axios-http.com/): Cliente HTTP para Vue.
-- [Tailwind CSS](https://tailwindcss.com/): Diseños rápidos y minimalistas.
+### 3.2 Tragamonedas
 
-### 3.2 Backend
-
-- [Flask](https://flask.palletsprojects.com/en/2.0.x/): Framework de desarrollo web.
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/): Permite el acceso a recursos de otros dominios.
-- [Flask-JWT-Extended](https://flask-jwt-extended.readthedocs.io/en/stable/): Autenticación de usuarios.
-- [Flask-Mail](https://pythonhosted.org/Flask-Mail/): Envío de correos electrónicos.
-- [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/): Creación de API REST.
-- [Flask-Script](https://flask-script.readthedocs.io/en/latest/): Ejecución de scripts.
-- [Stripe](https://stripe.com/docs/api): Sistema de pagos.
-- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/): ORM para bases de datos.
-
+<img src="./src/img2.png" alt="roulette" width="960px">
 
 ## 4. Endpoints
 
@@ -122,9 +108,25 @@ Ahora debes crear las base de datos y los juegos iniciales. Suponiendo la creaci
 CREATE DATABASE tumipalace_db;
 ```
 
+## 6. Librerías
 
-## 6. Capturas de pantalla
+Para desarrollar nuestro programa necesitamos de librerías indispensables tanto en el lado frontend como backend. A continuación se detallan las librerías utilizadas en cada uno de los lados.
 
-<img src="./src/img1.png" alt="roulette" width="960px">
+### 6.1 Frontend
 
-<img src="./src/img2.png" alt="roulette" width="960px">
+- [Vue 3](https://v3.vuejs.org/): Framework de desarrollo web.
+- [Vue Router](https://router.vuejs.org/): Enrutamiento de la aplicación.
+- [Vuex](https://vuex.vuejs.org/): Almacenamiento de datos.
+- [Axios](https://axios-http.com/): Cliente HTTP para Vue.
+- [Tailwind CSS](https://tailwindcss.com/): Diseños rápidos y minimalistas.
+
+### 6.2 Backend
+
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/): Framework de desarrollo web.
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/): Permite el acceso a recursos de otros dominios.
+- [Flask-JWT-Extended](https://flask-jwt-extended.readthedocs.io/en/stable/): Autenticación de usuarios.
+- [Flask-Mail](https://pythonhosted.org/Flask-Mail/): Envío de correos electrónicos.
+- [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/): Creación de API REST.
+- [Flask-Script](https://flask-script.readthedocs.io/en/latest/): Ejecución de scripts.
+- [Stripe](https://stripe.com/docs/api): Sistema de pagos.
+- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/): ORM para bases de datos.
