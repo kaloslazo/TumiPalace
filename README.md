@@ -130,3 +130,17 @@ Para desarrollar nuestro programa necesitamos de librerías indispensables tanto
 - [Flask-Script](https://flask-script.readthedocs.io/en/latest/): Ejecución de scripts.
 - [Stripe](https://stripe.com/docs/api): Sistema de pagos.
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/14/): ORM para bases de datos.
+
+## 7. Vistas
+
+| Vista | Descripcion |
+| --- | --- |
+| Dashboard | El usuario puede ver su información y cambiar su contraseña. | 
+| FormResetPassword | El usuario puede restablecer su contraseña. |
+| HomeView | El usuario ve la página de inicio. |
+| LoginView | El usuario puede iniciar sesión. |
+| NotAuthorizedView | El usuario ve la página de no autorizado. Helper. |
+| ProfileView | El usuario puede ver su información y actualizarla. |
+| StoreView | El usuario puede comprar fichas utilizando una tarjeta de credito. |
+| SupportView | Página relacionada con el soporte. |
+| RequestResetPassword | El usuario puede solicitar un token para restablecer su contraseña. |
