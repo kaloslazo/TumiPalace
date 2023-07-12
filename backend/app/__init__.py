@@ -431,28 +431,39 @@ def create_app(test_config=None):
     @app.route('/api/roulette/result', methods=['GET'])
     @jwt_required()
     def get_result():
-        user_id = get_jwt_identity();
-        user = User.query.get(user_id);
+        user_id = get_jwt_identity()
+        user = User.query.get(user_id)
         
-        if not user: return jsonify({'error': 'Usuario no encontrado.'}), 404
+        if not user:
+            return jsonify({'error': 'Usuario no encontrado.'}), 404
         
         bet_id = request.args.get('bet_id')
         bet = RouletteBet.query.get(bet_id)
-        if not bet: return jsonify({'error': 'Apuesta no valida.'}), 404
+        if not bet:
+            return jsonify({'error': 'Apuesta no válida.'}), 404
         
-        roulette_number = randint(0, 36);
-        roulette_color = 'red' if roulette_number in [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] else 'black';
-        
+        roulette_number = randint(0, 36)
+        roulette_color = 'red' if roulette_number in [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] else 'black'
         bet_data = json.loads(bet.bet_data)
-        for bet in bet_data:
-            if bet['type'] == 'number' and bet['value'] == roulette_number or bet['type'] == 'color' and bet['value'] == roulette_color:
-                bet['result'] = 'win'
-                user.bank += bet['amount'] * 2;
-            else: bet['result'] = 'lose';
-        bet.result = json.dumps(bet_data);
         
-        db.session.commit();
-        return jsonify(bet.serialize()), 200;
+        for bet_entry in bet_data:
+            if (bet_entry['type'] == 'number' and bet_entry['value'] == roulette_number) or (bet_entry['type'] == 'color' and bet_entry['value'] == roulette_color):
+                bet_entry['result'] = 'win'
+                user.bank += bet_entry['amount'] * 2
+            else:
+                bet_entry['result'] = 'lose'
+        
+        bet.result = 'win' if any(entry['result'] == 'win' for entry in bet_data) else 'lose'
+        result_data = {
+            'numbers': roulette_number,
+            'color': roulette_color,
+            'bet_data': bet_data
+        }
+
+        db.session.commit()
+        
+        return jsonify(result_data), 200
+
 
 
     # return app as instance
