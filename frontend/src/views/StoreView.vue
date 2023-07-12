@@ -1,17 +1,28 @@
 <template>
-    <div>
-        <form @submit.prevent="submit" class="max-w-lg mx-auto flex flex-col gap-10 text-white">
-            <h1>Añadir fondos</h1>
-            <input class="bg-brown-1000 px-6 py-3" v-model="amount" type="number" placeholder="Cantidad a añadir">
-            <div class="text-white" id="card-element" />
-            <button :disabled="processing" type="submit">Pagar</button>
-        </form>
+    <div class="px-6 max-w-2xl mx-auto">
+        <div class="w-full max-w-2xl bg-brown-1000">
+            <form @submit.prevent="submit" class="bg-gray-900 text-white rounded-lg p-8 max-w-lg m-auto py-24">
+                <h1 class="text-3xl font-bold mb-8">Añadir fondos</h1>
+                
+                <label for="amount">Ingresar monto S/.</label>
+                <input class="bg-white px-6 py-3 rounded-md text-black w-full mb-6 mt-5" v-model="amount" type="number"
+                    placeholder="Cantidad a añadir" />
+                
+                <label for="card-element">Datos bancarios</label>
+                <div id="card-element" class="p-2 bg-white text-black rounded-md py-5 mb-6 mt-5"></div>
+                
+                <button :disabled="processing"
+                    class="w-full bg-yellow-600 hover:bg-yellow-700 text-black font-bold py-3 rounded-md transition duration-300"
+                    type="submit">
+                    Pagar
+                </button>
+            </form>
+        </div>
 
         <ShowError :error="error" />
         <ShowSuccess :success="success" />
     </div>
 </template>
-  
   
 <script>
 import axios from 'axios';
@@ -19,10 +30,8 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import ShowError from '@/components/ShowError.vue';
 import ShowSuccess from '@/components/ShowSuccess.vue';
-import { toHandlers } from 'vue';
 
 export default {
-
     data() {
         return {
             stripe: null,
@@ -46,7 +55,6 @@ export default {
     },
     methods: {
         async submit() {
-            console.log("llamada a submit");
             this.success = "";
             this.error = "";
             this.processing = true;
@@ -55,29 +63,26 @@ export default {
                 const response = await axios.post('/add_funds', { amount: this.amount });
                 const clientSecret = response.data.clientSecret;
 
-                // Confirma el pago con Stripe
                 const result = await this.stripe.confirmCardPayment(clientSecret, {
                     payment_method: {
                         card: this.card,
                     },
                 });
 
-                if (result.error) { this.error = result.error.message; }
-                else {
-                    
-                    // Comenzar a hacer polling para obtener el saldo del usuario
+                if (result.error) {
+                    this.error = result.error.message;
+                } else {
                     const intervalId = setInterval(async () => {
                         const userResponse = await axios.get('/current_user');
                         const updatedBank = userResponse.data.user.bank;
-                        console.log("haciendo polling");
 
-                        // Si el saldo del usuario se ha actualizado, actualizar el estado y detener el polling
+                        console.log(userResponse)
                         if (updatedBank !== this.$store.state.bank) {
                             this.success = "Pago realizado con éxito.";
                             this.$store.commit('updateUserBank', updatedBank);
                             clearInterval(intervalId);
                         }
-                    }, 2000);
+                    }, 5000);
                 }
             } catch (error) {
                 console.error("ERROR", error);
@@ -89,11 +94,4 @@ export default {
     }
 };
 </script>
-
-<style>
-#card-element {
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-</style>
+  
