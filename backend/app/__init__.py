@@ -2,6 +2,8 @@ import os;
 import shutil
 import stripe;
 import re;
+import json;
+from random import randint;
 from dotenv import load_dotenv;
 from PIL import Image;
 from flask_cors import CORS
@@ -30,7 +32,8 @@ from .models import (
     setup_db,
     User,
     Game,
-    Transaction
+    Transaction,
+    RouletteBet
 );
 
 
@@ -402,9 +405,55 @@ def create_app(test_config=None):
         
         elif event['type'] == 'payment_intent.payment_failed':
             payment_intent = event['data']['object']
-            print('PaymentIntent was unsuccessful.')
+            print('No se hizo el pago.')
 
         return '', 200
+
+    #===: Roulette Logic ===:
+    @app.route('/api/roulette/bet', methods=['POST'])
+    @jwt_required()
+    def place_bet():
+        user_id = get_jwt_identity();
+        user = User.query.get(user_id);
+        if not user: return jsonify({'error': 'El usuario no fue encontrado.'}), 404;
+        
+        bet_data = request.json.get('bet_data');
+        total_bet_amount = sum(bet['amount'] for bet in bet_data);
+        if total_bet_amount > user.bank: return jsonify({'error': 'Los fondos son insuficientes.'}), 400;
+        
+        bet = RouletteBet(user_id=user_id, bet_data=json.dumps(bet_data));
+        user.bank = user.bank - total_bet_amount;
+        
+        db.session.add(bet)
+        db.session.commit()
+        return jsonify(bet.serialize()), 201
+
+    @app.route('/api/roulette/result', methods=['GET'])
+    @jwt_required()
+    def get_result():
+        user_id = get_jwt_identity();
+        user = User.query.get(user_id);
+        
+        if not user: return jsonify({'error': 'Usuario no encontrado.'}), 404
+        
+        bet_id = request.args.get('bet_id')
+        bet = RouletteBet.query.get(bet_id)
+        if not bet: return jsonify({'error': 'Apuesta no valida.'}), 404
+        
+        roulette_number = randint(0, 36);
+        roulette_color = 'red' if roulette_number in [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] else 'black';
+        
+        bet_data = json.loads(bet.bet_data)
+        for bet in bet_data:
+            if bet['type'] == 'number' and bet['value'] == roulette_number or bet['type'] == 'color' and bet['value'] == roulette_color:
+                bet['result'] = 'win'
+                user.bank += bet['amount'] * 2;
+            else: bet['result'] = 'lose';
+        bet.result = json.dumps(bet_data);
+        
+        db.session.commit();
+        return jsonify(bet.serialize()), 200;
+
 
     # return app as instance
     return app

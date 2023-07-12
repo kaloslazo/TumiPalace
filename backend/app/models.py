@@ -118,3 +118,25 @@ class Transaction(db.Model):
             'quantityDollar': self.quantityDollar,
             'creationDate': self.creationDate,
         };
+        
+#===: roulette bet :===
+class RouletteBet(db.Model):
+    __tablename__ = 'roulette_bet_table'
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"), unique=True)
+    user_id = db.Column(db.String(36), db.ForeignKey('user_table.id'), nullable=False)
+    bet_data = db.Column(db.Text, nullable=False)  # JSON, bets as a list of dicts {'type': 'xx', 'value': 00, 'amount': 00} 
+    result = db.Column(db.String(50), nullable=True)  # 'win', 'lose', or None if the bet hasn't been resolved yet
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __init__(self, user_id, bet_data):
+        self.user_id = user_id
+        self.bet_data = bet_data
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'bet_data': self.bet_data,
+            'result': self.result,
+            'timestamp': self.timestamp,
+        }

@@ -86,7 +86,7 @@ export default {
                 console.log(response);
             } catch (err) {
                 if (err.response) { this.error = err.response.data.message; }
-                else if (err.request) { this.error = 'No response from server'; }
+                else if (err.request) { this.error = 'No hubo respuesta del servidor.'; }
                 else { this.error = 'Error: ' + err.message; }
             }
         },
