@@ -36,7 +36,65 @@ Para poder usar esta implementación debes crear un archivo `.env` en tu directo
 npm run serve
 ```
 
-## 3. Archivos locales
+## 3. Librerías
+
+Para desarrollar nuestro programa necesitamos de librerías indispensables tanto en el lado frontend como backend. A continuación se detallan las librerías utilizadas en cada uno de los lados.
+
+### 3.1 Frontend
+
+- [Vue 3](https://v3.vuejs.org/): Framework de desarrollo web.
+- [Vue Router](https://router.vuejs.org/): Enrutamiento de la aplicación.
+- [Vuex](https://vuex.vuejs.org/): Almacenamiento de datos.
+- [Axios](https://axios-http.com/): Cliente HTTP para Vue.
+- [Tailwind CSS](https://tailwindcss.com/): Diseños rápidos y minimalistas.
+
+### 3.2 Backend
+
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/): Framework de desarrollo web.
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/): Permite el acceso a recursos de otros dominios.
+- [Flask-JWT-Extended](https://flask-jwt-extended.readthedocs.io/en/stable/): Autenticación de usuarios.
+- [Flask-Mail](https://pythonhosted.org/Flask-Mail/): Envío de correos electrónicos.
+- [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/): Creación de API REST.
+- [Flask-Script](https://flask-script.readthedocs.io/en/latest/): Ejecución de scripts.
+- [Stripe](https://stripe.com/docs/api): Sistema de pagos.
+- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/): ORM para bases de datos.
+
+
+## 4. Endpoints
+
+### 4.1 Autenticación y usuarios
+
+| Endpoint | Método | Descripción | Restricciones |
+| --- | --- | --- | --- |
+| `/api/register` | `POST` | Registra un nuevo usuario en la base de datos. | No autenticado |
+| `/api/login` | `POST` | Inicia sesión en la aplicación. | No autenticado |
+| `/api/users/<user_id>` | `GET` | Obtiene la información del usuario. | ID Válido |
+| `/api/current_user` | `GET` | Obtiene la información del usuario actual. | ID Válido |
+
+### 4.2 API 
+
+| Endpoint | Método | Descripción | Restricciones |
+| --- | --- | --- | --- |
+| `/webhook/stripe` | `POST` | Recibe los eventos de Stripe. | Autenticado |
+| `/api/users/<user_id>/change_password` | `POST` | Cambia la contraseña del usuario. | Autenticado |
+| `/api/reset_password/<token>` | `POST` | Restablece la contraseña del usuario con un token válido. | Token dura 10 minutos y un solo uso. |
+
+### 4.3 Actualización de datos
+
+| Endpoint | Método | Descripción | Restricciones |
+| --- | --- | --- | --- |
+| `/api/users/<user_id>` | `DELETE` | Elimina un usuario de la base de datos. | Autenticado |
+| `/api/users/add_funds` | `POST` | Añade fondos a la cuenta del usuario. | Autenticado |
+
+### 4.2 Juegos
+
+| Endpoint | Método | Descripción | Restricciones |
+| --- | --- | --- | --- |
+| `/api/games` | `GET` | Obtiene la información de todos los juegos. | Autenticado |
+| `/api/roulette/bet` | `POST` | Realiza una apuesta en la ruleta. | Autenticado |
+| `/api/roulette/result` | `GET` | Obtiene los resultados de la ruleta. | Autenticado |
+
+## 5. Despliegue
 
 Para poder usar esta implementación debes crear un archivo `.env` en tu directorio raíz, este guardará información sensible como tu `API` de stripe  de google accounts, para poder correr el sistema de pagos y recuperación de contraseñas respectivamente. Así mismo para ejecutar stripe en un servidor local es necesario instalar su CLI, revisa la documentación [aquí](https://stripe.com/docs/stripe-cli).
 
@@ -52,63 +110,17 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-## 4. Librerías
+Para crear la base de datos en PostgreSQL, puedes hacerlo por medio de pgadmin u otro IDE o por psql, para ello necesitas iniciar sesión con tu usuario, suponiendo que lo hagas con postgres, el comando sería el siguiente.
 
-Para desarrollar nuestro programa necesitamos de librerías indispensables tanto en el lado frontend como backend. A continuación se detallan las librerías utilizadas en cada uno de los lados.
+```bash
+sudo -u postgres psql
+``` 
 
-### 4.1 Frontend
-
-- [Vue 3](https://v3.vuejs.org/): Framework de desarrollo web.
-- [Vue Router](https://router.vuejs.org/): Enrutamiento de la aplicación.
-- [Vuex](https://vuex.vuejs.org/): Almacenamiento de datos.
-- [Axios](https://axios-http.com/): Cliente HTTP para Vue.
-- [Tailwind CSS](https://tailwindcss.com/): Diseños rápidos y minimalistas.
-
-### 4.2 Backend
-
-- [Flask](https://flask.palletsprojects.com/en/2.0.x/): Framework de desarrollo web.
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/): Permite el acceso a recursos de otros dominios.
-- [Flask-JWT-Extended](https://flask-jwt-extended.readthedocs.io/en/stable/): Autenticación de usuarios.
-- [Flask-Mail](https://pythonhosted.org/Flask-Mail/): Envío de correos electrónicos.
-- [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/): Creación de API REST.
-- [Flask-Script](https://flask-script.readthedocs.io/en/latest/): Ejecución de scripts.
-- [Stripe](https://stripe.com/docs/api): Sistema de pagos.
-- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/): ORM para bases de datos.
-
-
-## 5. Endpoints
-
-### 5.1 Autenticación y usuarios
-
-| Endpoint | Método | Descripción | Restricciones |
-| --- | --- | --- | --- |
-| `/api/register` | `POST` | Registra un nuevo usuario en la base de datos. | No autenticado |
-| `/api/login` | `POST` | Inicia sesión en la aplicación. | No autenticado |
-| `/api/users/<user_id>` | `GET` | Obtiene la información del usuario. | ID Válido |
-| `/api/current_user` | `GET` | Obtiene la información del usuario actual. | ID Válido |
-
-### 5.2 API 
-
-| Endpoint | Método | Descripción | Restricciones |
-| --- | --- | --- | --- |
-| `/webhook/stripe` | `POST` | Recibe los eventos de Stripe. | Autenticado |
-| `/api/users/<user_id>/change_password` | `POST` | Cambia la contraseña del usuario. | Autenticado |
-| `/api/reset_password/<token>` | `POST` | Restablece la contraseña del usuario con un token válido. | Token dura 10 minutos y un solo uso. |
-
-### 5.3 Actualización de datos
-
-| Endpoint | Método | Descripción | Restricciones |
-| --- | --- | --- | --- |
-| `/api/users/<user_id>` | `DELETE` | Elimina un usuario de la base de datos. | Autenticado |
-| `/api/users/add_funds` | `POST` | Añade fondos a la cuenta del usuario. | Autenticado |
-
-### 5.2 Juegos
-
-| Endpoint | Método | Descripción | Restricciones |
-| --- | --- | --- | --- |
-| `/api/games` | `GET` | Obtiene la información de todos los juegos. | Autenticado |
-| `/api/roulette/bet` | `POST` | Realiza una apuesta en la ruleta. | Autenticado |
-| `/api/roulette/result` | `GET` | Obtiene los resultados de la ruleta. | Autenticado |
+Ahora debes crear las base de datos y los juegos iniciales. Suponiendo la creación de una base de datos de desarrollo, necesitarás ejecutar los comandos a continuación. Mientras que si quieres tener juegos iniciales harás una consulta creándolos. El script se encuentra en `backend/scripts/newGame.py`.
+    
+```sql
+CREATE DATABASE tumipalace_db;
+```
 
 
 ## 6. Capturas de pantalla
@@ -116,7 +128,3 @@ Para desarrollar nuestro programa necesitamos de librerías indispensables tanto
 <img src="./src/img1.png" alt="roulette" width="960px">
 
 <img src="./src/img2.png" alt="roulette" width="960px">
-
-## 7. Autores
-
-- [Kalos Lazo](github.com/lzmkalos)
